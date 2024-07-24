@@ -1,0 +1,763 @@
+See discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/374771573
+The utility of volumetric MRI in assessment of volume changes in ventral
+diencephalon in autistic children
+Article  in  Egyptian Journal of Radiology and Nuclear Medicine · October 2023
+DOI: 10.1186/s43055-023-01118-6
+CITATIONS
+0
+READS
+31
+6 authors, including:
+Mohammad Fouad Allam
+Minia University
+21 PUBLICATIONS   28 CITATIONS   
+SEE PROFILE
+All content following this page was uploaded by Mohammad Fouad Allam on 18 October 2023.
+The user has requested enhancement of the downloaded file.
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173  
+https://doi.org/10.1186/s43055-023-01118-6
+RESEARCH
+The utility of volumetric MRI in assessment 
+of volume changes in ventral diencephalon 
+in autistic children
+Tamer El Zaeem Esmaeel1, Hosny Sayed Abdelghany1, Samir Mohamed Mounir1, Ahmed Ibrahim Rasekh1, 
+Hassan Ali Ahmed Mahmoud2 and Mohammad Fouad Abdel Baki Allam1*   
+ 
+Abstract 
+Background  Autism spectrum disorder (ASD) is a neurobehavioural disorder, characterized by abnormal affiliative 
+and socio-emotional responses which are generally regulated by certain neuropeptides in the hypothalamus (an 
+anatomic component of the ventral diencephalon (VD)). The use of volumetric MRI for studying VD volume change 
+could provide a novel approach for identification of structural brain changes in ASD; this could assist in understanding 
+the pathophysiology of ASD and would reflect on treatment strategies. The aim of the current work was to investigate 
+the role of MRI volumetric analysis of the ventral diencephalon in young children diagnosed with autism spectrum 
+disorder.
+Methods  Fifty children diagnosed with ASD underwent volumetric brain analysis, on a fully automated MRI brain 
+volumetry system (volBrain), with voxel-based morphometry of various segmental structures of the brain includ-
+ing the VD, using vol2Brain 1.0 pipeline software analysis suite.
+Results  There were 48 out of 50 children who demonstrated abnormal VD volume which was found below the nor-
+mal limits compared with reference standard normalized volume. All cases were normocephalic demonstrating nor-
+mal intra-cranial cavity volumes. Forty out of fifty cases showed increased total volume of grey matter, and eighteen 
+out of fifty cases showed increased total volume of white matter. Regarding the amygdala and hippocampus, there 
+were only two cases (4.0%) which showed slightly increased relative volume of the total amygdala, and two other 
+cases (4.0%) demonstrated increased relative volume of the total hippocampus. Comparison between the autistic 
+patients and normal references revealed a significant difference regarding the VD volume and total volume of grey 
+matter, whereas no significant differences were found regarding the white matter amygdala and hippocampus.
+Conclusions  Based on the consistent significant volume decrease in the ventral diencephalon in patients with child-
+hood autism, this study concluded that volumetric MRI analysis could be useful for diagnosis of childhood spectrum 
+disorder and could be utilized as a reliable screening method in the clinically vague cases. Further study with a larger 
+sample size including more age groups is recommended for more validation of the results.
+Keywords  Diencephalon, Magnetic resonance imaging, Neuroimaging, Autism spectrum disorder
+Background
+Autism spectrum disorder (ASD) is a developmental 
+neurobehavioural  disorder characterized by impaired 
+social interaction and communication. The global preva-
+lence of ASD is increasing with estimated value equal to 
+62/10,000 people, and this could further increase among 
+Open Access
+© The Author(s) 2023. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which 
+permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the 
+original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or 
+other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line 
+to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory 
+regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this 
+licence, visit http://creativecommons.org/licenses/by/4.0/.
+Egyptian Journal of Radiology
+and Nuclear Medicine
+*Correspondence:
+Mohammad Fouad Abdel Baki Allam
+mfallam@mu.edu.eg
+1 Faculty of Medicine, Minia University, Zip 61111, Minya, Egypt
+2 Sherwood Forest Hospitals, NHS Foundation Trust, Sutton in Ashfield, UK
+Page 2 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+children suffering from other developmental disorders [1, 
+2].
+The ventral diencephalon (VD) is defined as a group of 
+cerebral structures located ventral to the thalamus. They 
+could not be distinguished from each other on stand-
+ard magnetic resonance imaging (MRI). The relevant 
+and important VD component that would contribute 
+to pathophysiology of ASD is the hypothalamus, and 
+it could support and regulate the affiliative and socio-
+emotional responses owing to its neuropeptides. Because 
+of its small size and the difficulty regarding its delinea-
+tion and its volumetric analysis, the studies which are 
+concerning with hypothalamic abnormalities in ASD on 
+MRI are quite few in contrast to other structures like the 
+amygdala and hippocampus [3, 4].
+The use of volumetric MRI for studying various brain 
+diseases has been widely applied; it has the advantage of 
+being non-invasive technique which provides high spatial 
+resolution images. The detection of ventral diencepha-
+lon volume change using volumetric MRI could provide 
+a novel approach for identification of structural brain 
+changes which occur in autism; this in turn could assist 
+in understanding the pathophysiology of ASD and would 
+directly reflect on the treatment strategy alteration such 
+as early behavioural interference and individualized ther-
+apy [5, 6].
+The aim of the current work was to investigate the role 
+of MRI volumetric analysis of the ventral diencephalon in 
+young children diagnosed with autism spectrum disorder.
+Methods
+This observational analytic prospective study was con-
+ducted in the MRI unit of our institution from September 
+2021 to August 2022 after being approved by the Faculty 
+of Medicine Research Ethics Committee. Approval num-
+ber was 16:3/2021.
+Study participants
+Fifty five children aged 3–9 years and formally diagnosed 
+with autism spectrum disorder were referred from the 
+neuropsychiatric clinic in paediatric department to the 
+MRI unit for brain MRI study; five cases of them were 
+excluded from the study due to concurrent structural 
+brain anomalies found in MRI. The remaining fifty chil-
+dren were 40 (80%) males and 10 (20%) females with 
+mean age 5.58 ± 1.29 (range was 3–8.5). All fifty patients 
+underwent thorough history taking about their cogni-
+tive development and behaviour, assessment of language 
+abilities, as well as complete medical, neurological and 
+hearing examinations. An informed written consent was 
+obtained from child’s parents prior to participating in the 
+study.
+Inclusion criteria
+Inclusion criteria for patients were based on formal clini-
+cal diagnosis of ASD in a young child aged 3–9  years, 
+using in-depth developmental evaluation that was done 
+by a trained paediatric neurologist with eight-year expe-
+rience in paediatric neurology.
+Exclusion criteria
+Contraindications to MRI study (as in patients with coch-
+lear implant), concurrent congenital heart disease not 
+candidate for sedation, older children above 9 years and 
+patients with structural brain anomalies were the exclu-
+sion criteria.
+MRI technique
+Conventional MRI study of the brain was performed on 
+an Ingenia 1.5 Tesla Philips closed MR scanner using 
+head coil. All children were sedated with chloral hydrate 
+and immobilized on the table during the study. The fol-
+lowing sequences were performed for all cases: Sagit-
+tal T1W-3D turbo gradient echo (TR/TE 7.5/3.4  ms, 
+matrix 256 × 216, flip angle 8, duration 7:02 min), coro-
+nal T2WI (TR/TE 3163/100  ms, matrix 180 × 187, slice 
+thickness/gap 5/1 mm, duration 2:10 min), axial FLAIR 
+(TR/TE 8000/92  ms, matrix 240 × 143, slice thick-
+ness/gap 5/1  mm, duration 3:21  min), axial DWI (TR/
+TE 6000/110  ms, matrix 192 × 190, slice thickness/gap 
+5/1 mm, duration 1:13 min) and sagittal T1WI (TR/TE 
+550/15 ms, matrix 168 × 131, slice thickness/gap 5/1 mm, 
+duration 1:35 min).
+Image analysis
+Five radiologists have assessed the conventional brain 
+MRI images independently, and blindly in all cases, their 
+experiences in neuroradiology were 25, 15, 10, 9 and 
+5 years. Any structural abnormalities or signs of related 
+disease/syndrome were reported for exclusion purpose. 
+Volumetric analysis of the T1W-3D gradient echo images 
+was carried out on a fully automated MRI brain volu-
+metry system (volBrain) which employed a voxel-based 
+morphometry and segmentation of brain macro-struc-
+tures as well as subcortical regions including the limbic 
+system and VD, and the used software version was vol-
+2Brain 1.0 pipeline software analysis suite (Fig. 1).
+Quality control and case validation were done by visual 
+assessment of input image quality before uploading to 
+volBrain software, and also after the volumetric report 
+became ready, a second visual assessment of the pro-
+cessed images was performed on volBrain reports which 
+provide screenshots of one sagittal, one coronal and one 
+axial image. All volumes were presented in absolute val-
+ues (measured in ­
+cm3) as well as in relative values which 
+Page 3 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+	
+were measured in relation to the intra-cranial cavity vol-
+ume (ICV). For reference purpose, the obtained values 
+were compared with expected normal limits provided by 
+volBrain software that were 95% of normalized volume 
+in function of sex and age. The library of constructed 
+templates of the vol2Brain software has utilized different 
+public brain datasets covering nearly the entire human 
+life-span and both sexes (all values outside the limits were 
+highlighted in red). The Asymmetry Index is calculated 
+as the difference between right and left volumes divided 
+by their mean (in per cent) [7].
+Statistical analysis
+Data analysis was performed using SPSS software, ver-
+sion 26. The qualitative data were described as num-
+ber and percentage and were analysed by Chi-square 
+test. Descriptive statistics of the quantitative data were 
+done using Student’s “t” test if normally distributed or 
+Fig. 1  Tissue and structure segmentations as expressed on vol2Brain volumetry report, the segmental tissues are: cortical, subcortical 
+and cerebellar grey matter, white matter and cerebrospinal fluid (CSF), the macro-structures include the cerebrum, the cerebellum, the vermis 
+and the brainstem
+Page 4 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+Mann–Whitney U test, and Kruskal–Wallis test if not 
+normally distributed. The accepted level of significance 
+in this work was started at 0.05. (P < 0.05 was considered 
+significant.)
+Results
+This study was carried out on fifty autistic children, 40 
+(80%) males and 10 (20%) females. The mean age of all 
+patients was 5.58 ± 1.29 (range was 3–8.5) (Table 1).
+There were 48 out of 50 children who demonstrated 
+abnormal small ventral diencephalon volume, notably the 
+relative volume which was found below the normal limits 
+compared with normalized reference volume in function 
+of sex and age (mean was 0.58 ± 0.04, and inter-quartile 
+range was 0.542–0.614) (Table 2) (Figs. 2 and 3).
+All cases were normocephalic; they demonstrated nor-
+mal intra-cranial cavity volumes, and no case was catego-
+rized as micro- or macro-cephalic. Forty out of fifty cases 
+showed increased total volume of grey matter (mean was 
+60.19, and inter-quartile range was 59.08–61.19), and 
+eighteen out of fifty cases showed increased total volume 
+of white matter (mean was 30.27, and inter-quartile range 
+was 28.005–31.80). Regarding the major limbic system 
+structures (amygdala and hippocampus), there were only 
+two cases (4%) which showed increased relative volume 
+of the total amygdala above the upper normal limits in 
+relation to the intra-cranial cavity volume (mean was 
+0.142, and inter-quartile range was 0.136–0.15), whereas 
+the remaining cases showed normal values. In addition, 
+there were two other cases (4%) which demonstrated 
+increased relative volume of the total hippocampus in 
+relation to the intra-cranial volume above the upper nor-
+mal limits (mean was 0.565, and inter-quartile range was 
+0.546–0.589), and the remaining cases showed normal 
+relative volumes (Tables 3 and 4) (Figs. 4 and 5).
+Comparison between the autistic patients and normal 
+references revealed a significant differences regarding 
+the VD volume and total volume of grey matter (P value 
+was < 0.001), whereas no significant differences were 
+found regarding the white matter amygdala, hippocam-
+pus, basal ganglia, thalamus and cerebellum (Table 4).
+The per cent agreement in the study was excellent 
+between the readers, and the inter-reader reliability (IRR) 
+was calculated at 98% for the presence or absence of 
+structural brain anomalies. The IRR was non-applicable 
+regarding the results of vol2Brain charts, as the process 
+was fully automated and depended on a standardized 
+screenshots of selected images.
+Discussion
+No single pattern of structural brain abnormality was 
+found to be characteristic to ASD patients. Many stud-
+ies have evaluated the role of volumetric brain MRI in 
+assessment of region-specific structural changes such 
+as grey and white matter volumes, in addition to sub-
+cortical structures which include the hippocampus and 
+amygdala. The majority of studies have yielded conflict-
+ing results which varied from increased to decreased and 
+even preserved volumes [8–10].
+The current study has investigated the volume of ven-
+tral diencephalon which is believed to play a role in 
+pathophysiology of ASD due to hypothalamic implication 
+in socio-emotional and affiliative behaviour in humans.
+The main finding in the current study was the consist-
+ent relation between ASD children and small volume of 
+VD that was found in 48 out of 50 cases; this consistent 
+feature appeared to be in the same line with the theory 
+of endocrine functional alteration which suggests the 
+presence of abnormal hypothalamic hormonal function 
+in ASD patients including oxytocin hormone and other 
+hypothalamic-related neuropeptides. There is a paucity 
+of reports regarding the volumetric study of VD or its 
+components in ASD. Kurth et al. [11] investigated the 
+grey matter differences in fifty-two ASD children and 
+fifty-two matched control subjects using brain MRI 
+with voxel-based morphology analysis; they found sig-
+nificantly lower volume of hypothalamic grey matter in 
+ASD cases compared with control subjects at the loca-
+tion of supraoptic and paraventricular nuclei of the 
+hypothalamus (T = 5.24, P = 0.017 (FEW corr.), Z = 4.91, 
+kE = 13). This finding could be in agreement with what 
+the current study reported; although our study utilized 
+Table 1  Demographic data of the studied autistic patients 
+(n = 50)
+Age (years)
+Mean ± SD
+Median
+Range
+5.58 ± 1.29
+5.5
+(3–8.5)
+Sex
+Males
+Females
+40 (80%)
+10 (20%)
+Table 2  Volumetric analysis of the ventral diencephalon of the 
+autistic patients (n = 50)
+Absolute total volume of VD ­
+(cm3)
+Mean ± SD
+Median
+IQR
+7.63 ± 0.79
+7.41
+(7.015–8.32)
+Absolute volume of right VD ­
+(cm3)
+Mean ± SD
+Median
+IQR
+3.78 ± 0.38
+3.68
+(3.49–4.12)
+Absolute volume of left VD ­
+(cm3)
+Mean ± SD
+Median
+IQR
+3.85 ± 0.41
+3.74
+(3.51–4.2)
+Relative volume of VD (in relation to ICV)
+Mean ± SD
+Median
+IQR
+0.58 ± 0.04
+0.59
+(0.542–0.614)
+Page 5 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+	
+a different MRI brain volumetry system which did not 
+differentiate between the hypothalamic nuclei and 
+other VD components, the authors did not consider 
+this point as an obstacle or limitation in our study due 
+to universal methodological and technical difficulties 
+regarding volumetric brain analysis in ventral dien-
+cephalon region. In another study in the same line, 
+Wolfe et  al. [12] examined the hypothalamic atrophy 
+in ASD directly by measuring the grey matter density 
+using voxel-based morphometry analysis on 3D brain 
+MRI, and indirectly by measuring the third ventricular 
+volume being surrounded by hypothalamic nuclei; they 
+reported a decrease in hypothalamic grey matter den-
+sity and an increase in third ventricle volume in ASD 
+patients compared with typically developing individu-
+als. To the best of the author’s knowledge, no report has 
+yielded a different finding [11, 12].
+Fig. 2  Vol2Brain volumetry report of segmental subcortical structures in a 6-year-old male child with ASD showed reduced relative volume 
+of ventral diencephalon (highlighted in red)
+Page 6 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+Regarding the increased volume of total grey matter in 
+ASD in the current study, this could be in partial agree-
+ment with Kurth et  al. [11] who investigated the grey 
+matter difference in autism spectrum disorder, using 
+voxel-based morphometry analysis in 52 affected chil-
+dren and adolescents, they observed a slightly higher 
+global volume of the whole-brain grey matter in autism; 
+however, the differences did not reach significance [11].
+Regarding the amygdala and hippocampal volume 
+changes in the current study, 96% of subjects showed no 
+volume changes; this could be in agreement with Pal-
+men et al. [13] who investigated the amygdala and hip-
+pocampus volumes in 42 medication-naive children with 
+high-functioning autism and Asperger’s syndrome on 
+whole-brain MRI scans; they found no significant differ-
+ences in amygdala and hippocampus volume for autistic 
+and control subjects. In the same line, Barnea-Goraly 
+et al. [14] investigated twenty-three children with autism 
+with magnetic resonance imaging; they found prelimi-
+nary evidence of normalization of amygdala volumes in 
+Fig. 3  Column chart of relative volume of ventral diencephalon (red column) among all fifty cases in relation to the upper normal (green column) 
+and lower normal (blue column) limits
+Page 7 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+	
+ASD; however, they reported a significant increase in 
+right hippocampal volume in the autism. On the other 
+hand, several studies have yielded contradictory results; 
+some of them found an association of ASD with vol-
+ume increase in amygdala and/or hippocampus; these 
+included Zhu et  al. [15] who examined the amygdala 
+volume in 39 preschool children with autism spectrum 
+disorder and found significant high total volumes of the 
+amygdala in the autism (t = 5.901, P < 0.001). Similarly, 
+Gibbard et  al. [16] investigated the amygdala volume 
+and amygdala-cortical connections with ASD behav-
+iours; they reported greater amygdala volume in ASD 
+(F(1,94) = 4.19;  P = 0.04) and altered microstructure of 
+connections between the amygdala and the cortex. In 
+contrast to all aforementioned studies, some other stud-
+ies found significant correlation with volume reduction 
+in the aforementioned structures such as Van Dessel 
+et al. [17] who examined the amygdala in patients with 
+attention-deficit/hyperactivity disorder; they suggested a 
+functional significance of reduced amygdala volumes in 
+attention-deficit/hyperactivity disorder. In another study, 
+Nicolson et al. [18] studied the hippocampal abnormali-
+ties in autism using volumetric magnetic resonance imag-
+ing scan at 3 Tesla; they found subtle differences between 
+patients and controls in right posterior hippocampus and 
+suggested that autism might be associated with regional 
+reductions in hippocampal size. These conflicting results 
+along with the general lack of logic explanations of such 
+volumetric abnormalities could raise more questions 
+about the exact pathophysiology of medial temporal and 
+global volumetric alterations in ASD population (13–18).
+This study had some limitations: The first was the lack 
+of control group of normal children of the same age; this 
+was due to some logistic difficulties, as all of them would 
+be young children and would be exposed to unjustified 
+sedation, and the second was the relatively small sample 
+size.
+Conclusions
+Based on the consistent significant volume decrease 
+in the ventral diencephalon in patients with childhood 
+autism, this study concluded that volumetric MRI analy-
+sis could be useful for diagnosis of childhood spectrum 
+disorder and could be utilized as a reliable screening 
+method in the clinically vague cases. Further study with 
+a larger sample size including more age groups is recom-
+mended for more validation of the results.
+Table 3  Volumetric analysis of intra-cranial cavity, major limbic 
+system and other structures in autistic patients (n = 50)
+Variable
+Median (IQR)
+Intra-cranial cavity volume ­
+(cm3)
+1329.5 (1234.9–1396.1)
+Total absolute volume of amygdala ­
+(cm3)
+1.84 (1.69–2.03)
+Right absolute volume of amygdala ­
+(cm3)
+0.96 (0.865–1.045)
+Left absolute volume of amygdala ­
+(cm3)
+0.9 (0.825–1.01)
+Relative total volume of amygdala (in relation 
+to ICV)
+0.142 (0.136–0.15)
+Total absolute volume of hippocampus ­
+(cm3)
+7.23 (6.885–7.925)
+Right absolute volume of hippocampus ­
+(cm3)
+3.61 (3.51–4.0)
+Left absolute volume of hippocampus ­
+(cm3)
+3.69 (3.36–3.93)
+Relative volume of hippocampus (in relation 
+to ICV)
+0.565 (0.546–0.589)
+Total grey matter volume ­
+(cm3)
+60.19 (59.08–61.19)
+Total white matter volume ­
+(cm3)
+30.27 (28.005–31.80)
+CSF ­
+(cm3)
+7.63 (7.25–10.27)
+Cerebellum ­
+(cm3)
+9.46 (9.23–9.86)
+Vermis ­
+(cm3)
+0.68 (0.66–0.72)
+Brain stem ­
+(cm3)
+1.14 (1.09–1.26)
+Putamen ­
+(cm3)
+0.706 (0.683–0.720)
+Caudate ­
+(cm3)
+0.639 (0.621–0.684)
+Pallidum ­
+(cm3)
+0.222 (0.205–0.236)
+Thalamus ­
+(cm3)
+0.873 (0.936–0.965)
+Table 4  Comparison between autistic patients and the normal reference regarding VD, limbic and basal ganglia structures, total grey 
+and white matters and cerebellum (n = 50)
+Variable
+Autistic patients
+Normal reference
+P value
+Abnormal (small) VD
+48 (96%)
+0 (0%)
+ < 0.0001
+Abnormal (enlarged) Amygdala
+2 (4.0%)
+0 (0%)
+0.31
+Abnormal (enlarged) hippocampus
+2 (4.0%)
+0 (0%)
+0.31
+Abnormal (enlarged) caudate
+2 (4%)
+0 (0%)
+0.317
+Abnormal (small) pallidum
+2 (4%)
+0 (0%)
+0.317
+Abnormal (small) thalamus
+2 (4%)
+0 (0%)
+0.317
+Abnormal (enlarged) total grey matter volume
+40 (80%)
+0 (0%)
+ < 0.001
+Abnormal (small) total white matter volume
+18 (36%)
+0 (0%)
+0.05
+Abnormal (small) cerebellum
+4 (8%)
+0 (0%)
+0.153
+Page 8 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+Abbreviations
+ASD	
+
+Autism spectrum disorder
+ICV	
+
+Intra-cranial cavity volume
+MRI	
+
+Magnetic resonance imaging
+VD	
+
+Ventral diencephalon
+Acknowledgements
+Not applicable.
+Author contributions
+TEI carried out imaging reading and analysis, statistical analysis, in addition 
+to editing of publications. HSA carried out the study design, as well as the 
+supervision on editing of publications. SMM carried out all clinical issues of 
+the patients including their examination and data collection. HAAM and ARI 
+carried out data collection and contributed in publications editing. MFA car-
+ried out the study design, statistical analysis, as well as editing of publications/
+presentation. All authors read and approved the final manuscript.
+Funding
+The study had no funding from any resource.
+Availability of data and materials
+The datasets used and analysed during the study are available from the cor-
+responding author on reasonable request.
+Declarations
+Ethics approval and consent for participates
+The study was approved by the Research Ethics Committee of the Faculty of 
+Medicine, Minia University, on 22 March 2021; reference number of approval: 
+16:3/2021. All cases gave written informed consent to participate in the 
+research.
+Consent for publication
+All patients included in this study gave written informed consent for data pub-
+lishing contained within this study.
+Fig. 4  Vol2Brain volumetry report of brain macro-structures in a 7-year-old male child with ASD showed increased volume of the cerebral grey 
+matter and reduced volume of the brain stem
+Fig. 5  Column chart of percentage of abnormal values of limbic system structures, ventral diencephalon and white and grey matters
+Page 9 of 9
+Esmaeel et al. Egypt J Radiol Nucl Med          (2023) 54:173 
+	
+Competing interests
+The authors declare that they have no competing interests.
+Received: 27 July 2023   Accepted: 28 September 2023
+References
+	1.	
+Meguid NA (2015) Egypt and autism. In: Volkmar F (ed) Encyclopedia of 
+autism spectrum disorders. Springer, New York. https://​
+doi.​
+org/​
+10.​
+1007/​
+978-1-​
+4614-​
+6435-8_​
+102026-2
+	2.	
+Zeidan J, Fombonne E, Scorah J et al (2022) Global prevalence of autism: 
+a systematic review update. Autism Res 15(5):778–790. https://​
+doi.​
+org/​
+10.​
+1002/​
+aur.​
+2696
+	3.	
+Shehata L, Ibrahim O, El-Kammash T et al (2023) Brain volumetric and 
+white matter structural connectivity alterations in autistic children: case–
+control study. Egypt J Radiol Nucl Med 54:36. https://​
+doi.​
+org/​
+10.​
+1186/​
+s43055-​
+023-​
+00985-3
+	4.	
+Abdelgawad EA, Mounir SM, Abdelhay MM et al (2021) Magnetic reso-
+nance imaging (MRI) volumetry in children with nonlesional epilepsy, 
+does it help? Egypt J Radiol Nucl Med 52:35. https://​
+doi.​
+org/​
+10.​
+1186/​
+s43055-​
+021-​
+00409-0
+	5.	
+Li G, Chen M, Li G et al (2019) A preliminary volumetric MRI study of 
+amygdala and hippocampal subfields in autism during infancy. Proc IEEE 
+Int Symp Biomed Imaging 7:1052–1056
+	6.	
+Chen Y, Zheng X, Wang X (2021). The volume alterations of the amygdala 
+in autism spectrum disorder: a meta-analysis on MRI study. https://​
+doi.​
+org/​
+10.​
+21203/​
+rs.3.​
+rs-​
+757558/​
+v1
+	7.	
+Manjón JV, Coupé P (2016) volBrain: an online MRI brain volumetry 
+system. Front Neuroinform 27(10):30. https://​
+doi.​
+org/​
+10.​
+3389/​
+fninf.​
+2016.​
+00030
+	8.	
+Donovan AP, Basson MA (2017) The neuroanatomy of autism—A devel-
+opmental perspective. J Anat 230(1):4–15. https://​
+doi.​
+org/​
+10.​
+1111/​
+joa.​
+12542
+	9.	
+Pagnozzi AM, Conti E, Calderoni S et al (2018) A systematic review of 
+structural MRI biomarkers in autism spectrum disorder: a machine learn-
+ing perspective. Int J Dev Neurosci 71:68–82. https://​
+doi.​
+org/​
+10.​
+1016/j.​
+ijdev​
+neu.​
+2018.​
+08.​
+010
+	10.	 Caria A, Ciringione L, Falco S (2020) Morphofunctional alterations of the 
+hypothalamus and social behavior in autism spectrum disorders. Brain Sci 
+10(7):435. https://​
+doi.​
+org/​
+10.​
+3390/​
+brain​
+sci10​
+070435
+	11.	 Kurth F, Narr KL, Woods RP et al (2011) Diminished gray matter within the 
+hypothalamus in autism disorder: a potential link to hormonal effect? Biol 
+Psychiatry 70(3):278–282. https://​
+doi.​
+org/​
+10.​
+1016/j.​
+biops​
+ych.​
+2011.​
+03.​
+026
+	12.	 Wolfe FH, Auzias G, Deruelle C et al (2015) Focal atrophy of the hypo-
+thalamus associated with third ventricle enlargement in autism spectrum 
+disorder. NeuroReport 26(17):1017–1022. https://​
+doi.​
+org/​
+10.​
+1097/​
+WNR.​
+00000​
+00000​
+000461
+	13.	 Palmen SJ, Durston S, Nederveen H et al (2006) No evidence for preferen-
+tial involvement of medial temporal lobe structures in high-functioning 
+autism. Psychol Med 36(6):827–834. https://​
+doi.​
+org/​
+10.​
+1017/​
+S0033​
+29170​
+60072​
+15
+	14.	 Barnea-Goraly N, Frazier TW, Piacenza L et al (2014) A preliminary longi-
+tudinal volumetric MRI study of amygdala and hippocampal volumes 
+in autism. Prog Neuropsychopharmacol Biol Psychiatry 3(48):124–128. 
+https://​
+doi.​
+org/​
+10.​
+1016/j.​
+pnpbp.​
+2013.​
+09.​
+010
+	15.	 Zhu Z, Fang X, Chen H et al (2018) Alterations in volumes and MRI fea-
+tures of amygdala in Chinese autistic preschoolers associated with social 
+and behavioral deficits. Brain Imaging Behav 12(6):1814–1821. https://​
+doi.​
+org/​
+10.​
+1007/​
+s11682-​
+018-​
+9853-9
+	16.	 Gibbard CR, Ren J, Skuse DH et al (2018) Structural connectivity of the 
+amygdala in young adults with autism spectrum disorder. Hum Brain 
+Mapp 39(3):1270–1282. https://​
+doi.​
+org/​
+10.​
+1002/​
+hbm.​
+23915
+	17.	 Van Dessel J, Sonuga-Barke E, Moerkerke M et al (2020) The amygdala in 
+adolescents with attention-deficit/hyperactivity disorder: structural and 
+functional correlates of delay aversion. World J Biol Psychiatry 21(9):673–
+684. https://​
+doi.​
+org/​
+10.​
+1080/​
+15622​
+975.​
+2019.​
+15859​
+46
+	18.	 Nicolson R, DeVito TJ, Vidal CN et al (2006) Detection and mapping of hip-
+pocampal abnormalities in autism. Psychiatry Res 148(1):11–21. https://​
+doi.​
+org/​
+10.​
+1016/j.​
+pscyc​
+hresns.​
+2006.​
+02.​
+005
+Publisher’s Note
+Springer Nature remains neutral with regard to jurisdictional claims in pub-
+lished maps and institutional affiliations.
+View publication stats

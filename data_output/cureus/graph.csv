@@ -1,0 +1,263 @@
+node_1|node_2|edge|chunk_id|node_3
+astrocytes|radial glia (located in the upper region along the third ventricle wall)|Derived from radial glia through lineage tracing via in-utero electroporation in the embryonic mouse brain. Astrogenesis occurs at an early time point relative to that in the ventral region of the developing diencephalon.|9e95e9ba186e41e4bbf556b89d04b202|
+astrocytes|radial glia (located in the lower region along the third ventricle wall)|During genetic fate mapping analysis, it was revealed that radial glia located in different regions along the third ventricle wall of the diencephalon produce distinct cell types: radial glia in the upper region produce astrocytes and those in the lower region produce neurons in the diencephalon.|9e95e9ba186e41e4bbf556b89d04b202|
+astrocytes|zona incerta (first population of astrocytes appears along)||9e95e9ba186e41e4bbf556b89d04b202|
+dorsal region|ventral region|spatial relationship between the dorsal and ventral regions in the developing diencephalon|3c3cf4f29d9940169d9de46f7d9b34ea|
+3v wall|dorsal 3v wall|subregion of the third ventricle (LV) and its dorsal part|3c3cf4f29d9940169d9de46f7d9b34ea|
+3v wall|ventral 3v wall|subregion of the third ventricle (LV) and its ventral part|3c3cf4f29d9940169d9de46f7d9b34ea|
+astrocytes|dorsal diencephalon|spatial distribution of astrocyte generation in the developing diencephalon, specifically in the dorsal region|3c3cf4f29d9940169d9de46f7d9b34ea|
+astrocytes|dorsal 3v wall|spatial distribution of astrocyte generation in the developing diencephalon, specifically in the dorsal part of the third ventricle wall|3c3cf4f29d9940169d9de46f7d9b34ea|
+astrocytes|ventral 3v wall|spatial distribution of astrocyte generation in the developing diencephalon, specifically in the ventral part of the third ventricle wall|3c3cf4f29d9940169d9de46f7d9b34ea|
+diencephalon|third ventricle|subregion of the diencephalon containing the third ventricle|3c3cf4f29d9940169d9de46f7d9b34ea|
+astrocytes|lv wall|spatial distribution of astrocyte generation in the developing diencephalon, specifically in the lateral part of the third ventricle wall|3c3cf4f29d9940169d9de46f7d9b34ea|
+radial glia|astrocytes|cellular lineage relationship between radial glia and astrocytes during development|3c3cf4f29d9940169d9de46f7d9b34ea|
+lineage tracing|diencephalon|technique used to study the developmental origins of cells in the diencephalon|3c3cf4f29d9940169d9de46f7d9b34ea|
+conditions|understanding of astrocyte lineage development|is still in its infancy|ba49b6e3616242fc994530eff44675bb|
+generation of astrocytes|ventral spinal cord|modulated in a regionally restricted manner|ba49b6e3616242fc994530eff44675bb|
+cross-repressive interactions between scl and olig2|astrogenesis in the p2 progenitor domain of the spinal cord|direct|ba49b6e3616242fc994530eff44675bb|
+combinatorial expression of pax6 and nkx6.1|region-specific subtypes of ventral astrocytes|specifies|ba49b6e3616242fc994530eff44675bb|
+radial glia-derived astrocytes|spatial domains in both the spinal cord and other regions|allocated to|ba49b6e3616242fc994530eff44675bb|
+ventral astrocytes|subtypes of ventral astrocytes|ventral astrocytes are a specific type of astrocytes, and subtypes of ventral astrocytes refer to different variations within this category.|8a3132a7d3ef4227b0f0981fa3445ba7|
+radial glia-derived astrocytes|astrocytes|Radial glia are cells that give rise to both neurons and astrocytes during CNS development. Radial glia-derived astrocytes refer to a specific type of astrocyte that originates from radial glia.|8a3132a7d3ef4227b0f0981fa3445ba7|
+spatial domains|astrocytes|Astrocytes are allocated to specific spatial regions in the CNS, which is determined by their embryonic site of origin in the ventricular zone.|8a3132a7d3ef4227b0f0981fa3445ba7|
+protoplasmic astrocytes|cortical protoplasmic astrocytes|Cortical protoplasmic astrocytes are a specific type of astrocyte that develops from radial glia in the cortex during CNS development.|8a3132a7d3ef4227b0f0981fa3445ba7|
+radial glia|astrocytes|Radial glia can transform into astrocytes in the cortex after neurogenesis is completed, which suggests a relationship between radial glia and astrocyte development.|8a3132a7d3ef4227b0f0981fa3445ba7|
+radial glial cells|neural precursor cells|Radial glial cells are bipolar neural precursor cells that can produce both neurons and astrocytes during CNS development.|8a3132a7d3ef4227b0f0981fa3445ba7|
+astrocyte lineage|developmental stages|The stages in the development of the astrocyte lineage, including specification and migration processes, have been poorly defined.|8a3132a7d3ef4227b0f0981fa3445ba7|
+3v wall|astrocytes|In this study, we explored the fate specification and migration of astrocytes derived from radial glia located in the third ventricle (3V) wall during the development of the diencephalon.|8a3132a7d3ef4227b0f0981fa3445ba7|
+astrocyte-specific hgfap-creert2; ai14|genetic fate mapping analysis|We conducted genetic fate mapping analysis of astrocyte progression using astrocyte-specific hGFAP-CreERT2; Ai14 transgenic mice.|8a3132a7d3ef4227b0f0981fa3445ba7|
+hgfap-creert2|transgenic mice|These findings suggest that astrocytes are generated with a spatiotemporal pattern in the developing diencephalon using hGFAP-CreERT2 transgenic mice.|024821cc9e7d49cea761bb6d6098e09a|
+ai14|transgenic mice|The following transgenic mice were used: hGFAP-CreERT2 and Ai14|024821cc9e7d49cea761bb6d6098e09a|
+wild-type c57bl/6j mice|icr mice|Wild-type C57BL/6J and ICR mice were purchased from the Shanghai SLAC Laboratory.|024821cc9e7d49cea761bb6d6098e09a|
+e0.5|exact embryonic time-point|To obtain the exact embryonic time-point, one male and two female mice were placed together in one cage in the evening, and the female’s vulva was checked the next morning. E0.5 was logged for the first day of pregnancy if a vaginal plug was observed.|024821cc9e7d49cea761bb6d6098e09a|
+tamoxifen|induction of creer-dependent recombination|For the induction of CreER-dependent recombination in hGFAP-CreERT2;Ai14 transgenic mice, an intraperitoneal injection of tamoxifen was administered to pregnant females at various time points as indicated, and pups were perfusion-fixed at P14.|024821cc9e7d49cea761bb6d6098e09a|
+p14|time points as indicated|denotes the temporal relationship between a specific developmental stage and the time points mentioned in the context|879a4722e54b4b7e97cbce18440da9f7|
+100 mg/kg body weight|intraperitoneal injection|represents the method by which tamoxifen was administered to the mice|879a4722e54b4b7e97cbce18440da9f7|
+hgfap-creert2;ai14 transgenic mice|mice were perfusion-fixed|indicates that the perfusion fixation procedure was performed on the hGFAP-CreERT2;Ai14 transgenic mice|879a4722e54b4b7e97cbce18440da9f7|
+cs-cdf-cg-pre vector|hgfap-gfp plasmid|denotes that the hGFAP-GFP plasmid was generated by sub-cloning the synthetic hGFAP promoter into the CS-CDF-CG-PRE vector|879a4722e54b4b7e97cbce18440da9f7|
+icr pregnant female mice|while the embryos were still in the uterus|indicates that the in-utero electroporation (IUE) was performed on wild-type ICR pregnant female mice while the embryos were still in the uterus|879a4722e54b4b7e97cbce18440da9f7|
+plasmid dna solution|embryonic forebrain|represents the direct injection of plasmid DNA solution into the LV or 3V of the embryonic forebrain during IUE|879a4722e54b4b7e97cbce18440da9f7|
+glass micropipette|embryonic forebrain|denotes the use of a glass micropipette for injecting plasmid DNA solution into the embryonic forebrain during IUE|879a4722e54b4b7e97cbce18440da9f7|
+electrical pulses|embryonic forebrain|indicates that five electrical pulses were applied through the uterus to the embryonic forebrain during IUE|879a4722e54b4b7e97cbce18440da9f7|
+warm saline|abdominal cavity|represents that warm saline was used to replenish the abdominal fluids after performing IUE on pregnant mice|879a4722e54b4b7e97cbce18440da9f7|
+warm saline|abdominal fluids|replenish|d2874a9806eb485fad9770e14cb79f09|
+abdominal wall|skin|separately sutured|d2874a9806eb485fad9770e14cb79f09|
+pregnant mice|home cage|returned to|d2874a9806eb485fad9770e14cb79f09|
+injected embryos|development|allowed to|d2874a9806eb485fad9770e14cb79f09|
+lentivirus|hek293t cells|produced after transient transfections|d2874a9806eb485fad9770e14cb79f09|
+hgfap-egfp lentiviral vector|packaging plasmids (pmdl, vsvg, and prev)|generated by transient transfections|d2874a9806eb485fad9770e14cb79f09|
+virus-containing culture supernatants|concentrated by centrifugation|collected|d2874a9806eb485fad9770e14cb79f09|
+glioma cells|viral infection|quantifying GFP-expressing cells at 72 h after viral infection|d2874a9806eb485fad9770e14cb79f09|
+manually injected lentivirus|embryonic forebrain|injected into the 3V|d2874a9806eb485fad9770e14cb79f09|
+gfp|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde.|58331e2e9bfb41679db7a2d7d0526bc5|
+gfap|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde.|58331e2e9bfb41679db7a2d7d0526bc5|
+aldh1l1|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde.|58331e2e9bfb41679db7a2d7d0526bc5|
+pcna|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+s100β|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+neun|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+sox2|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+olig2|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+ng2|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+gs|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+iba1|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+cd31|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+nfia|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+aqp4|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+collagen iv|embryonic brains|Extracted at the indicated ages and fixed with 4% paraformaldehyde after transcardial perfusion.|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|coronal sections|Cut at 16 µm on a Cryostat (Leica) and mounted onto Superfrost-plus microscope slides (Fisher).|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|coroinal sections|Washed with PBS.|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|coronal sections|Blocked with 5% bovine serum albumin (BSA) in PBS.|58331e2e9bfb41679db7a2d7d0526bc5|
+primary antibodies|sections|Incubated overnight at 4°C.|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|washes|Washed three times for 5 minutes with PBS.|58331e2e9bfb41679db7a2d7d0526bc5|
+secondary antibodies|sections|Incubated in the dark at room temperature for 90 min.|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|mounting medium|Mounted using ProLong Gold Antifade Mountant (Thermo Fisher Scientific) and left overnight in the dark at room temperature.|58331e2e9bfb41679db7a2d7d0526bc5|
+sections|slides|Sealed with nail polish and stored in the dark at 4°C until analyzed.|58331e2e9bfb41679db7a2d7d0526bc5|
+cd31|collagen iv|Both proteins are present in the extracellular matrix of blood vessels, suggesting a physical interaction between them.|2b8b57dad5e8468a8e1c622f337c6cb7|
+nfia|3v or lv|The location-specific expression of NFIA is observed in the wall of either the right or left ventricle during embryonic development.|2b8b57dad5e8468a8e1c622f337c6cb7|
+rna sequencing|e14.5 mouse embryos|The RNA sequencing technique is used to analyze the expression profiles of genes in the wall of either the right or left ventricle at E14.5 stage of embryonic development.|2b8b57dad5e8468a8e1c622f337c6cb7|
+illumina pe150 platform|rna-seq libraries|The Illumina PE150 platform is used to construct RNA sequencing libraries for deep sequencing of gene expression in the wall of either the right or left ventricle.|2b8b57dad5e8468a8e1c622f337c6cb7|
+ensemble mouse reference genome grcm38.p6|mapped reads|The ensemble mouse reference genome is used to map cleaned RNA sequencing reads obtained from the wall of either the right or left ventricle at E14.5 stage.|2b8b57dad5e8468a8e1c622f337c6cb7|
+astrocytes derived from region‑specific radial glia|radial glia|These terms represent different stages in the development of the diencephalon. The radial glia give rise to astrocytes, which are analyzed at P21.|cee46d8fcb194d0b8443a80d20f0e168|
+iue|plasmids with specific genes|These terms refer to the procedure used to trace progenitors lining the ventricular wall in the developing diencephalon. Plasmids containing specific genes are delivered into these progenitors via IUE, which allows for their temporal tracing.|cee46d8fcb194d0b8443a80d20f0e168|
+diencephalon|embryonic diencephalon|These terms refer to the specific region of the embryonic brain analyzed at different time points after IUE.|cee46d8fcb194d0b8443a80d20f0e168|
+eyept|astrocyte-like cells|In this context, eyept refers to the thalamus, where radial glia give rise to astrocyte-like cells.|cee46d8fcb194d0b8443a80d20f0e168|
+hypothalamus|neuron-like cells|This term refers to a different region of the brain, where radial glia give rise to neuron-like cells.|cee46d8fcb194d0b8443a80d20f0e168|
+p21|section from iue at p21|These terms refer to a specific time point and type of section analyzed in this context.|cee46d8fcb194d0b8443a80d20f0e168|
+neun|section from iue at p21|This term refers to a specific neuronal marker used for immunostaining in the section analyzed at P21.|cee46d8fcb194d0b8443a80d20f0e168|
+eyfp-expressing cells|astrocytes|rise to astrocytes in the developing diencephalon|c36bd013662b43d2bb71a4d173abeb2d|
+3v progenitors|eyfp-expressing cells|labeled cells in the 3V wall showed radial glial morphology 24 h after electroporation|c36bd013662b43d2bb71a4d173abeb2d|
+radial glia|eyfp-expressing cells|numerous EYFP-expressing radial glia were observed to elongate their long radial processes to the pial surface throughout the developing diencephalon|c36bd013662b43d2bb71a4d173abeb2d|
+hgfap-egfp plasmid|astrocyte progenitors|embryonic mouse brains electroporated with hGFAP-EGFP plasmid at E14.5 and examined at E17.5|c36bd013662b43d2bb71a4d173abeb2d|
+dorsal diencephalon|astrocyte progenitors|radial migration of astrocyte progenitors in the dorsal diencephalon is shown|c36bd013662b43d2bb71a4d173abeb2d|
+hoechst staining|astrocyte progenitors|B: Hoechst staining reveals the nuclei|c36bd013662b43d2bb71a4d173abeb2d|
+cerebral cortex|p7|belongs to the cerebral cortex at P7|646536a33ba34caca7f15913bb335b6d|
+eyfp-labeled radial glia|diencephalon|located in the diencephalon at P7|646536a33ba34caca7f15913bb335b6d|
+eyfp-labeled radial glia|astrocyte-like cells|differentiate into astrocyte-like cells in the diencephalon at P7|646536a33ba34caca7f15913bb335b6d|
+eyfp-labeled radial glia|neuron-like cells|differentiate into neuron-like cells in the diencephalon at P7|646536a33ba34caca7f15913bb335b6d|
+progeny of radial glia|astrocyte-like cells|produce astrocyte-like cells in the diencephalon at P21|646536a33ba34caca7f15913bb335b6d|
+progeny of radial glia|neuronal-like cells|produce neuronal-like cells in the diencephalon at P21|646536a33ba34caca7f15913bb335b6d|
+gs+ astrocytes|eyfp+ cells|majority of EYFP+ cells in the thalamus are GS+ astrocytes at P21|646536a33ba34caca7f15913bb335b6d|
+neun+ neurons|eyfp+ cells|majority of EYFP+ cells in the hypothalamus are NeuN+ neurons at P21|646536a33ba34caca7f15913bb335b6d|
+hgfap-egfp-labeled cells|radial glial morphology|have radial glial morphology 24 h post-IUE|646536a33ba34caca7f15913bb335b6d|
+plasmid experiments|hgfap-egfp-labeled cells in the 3v wall|present in the same context, as plasmid experiments involve introducing DNA into cells for experimental purposes and hGFAP-EGFP is a marker used to track cell lineage. The hGFAP-EGFP-labeled cells in the 3V wall were observed during plasmid experiments.|4d16519e999b4ae093bf1b9f989ccce2|
+hgfap-egfp-labeled cells in the 3v wall|radial glial morphology|observed in the context of plasmid experiments, as the hGFAP-EGFP-labeled cells in the 3V wall showed radial glial morphology at a specific time point.|4d16519e999b4ae093bf1b9f989ccce2|
+radial migration|astrocyte progenitors with various morphologies|described in the context of plasmid experiments, as radial migration of astrocyte progenitors with various morphologies was observed during experiments in the dorsal diencephalon at a specific time point.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|radial glial morphology|observed in the context of plasmid experiments, as astrocyte progenitors with radial glial morphology were identified during experiments at specific time points.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|e17.5|described in the context of plasmid experiments, as astrocyte progenitors with various morphologies were observed in the dorsal diencephalon during experiments at E17.5.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|p1|described in the context of plasmid experiments, as migrating astrocyte progenitors were observed in the diencephalon during experiments at P1.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|blbp|described in the context of plasmid experiments, as EGFP-expressing cells that migrated to the parenchyma of the diencephalon were stained with BLBP, an astrocyte marker at both E17.5 and P1.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|aldh1l1|described in the context of plasmid experiments, as hGFAP-EGFP-labeled cells exhibited extensive colocalization with Aldh1L1 staining in the diencephalon at E17.5 but fewer Aldh1L1+ cells were observed in the cortex.|4d16519e999b4ae093bf1b9f989ccce2|
+astrocyte progenitors|cortex|described in the context of plasmid experiments, as few Aldh1L1+ cells were observed in the cortex and they were mainly distributed in the ventricular wall of the LV and showed.|4d16519e999b4ae093bf1b9f989ccce2|
+aldh1l1+ cells|ventricular wall of lv|These cortical Aldh1L1+ cells were mainly distributed in the ventricular wall of the LV and showed radial glial morphology.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+3v wall at e17.5|hgfap-egfp-expressing cells|The hGFAP-EGFP-expressing cells were largely co-labelled with NFIA in the 3V wall at E17.5.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+lv|weak expression of nifa|In contrast, weak expres sion of NIFA was detected in the wall of the LV but was highly expressed in the deep cortical layers and subplate.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+hgfap-egfp-expressing cells|ng2 glia|The EGFP-expressing cells were not stained positive for markers of NG2 glia.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+hgfap-egfp-expressing cells|olig2|The EGFP-expressing cells were not stained positive for markers of oligodendrocytes.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+e17.5|pcna|9% and 19% of EGFP+ cells were dividing cells (EGFP+PCNA+) at E17.5 and P1, respectively.|77ed4cb8bf6648c1baf30b5fd7eb767c|
+egfp+ cells labeled in the 3v wall|astrocyte features in the dorsal part of the diencephalon|At P21, all EGFP-expressing cells with astrocyte features were found in the dorsal part of the diencephalon.|93214709fd454d379061c52027e06d3c|
+egfp+ cells labeled in the 3v wall|radial glial (tanycyte-like) morphology in the ventral diencephalon|In contrast to EGFP-expressing cells in the dorsal part, those in the ventral diencephalon had radial glial (tanycyte-like) morphology.|93214709fd454d379061c52027e06d3c|
+egfp+ cells labeled in the 3v wall|long extended basal processes into the parenchyma|The EGFP-expressing cells in the ventral diencephalon had long extended basal processes that projected into the parenchyma and ended at the pial surface of the hypothalamus.|93214709fd454d379061c52027e06d3c|
+egfp+ cells labeled in the 3v wall|blood-brain barrier structure and cerebral blood flow regulation|Astrocytic endfeet, which are crucial for the structure of the blood-brain barrier and the regulation of cerebral blood flow, were not specifically mentioned in this context.|93214709fd454d379061c52027e06d3c|
+hgfap-egfp plasmid|sections from e17.5 mouse brains|The sections used for immunostaining with anti-Aldh1L1 and anti-NFIA antibodies were from E17.5 mouse brains that underwent electroporation with hGFAP-EGFP plasmid at E14.5.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|immunostaining with anti-aldh1l1 antibody|The sections were immunostained with an anti-Aldh1L1 antibody in the thalamus.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|immunostaining with anti-nfia antibody|The sections were also immunostained with an anti-NFIA antibody in the thalamus and cortex.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|isoform 2 of aldehyde dehydrogenase family 1 member l1 (aldh1l1)|The sections were immunostained with an anti-Aldh1L1 antibody to label migrating astrocyte progenitors.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|neural transcription factor nfia|The sections were also immunostained with an anti-NFIA antibody in the thalamus and cortex.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|hoechst staining (ho)|The sections were stained with Hoechst to visualize the nuclei.|93214709fd454d379061c52027e06d3c|
+sections from e17.5 mouse brains|immunostaining with anti-ng2 or anti-olig2 antibodies|Additional sections were immunostained with either an anti-NG2 or anti-OLIG2 antibody.|93214709fd454d379061c52027e06d3c|
+plasmid|hgfap (glial fibrillary acidic protein)|The plasmid used for electroporation contained the gene for hGFAP, which is expressed by astrocytes.|93214709fd454d379061c52027e06d3c|
+mouse brains|electroporation with hgfap-egfp plasmid at e14.5|The mouse brains were electroporated with the hGFAP-EGFP plasmid at embryonic day (E) 14.5.|93214709fd454d379061c52027e06d3c|
+mouse brains|immunostaining|The sections from these mouse brains were used for immunostaining with various antibodies to label specific cell types and proteins.|93214709fd454d379061c52027e06d3c|
+astrocytic endfeet|blood vessels|crucial for the structure of the blood-brain barrier and regulation of cerebral blood flow|f3b65d38389547858c227c809c90f82c|
+endfeet of cortical astrocytes|blood vessels|almost fully cover the blood vessels by P20 in the dorsal diencephalon|f3b65d38389547858c227c809c90f82c|
+egfp+ astrocytes|blood vessels|form endfeet structures with blood vessels in the dorsal diencephalon at P7 and P14|f3b65d38389547858c227c809c90f82c|
+egfp+ astrocytes|blood vessels|rarely form endfeet structures with blood vessels at P1 in the dorsal diencephalon|f3b65d38389547858c227c809c90f82c|
+aqp4|egfp+ astrocytes and collagen iv+ blood vessels|co-localization in the postnatal diencephalon|f3b65d38389547858c227c809c90f82c|
+hgfap-egfp lentivirus|e14.5 mouse embryos|used to trace astrocyte specification in the developing diencephalon|f3b65d38389547858c227c809c90f82c|
+egfp+ cells at p21|dorsal diencephalon|mainly distributed in|f3b65d38389547858c227c809c90f82c|
+diencephalon|astrocytes|In the P14 hGFAP-CreERT2;Ai14 transgenic mice treated with tamoxifen at E14.5, all tdT+ cells displayed astrocytic morphology in the diencephalon, mostly distributed along the zona incerta in the dorsal region above the 3V.|5c67b6ac73ba437387dc1c3d9ec46639|
+diencephalon|astrocytes|In contrast, only a few scattered tdT+ astrocyte-like cells were observed in the ventral region of the diencephalon.|5c67b6ac73ba437387dc1c3d9ec46639|
+cerebral cortex|tdt+ cells|In the P14 hGFAP-CreERT2;Ai14 transgenic mice treated with tamoxifen at E14.5, the tdT+ cells exhibited both pyramidal neuron-like and protoplasmic astrocyte-like cells.|5c67b6ac73ba437387dc1c3d9ec46639|
+cerebral cortex|protoplasmic astrocytes|Some tdT+ dividing protoplasmic astrocytes were found in cortical layers II/III.|5c67b6ac73ba437387dc1c3d9ec46639|
+hippocampal formation|tdt+ cells|In the P14 hGFAP-CreERT2;Ai14 transgenic mice treated with tamoxifen at E14.5, most of the tdT+ cells displayed the morphology of pyramidal neurons in the hippocampal CA1/CA3 region or of granular neurons localized in the dentate gyrus.|5c67b6ac73ba437387dc1c3d9ec46639|
+diencephalon|astrocytes|Compared with the tdT+ cells induced at E14.5 in the diencephalon, there was a dramatic increase in tdT+ astrocyte-like cells, particularly in the dorsal region above the 3V, that was induced by tamoxifen at E16.5.|5c67b6ac73ba437387dc1c3d9ec46639|
+astrocyte-like cells|region above the 3v induced by tamoxifen at e16.5|located in the dorsal region above the third ventricle (3V) that was induced by tamoxifen at E16.5.|dbe102a1ebe44894830554868bc458a6|
+astrocyte-like cells|ventral region of the diencephalon|scattered in the ventral region of the diencephalon.|dbe102a1ebe44894830554868bc458a6|
+tdt+ cells|astrocyte-like cells distributed across the entire forebrain|induced at E18.5|dbe102a1ebe44894830554868bc458a6|
+tdt+ cells|granular neurons in the dentate gyrus|generated during the development of the dentate gyrus for cells induced at E14.5, E16.5, or E18.5|dbe102a1ebe44894830554868bc458a6|
+astrocyte proliferation|developing diencephalon|in mice that underwent IUE with hGFAP-EGFP plasmid at E14.5|dbe102a1ebe44894830554868bc458a6|
+astrocyte proliferation|p1 brain sections from mice that underwent iue with hgfap-egfp plasmid at e14.5||dbe102a1ebe44894830554868bc458a6|
+hgfap-egfp plasmid|e14.5 embryos|were electroporated at P21.|dbe102a1ebe44894830554868bc458a6|
+egfp-expressing cells|thalamus that exhibit astrocytic morphology|in mice that underwent IUE with hGFAP-EGFP plasmid at E14.5.|dbe102a1ebe44894830554868bc458a6|
+egfp-expressing cells|hypothalamus|confined specifically to the wall of the 3V and have radial glial (tanycyte-like) morphology|84ce50a68c1c4490bf16b7b45465f70c|
+astrocytes|blood vessels|endfeet enveloping blood vessels|84ce50a68c1c4490bf16b7b45465f70c|
+gfp+ astrocytes|diencephalon||84ce50a68c1c4490bf16b7b45465f70c|
+aqp4|collagen iv|co-labeled in the diencephalon|84ce50a68c1c4490bf16b7b45465f70c|
+s100β|_tdt+ cells||84ce50a68c1c4490bf16b7b45465f70c|
+neun|_tdt+ cells||84ce50a68c1c4490bf16b7b45465f70c|
+olig2|_tdt+ cells||84ce50a68c1c4490bf16b7b45465f70c|
+creert2|ai14 transgenic mice|indicates that astrocyte lineage progression in the forebrain at different developmental stages can be observed through CreERT2 and Ai14 transgenic mice induced by tamoxifen at E14.5, E16.5, and E18.5.|ea61dcf674e74c2aa221bc74e5ccbaa6|
+astrocyte|p14 hgfap-creert2; ai14(tdt)|represents the distribution of tdT+ astrocytes along the region of the zona incerta in the thalamus, an astrocytes-like cell in the ventral region of the diencephalon, a protoplasmic astrocyte, pyramidal neurons, dividing protoplasmic astrocytes in the cortex, and tdT+ cells in the dentate gyrus at different developmental stages.|ea61dcf674e74c2aa221bc74e5ccbaa6|
+thalamus|hypothalamus|indicates the location of tdT+ cells in the thalamus, hypothalamus, and amygdala at different developmental stages.|ea61dcf674e74c2aa221bc74e5ccbaa6|amygdala
+thalamus|hypothalamus|indicates the location of tdT+ cells in the thalamus, hypothalamus, and cortex at different developmental stages.|ea61dcf674e74c2aa221bc74e5ccbaa6|cortex
+thalamus|hypothalamus|indicates the location of tdT+ cells in the thalamus, hypothalamus, and dentate gyrus at different developmental stages.|ea61dcf674e74c2aa221bc74e5ccbaa6|dentate gyrus
+early time point|dorsal|suggests that astrogenesis occurs at an early time point in the dorsal region of the diencephalon before that in the telencephalon.|ea61dcf674e74c2aa221bc74e5ccbaa6|
+3v-d|3v-v|Dissected from the same mouse brains at E14.5, two different regions of the telencephalon with varying gene expression profiles as revealed by RNA-seq analysis.|63a88b1a262e4b9fa9317640c1bc1b90|
+3v-d|lv-d|Both dissection groups show distinct transcriptomic profiles as identified through PCA analysis and differential gene expression analysis, with 452 genes upregulated and 3365 genes upregulated in the 3V-d group compared to their respective groups.|63a88b1a262e4b9fa9317640c1bc1b90|
+gbx2|id3|Both upregulated in the 3V-d group compared to the 3V-v group, potentially involved in astrogenesis in the dorsal diencephalon.|63a88b1a262e4b9fa9317640c1bc1b90|
+wif1|slc17a6|Both upregulated in the 3V-d group compared to the 3V-v group as identified through transcriptomic analysis.|63a88b1a262e4b9fa9317640c1bc1b90|
+percentages of variation explained by principal components|c|C represents the percentages of variation explained by principal components in the given context.|2138215950d7499baea4bf39bdd15b16|
+d volcano plots|c, d|Volcano plots are used to display statistically significant differentially expressed genes. C and D refer to the groups being compared in these volcano plots.|2138215950d7499baea4bf39bdd15b16|
+3v-v vs 3v-d|3v-d, lv-d|3V-v and 3V-d are groups being compared in the context. LV-d is also being compared with both of these groups.|2138215950d7499baea4bf39bdd15b16|
+significantly down-regulated genes|c, d|Significantly down-regulated genes are displayed for the groups being compared in C and D.|2138215950d7499baea4bf39bdd15b16|
+light blue, sig = true|significantly down-regulated genes, sig = true|Light blue color is used to indicate significantly down-regulated genes in C and D.|2138215950d7499baea4bf39bdd15b16|
+pink, sig = true|significantly up-regulated genes, sig = true|Pink color is used to indicate significantly up-regulated genes in C and D.|2138215950d7499baea4bf39bdd15b16|
+red, sig = true|significantly up-regulated genes, sig = true|Red color is used to indicate highlighted significantly up-regulated genes in C and D.|2138215950d7499baea4bf39bdd15b16|
+grey, sig = false|nonsignificant genes, sig = false|Grey color is used to indicate nonsignificant genes in C and D.|2138215950d7499baea4bf39bdd15b16|
+"|log2fc| >2"|3v-v vs 3v-d, e|"A threshold of |log2FC| > 2 is used to filter significantly differentially expressed genes in the comparisons of 3V-v vs 3V-d and E."|2138215950d7499baea4bf39bdd15b16|
+fdr <0.01|3v-v vs 3v-d, e|A false discovery rate (FDR) threshold of less than 0.01 is used to filter significantly differentially expressed genes in the comparisons of 3V-v vs 3V-d and E.|2138215950d7499baea4bf39bdd15b16|
+e|3v-v vs 3v-d|Heatmaps displaying differentially expressed genes are shown for the comparisons of 3V-v vs 3V-d and E.|2138215950d7499baea4bf39bdd15b16|
+gsea analysis|3v-v vs 3v-d, h|Gene set enrichment analysis (GSEA) is performed on the differentially expressed genes using a gene set representing positive regulation of astrogenesis and astrocyte development in the comparisons of 3V-v vs 3V-d and H.|2138215950d7499baea4bf39bdd15b16|
+positive regulation of astrogenesis|gsea analysis, g|The positive regulation of astrogenesis is represented as a gene set in the GSEA analysis for the comparison of 3V-v vs 3V-d.|2138215950d7499baea4bf39bdd15b16|
+positive regulation of astrocyte development|gsea analysis, h|The positive regulation of astrocyte development is represented as a gene set in the GSEA analysis for the comparison of LV-d with both 3V-v and 3V-d.|2138215950d7499baea4bf39bdd15b16|
+differentially expressed genes in dorsal 3v wall|radial glial cells from dorsal vz|give rise to astrocytes in the thalamus|3e4f902621654dc1bae1e0dca9605ac5|
+radial glial cells from ventral vz|differentially expressed genes in dorsal 3v wall|do not have a direct relationship|3e4f902621654dc1bae1e0dca9605ac5|
+astrocytes|radial glial cells from dorsal vz|evolve from|3e4f902621654dc1bae1e0dca9605ac5|
+neurons in hypothalamus|radial glial cells from ventral vz|give rise to|3e4f902621654dc1bae1e0dca9605ac5|
+radial glia|astrocytes|These radially migrating cells in the dorsal diencephalon express markers for astrocytes (BLBP and Aldh1L1) but not oligodendrocytes or NG2 glia. Although evidence has shown that astrocytes and oligodendrocytes share a common lineage in the developing CNS [35, 38], our results reveal that these EYFP- or EGFP-labeled radial glial cells do not give rise to oligodendrocytes in the diencephalon.|c66792071dbd42b88c1a349f5220bd80|
+dorsal 3v wall|ven-tral 3v wall, dorsal lv wall|expressed in the dorsal 3V wall when compared to the ven-tral 3V wall or the dorsal LV wall.|c66792071dbd42b88c1a349f5220bd80|
+radial glia based on iue|progenitors in the 3v wall electroporated with the hgfap-egfp plasmid or transduced with the hgfap-egfp lentivirus|Consistent with the CAG-EYFP labeling results of the radial glia based on IUE, progenitors in the 3V wall electroporated with the hGFAP-EGFP plasmid or transduced with the hGFAP-EGFP lentivirus differentiate into astrocytes in the dorsal diencephalon.|c66792071dbd42b88c1a349f5220bd80|
+3v wall|diencephalon|radial glial−like cells remain along the ventral portion of the 3V wall with long extended processes at P21.|c66792071dbd42b88c1a349f5220bd80|
+e17.5|iafp+ radial glial−like cells|Unlike numerous astrocytic progeny derived from radial glia in the dorsal domain of the third VZ, the ­GFAP+ alpha tanycytes proliferate in response to intracerebral infusion of at E17.5, these IUE-labeled astrocytes undergo proliferation.|c66792071dbd42b88c1a349f5220bd80|
+hypothalamus|postnatal hypothalamus|In the postnatal hypothalamus, ­GFAP+ alpha tanycytes proliferate in response to intracerebral infusion of.|c66792071dbd42b88c1a349f5220bd80|
+markers for astrocytes (blbp and aldh1l1)|astrocytes|These radially migrating cells in the dorsal diencephalon express markers for astrocytes (BLBP and Aldh1L1) but not oligodendrocytes or NG2 glia.|c66792071dbd42b88c1a349f5220bd80|
+oligodendrocytes|radial glial cells|Our results reveal that these EYFP- or EGFP-labeled radial glial cells do not give rise to oligodendrocytes in the diencephalon.|c66792071dbd42b88c1a349f5220bd80|
+egfp+ radial glial−like cells|gfap+ alpha tanycytes|Unlike numerous astrocytic progeny derived from radial glia in the dorsal domain of the third VZ, the ­GFAP+ alpha tanycytes proliferate in response to intracerebral infusion of at E17.5, these IUE-labeled astrocytes undergo proliferation and remain along the ventral portion of the 3V wall with long extended processes at P21.|c66792071dbd42b88c1a349f5220bd80|
+hgfap-creert2|first population of astrocytes distributed along the zona incerta|generated from hGFAP-CreERT2;Ai14 transgenic mice by tamoxifen treatment at timed embryonic stages, demonstrating the temporal-spatial generation of astrocytes in the developing diencephalon as well as the telencephalon. In agreement with the sequential neuron-glia differentiation of neural precursor cells in the cortex, the progeny of cortical astrocytes is dramatically increased with tamoxifen induction at time points later than E14.5.|161e784a1d5341bf9f2aab88c2829f92|
+hgfap|radial glia in the cortical vz|expression of transgenes driven by the hGFAP promoter is detectable specifically in radial glia in the cortical VZ as early as E14.5 [42].|161e784a1d5341bf9f2aab88c2829f92|
+egf and fgf|gfap+ alpha tanycytes proliferate in response to intracerebral infusion of| [39, 40].|161e784a1d5341bf9f2aab88c2829f92|
+astrocyte lineage|highly specific clonal distribution patterns in the rodent cor-tex revealed by startrack method based on combinatorial expression of six fluorescent reporter proteors under the control of the hgfap promoter [43, 44].||161e784a1d5341bf9f2aab88c2829f92|
+lv walls|egfp-positive tanycyte-like cells labeled at e14.5 by iue remain largely quiescent 3 weeks after birth, similar to the adult progenitor b1 cells within the lv walls [41].||161e784a1d5341bf9f2aab88c2829f92|
+creert2|astrocytes|CreERT2 is used to induce the generation of astrocytes in the diencephalon.|2e1647a70e0840a09f15128d6ca6fe2d|
+ai14|astrocytes|The use of Ai14 in conjunction with CreERT2 allows for visualization of astrocytes in the diencephalon.|2e1647a70e0840a09f15128d6ca6fe2d|
+tdt+ cells|astrocytes|All tdT+ cells induced at each embryonic time point in the diencephalon give rise to S100β+ astrocytes.|2e1647a70e0840a09f15128d6ca6fe2d|
+iba1+ microglia|tdt+ cells|2% of tdT+ cells induced at E18.5 are IBA1+ microglia in the P14 cortex.|2e1647a70e0840a09f15128d6ca6fe2d|
+hgfap promoter|reporter expression|The hGFAP promoter can drive reporter expression in microglia in the developing cerebral cortex.|2e1647a70e0840a09f15128d6ca6fe2d|
+cortical development|tdt+ astrocytes|Microglia may have engulfed tdT+ astrocytes during cortical development.|2e1647a70e0840a09f15128d6ca6fe2d|
+astrogenesis|cerebellum|A study by in vivo clonal analysis demonstrated that astrogenesis in the cerebellum follows a well-defined spatial and temporal pattern.|2e1647a70e0840a09f15128d6ca6fe2d|
+tiotemporal pattern|orderly developmental program|In this context, 'tiotemporal pattern' and 'orderly developmental program' are both referred to in the same sentence, indicating a potential relationship between the two concepts. Further lineage tracing studies will be important to determine the timing of astrogenesis and regional differences of the astrocytic lineage in many other brain regions such as the olfactory bulb, hippocampus, striatum, and brain stem. This suggests that understanding the tiotemporal pattern and orderly developmental program may provide insights into the timing and location of astrogenesis.|76940c8dbc194c08a49985e26c575fab|
+qin laboratory||The authors acknowledge the suggestions and comments from members of the Qin laboratory, implying a possible association between these individuals and the context's concepts. However, without further information, it is unclear whether there are specific relationships between the Qin laboratory and 'tiotemporal pattern', 'orderly developmental program', or any other mentioned concept.|76940c8dbc194c08a49985e26c575fab|
+li||The authors express gratitude to Dr. Haimin Li for his preliminary intellectual exploration. Again, without further details, it is unclear how Li's exploration relates to the context's concepts.|76940c8dbc194c08a49985e26c575fab|
+national natural science foundation of china||The study was supported by the National Natural Science Foundation of China, which suggests that these funding sources may be related to 'tiotemporal pattern', 'orderly developmental program', or any other mentioned concept. However, without further information, it is impossible to determine the nature of this relationship.|76940c8dbc194c08a49985e26c575fab|
+natural science foundation of shanghai||The authors also acknowledge funding from the Natural Science Foundation of Shanghai. As with the National Natural Science Foundation of China, it is uncertain whether this organization's support is linked to 'tiotemporal pattern', 'orderly developmental program', or other contextual concepts.|76940c8dbc194c08a49985e26c575fab|
+national key basic research program of china||The study was also supported by the National Key Basic Research Program of China. This funding source's relationship with 'tiotemporal pattern', 'orderly developmental program', or any other concept in the context is unknown without further information.|76940c8dbc194c08a49985e26c575fab|
+creative commons attribution 4.0 international license||The authors note that this article is licensed under a Creative Commons Attribution 4.0 International License. The license's connection to 'tiotemporal pattern', 'orderly developmental program', or any other concept is unclear without additional context.|76940c8dbc194c08a49985e26c575fab|
+creative commons licence|material|included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder.|5044cb2035684913bd12d1965ed603c9|
+molofsky av|astrocytes and disease: a neurodevelopmental per-spective|authored by|5044cb2035684913bd12d1965ed603c9|
+gallo v|glial development: the crossroads of regeneration and repair in the cns|authored by|5044cb2035684913bd12d1965ed603c9|
+he c|novel insight into glial biology and diseases|authored by|5044cb2035684913bd12d1965ed603c9|
+tsai hh|regional astrocyte allocation regulates cns synaptogenesis and repair|co-authored by|5044cb2035684913bd12d1965ed603c9|
+li h|tsai hh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+fuentealba lc|tsai hh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+molofsky av|tsai hh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+taveira-marques r|tsai hh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+zhuang h|tsai hh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+brambilla r|the contribution of astrocytes to the neuroinflamma-tory response in multiple sclerosis and experimental autoimmune encephalomyelitis|discussed in|5044cb2035684913bd12d1965ed603c9|
+rowitch dh|developmental genetics of vertebrate glial-cell specification|authored by|5044cb2035684913bd12d1965ed603c9|
+kriegstein ar|rowitch dh|co-authored by|5044cb2035684913bd12d1965ed603c9|
+muroyama y|specification of astrocytes by bhlh protein scl in a restricted region of the|discussed in|5044cb2035684913bd12d1965ed603c9|
+muroyama y|astrocytes|Muroyama Y's study in Nature (2005) identified the specification of astrocytes by bHLH protein SCL in a restricted region of the neural tube.|15c6410c38bb47f889ae4cb45c128b30|
+hochstim c|positionally distinct astrocyte subtypes|Hochstim C et al.'s study in Cell (2008) identified positionally distinct astrocyte subtypes whose identities are specified by a homeodomain code.|15c6410c38bb47f889ae4cb45c128b30|
+magavi s|pyramidal neurons and protoplasmic astrocytes|Magavi S et al.'s study in J Neurosci (2012) found that coincident generation of pyramidal neurons and protoplasmic astrocytes occurs in neocortical columns.|15c6410c38bb47f889ae4cb45c128b30|
+kriegstein a|embryonic and adult neural stem cells|Kriegstein A and Alvarez-Buylla A's study in Ann Rev Neurosci (2009) discussed the glial nature of embryonic and adult neural stem cells.|15c6410c38bb47f889ae4cb45c128b30|
+noctor sc|symmetric and asymmetric division zones|Noctor SC et al.'s study in Nat Neurosci (2004) found that cortical neurons arise in symmetric and asymmetric division zones and migrate through specific phases.|15c6410c38bb47f889ae4cb45c128b30|
+levison sw|oligodendrocytes and astrocytes|Levison SW and Goldman JE's study in Neuron (1993) established that both oligodendrocytes and astrocytes develop from progenitors in the subventricular zone of postnatal rat forebrain.|15c6410c38bb47f889ae4cb45c128b30|
+ganat ym|multilineage precursors and neural stem cells|Ganat YM et al.'s study in J Neurosci (2006) revealed that early postnatal astroglial cells produce multilineage precursors and neural stem cells in vivo.|15c6410c38bb47f889ae4cb45c128b30|
+madisen l|high-throughput cre reporting system|Madisen L et al.'s study in Nat Neurosci (2010) presented a robust and high-throughput Cre reporting and characterization system for the whole mouse brain.|15c6410c38bb47f889ae4cb45c128b30|
+ge wp|jan yn|Local genreation of glia is a major astrocyte source in postnatal cortex, published in Nature in 2012.|51ac7329d89c470c927db8665b1371fa|
+hu ny|liu ys|Expression patterns of inducible cre recombinase driven by differential astrocyte-specific promoters in transgenic mouse lines, published in Neuroscience Bulletin in 2020.|51ac7329d89c470c927db8665b1371fa|
+deneen b|gronostajski rm|The transcription factor NFIA controls the onset of gliogenesis in the developing spinal cord, published in Neuron in 2006.|51ac7329d89c470c927db8665b1371fa|
+shu t|richards lj|Abnormal development of forebrain midline glia and commissures, published in unknown publication in unknown year.|51ac7329d89c470c927db8665b1371fa|
+gong s|scham b u|A gene expression atlas of the central nervous system based on bacterial artificial chromosomes, published in Nature in 2003.|51ac7329d89c470c927db8665b1371fa|
+miller fd|jan ly|Local genreation of glia is a major astrocyte source in postnatal cortex, published in Nature in 2012.|51ac7329d89c470c927db8665b1371fa|
+haddad-tóvolli r|alvarez-bolado g|Genetic manipulation of the mouse developing hypothalamus through in utero electroporation, published in Journal of Visualized Experiments in 2013.|51ac7329d89c470c927db8665b1371fa|
+kagawa y|miyazaki h|Fatty acid-binding protein 7 regulates function of caveolae in astrocytes through expression of caveolin-1, published in Glia in 2015.|51ac7329d89c470c927db8665b1371fa|
+gong s|didkovsky n|A gene expression atlas of the central nervous system based on bacterial artificial chromosomes, published in Nature in 2003.|51ac7329d89c470c927db8665b1371fa|
+miller fd|gauthier as|Timing is everything: Making neurons versus Glia in the developing cortex, published in Neuron in 2007.|51ac7329d89c470c927db8665b1371fa|
+cd31|vascular endothelium|CD31 signals confer immune privilege to the vascular endothelium.|44a519c1114d4ac6bccfafbbeb5146fa|
+gfap|astrocyte-specific expression|GFAP promoter directs astrocyte-specific expression in transgenic mice.|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|cerebral blood flow|Astrocyte-mediated control of cerebral blood flow.|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|brain glue|From brain glue to communication elements: The revolution continues (Volterra & Meldolesi, 2005).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrogliosis|neurodegenerative diseases|Astrogliosis and neurodegenerative diseases: Two sides of the same coin (Barnat & Elble, 2019).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|cerebral cortex|Local production of astrocytes in the cerebral cortex (Ge & Jia, 2016).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|cortical glial cell development|Decoding cortical glial cell development (Li et al., 2021).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|astrocyte-specific expression|Astrocyte development: A guide for the perplexed (Molofsky & Deneen, 2015).|44a519c1114d4ac6bccfafbbeb5146fa|
+aquaporin-4|brain|Physiological roles of aquaporin-4 in brain (Nagelhus & Ottersen, 2013).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|forebrain midline glia|Abnormal development of forebrain midline glia and commissural projections in Nfia knock-out mice (Shu et al., 2003).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|commissural projections|Abnormal development of forebrain midline glia and commissural projections in Nfia knock-out mice (Shu et al., 2003).|44a519c1114d4ac6bccfafbbeb5146fa|
+astrocytes|neurodegenerative diseases|Astrocyte activation in neurodegenerative diseases: A tale of two sides (Sofroniew & Vinces, 2010).|44a519c1114d4ac6bccfafbbeb5146fa|
+retinal astrocytes|normal develpment|Large-scale death of retinal astrocytes during normal develpment is non-apoptotic and implemented by microglia. (Puñal VM et al., 2019)|85baf5f8dd594ee9ba324f49d7bfe570|
+microglia|retinal astrocytes|Microglia refine developing retinal astrocytic and vascular networks through the complement C3/C3aR axis. (Gnanaguru G et al., 2023)|85baf5f8dd594ee9ba324f49d7bfe570|
+cerebellar astrocytes|spatiotemporal emergence|Multiple origins and modularity in the spatiotemporal emergence of cerebellar astrocyte heterogeneity. (Cerrato V et al., 2018)|85baf5f8dd594ee9ba324f49d7bfe570|
+retinal astrocytes|complement c3/c3ar axis|Microglia refine developing retinal astrocytic and vascular networks through the complement C3/C3aR axis. (Gnanaguru G et al., 2023)|85baf5f8dd594ee9ba324f49d7bfe570|
+normal develpment|complement c3/c3ar axis|Large-scale death of retinal astrocytes during normal develpment is non-apoptotic and implemented by microglia through the complement C3/C3aR axis. (Puñal VM et al., 2019)|85baf5f8dd594ee9ba324f49d7bfe570|

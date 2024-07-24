@@ -4,7 +4,6 @@ sys.path.append("..")
 
 import json
 import ollama.client as client
-import os
 
 
 def extractConcepts(prompt: str, metadata={}, model="mistral-openorca:latest"):
@@ -39,11 +38,12 @@ def graphPrompt(input: str, metadata={}, model="mistral-openorca:latest"):
 
     # model_info = client.show(model_name=model)
     # print( chalk.blue(model_info))
+
     SYS_PROMPT = (
         "You are a network graph maker who extracts terms and their relations from a given context. "
         "You are provided with a context chunk (delimited by ```) Your task is to extract the ontology "
         "of terms mentioned in the given context. These terms should represent the key concepts as per the context. \n"
-        "you should only keep relevent nodes, you can act as you see fit. \n"
+        "Ignore every information that is not in the text of the article but in the margin (series of number, title, DOI, references...)\n"
         "Thought 1: While traversing through each sentence, Think about the key terms mentioned in it.\n"
             "\tTerms may include object, entity, location, organization, person, \n"
             "\tcondition, acronym, documents, service, concept, etc.\n"
@@ -62,8 +62,6 @@ def graphPrompt(input: str, metadata={}, model="mistral-openorca:latest"):
         "   }, {...}\n"
         "]"
     )
-
-
 
     USER_PROMPT = f"context: ```{input}``` \n\n output: "
     response, _ = client.generate(model_name=model, system=SYS_PROMPT, prompt=USER_PROMPT)

@@ -1,2 +1,393 @@
-text|source|chunk_id
-Fax 41 61 306 12 34 E-Mail kargerkarger.ch www.karger.com Original Paper Brain Behav Evol 2008;71:1531 DOI: 10.1159000108608 Early Diencephalon Development in Alligator Michael B. Pritz Department of Neurological Surgery, Indiana University School of Medicine, Indianapolis, Ind. , USA noted further parcellation of the synencephalon into an an- terior and posterior component, whereas others have not. Notwithstanding differe nces as to whether the synencepha- lon is a single unit or not, these detailed analyses in reptiles (Alligator) , birds (chick), and mammals (humans), suggest that the initial pattern of early diencephalon development in amniotes is similar. Copyright  2007 S. Karger AG, Basel Introduction A number of approaches have been used to unravel the organization and evolution of the forebrain in vertebrates Nieuwenhuys, 1998b. Varying degrees of success have been achieved through an analysis of neuronal cell types and aggregates and their respective properties in a wide variety of adult animals Nieuwenhuys, 1998b; Striedter, 2005 usually selecting representative species in a given class. An alternative approach has been to analyze devel- opment, with the hope that certain features might be un- covered which would have remained obscure had only adult animals been examined Puelles, 1995.|data_input\cureus\Dien.DevelopBBE2008-pages.txt|af887b3105674984bc39bc6da28f6c7f
+node_1|node_2|edge|chunk_id
+alligator|diencephalon|development in|9d187ab800674faa998feb3551df4355
+early diencephalon development|alligator|in|9d187ab800674faa998feb3551df4355
+reptiles|diencephalon|development in|9d187ab800674faa998feb3551df4355
+birds|diencephalon|development in|9d187ab800674faa998feb3551df4355
+mammals|diencephalon|development in|9d187ab800674faa998feb3551df4355
+forebrain|vertebrates|the forebrain of vertebrates|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+organization|evolution|unravel the organization and evolution of the forebrain in vertebrates|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+neuronal cell types|aggregates|analysis of neuronal cell types and aggregates|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+development|ontogeny|analyze development, with the hope that certain features might be uncovered which would have remained obscure had only adult animals been examined|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+diencephalon|telencephalon|the properties of the diencephalon are seemingly less complex than that of the telencephalon|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+diencephalon|vertebrates|the diencephalon shares common characters in all vertebrates during early development and changes occur later in time which are specific for that group or species|da2d2abcd1c34ff9b65cbc36e8cdbbcb
+alligator mississipiensis|reptiles|Alligator mississipiensis is a type of reptile|f5246dd1ed67481a9f8a27745956d30a
+diencephalon|development|The development of the diencephalon was investigated in the context of Alligator mississipiensis embryos|f5246dd1ed67481a9f8a27745956d30a
+diencephalon|ontogeny|The study examined the ontogeny of the diencephalon in Alligator mississipiensis|f5246dd1ed67481a9f8a27745956d30a
+pretectum|diencephalon|The pretectum is a part of the diencephalon|f5246dd1ed67481a9f8a27745956d30a
+forebrain|evolution|The evolution of the forebrain, including the diencephalon, was studied in the context of Alligator mississipiensis embryos|f5246dd1ed67481a9f8a27745956d30a
+early diencephalon development|birds (chick)|occurs in|4681523058f8449fb0dbe967631c4565
+early diencephalon development|mammals (humans)|follows a similar pattern to|4681523058f8449fb0dbe967631c4565
+diencephalic compartment|par-encephalon|divides into|4681523058f8449fb0dbe967631c4565
+diencephalic compartment|synencephalon|divides into|4681523058f8449fb0dbe967631c4565
+parencephalon|anterior unit|subdivides into|4681523058f8449fb0dbe967631c4565
+parencephalon|posterior unit|subdivides into|4681523058f8449fb0dbe967631c4565
+studies|present study|include|4681523058f8449fb0dbe967631c4565
+mammal|mouse|representative example|4a663b26081b4584835f3e5fcbc98c43
+bird|chick|example for birds|4a663b26081b4584835f3e5fcbc98c43
+mammals|birds|diverged early in phylogeny|4a663b26081b4584835f3e5fcbc98c43
+crocodilians|birds|reptilian group most closely related to birds|4a663b26081b4584835f3e5fcbc98c43
+american alligator|alligator mississipiensis|representative of the order|4a663b26081b4584835f3e5fcbc98c43
+diencephalon development|early diencephalon development in alligator|details report on|4a663b26081b4584835f3e5fcbc98c43
+morphological techniques|forebrain|applied to the forebrain|4a663b26081b4584835f3e5fcbc98c43
+alligator|diencephalon|part of|90c5b329ee1f4f309b9ad2846eee8d9a
+morpho-logic features|divisions of the diencephalon|identify|90c5b329ee1f4f309b9ad2846eee8d9a
+development|alligator|happens in|90c5b329ee1f4f309b9ad2846eee8d9a
+early stages of development|diencephalon|pertains to|90c5b329ee1f4f309b9ad2846eee8d9a
+vertebrates|alligator|comparable with|90c5b329ee1f4f309b9ad2846eee8d9a
+organization|diencephalon|pertains to|90c5b329ee1f4f309b9ad2846eee8d9a
+birds|mammals|similar with|90c5b329ee1f4f309b9ad2846eee8d9a
+ontogeny|development|related to|90c5b329ee1f4f309b9ad2846eee8d9a
+events|development|produces|90c5b329ee1f4f309b9ad2846eee8d9a
+diencephalic subdivisions|developmentally significant criteria|represent|059aaeb19b7f4dbcbd279f1ed6a6bfac
+keynes and lumsden (1990)|develop-mentally significant criteria|enumerated|059aaeb19b7f4dbcbd279f1ed6a6bfac
+gene or transcription factor expression|individual units|investigate|059aaeb19b7f4dbcbd279f1ed6a6bfac
+hindbrain|rhombomeres|can be seen|059aaeb19b7f4dbcbd279f1ed6a6bfac
+transversal diencephalic subdivisions|identification|proved elusive|059aaeb19b7f4dbcbd279f1ed6a6bfac
+procedures and protocols|animal care committee|reviewed and approved|059aaeb19b7f4dbcbd279f1ed6a6bfac
+national institute of health guidelines|procedures and protocols|conform to|059aaeb19b7f4dbcbd279f1ed6a6bfac
+alligator eggs|rockefeller wildlife refuge|obtained from|059aaeb19b7f4dbcbd279f1ed6a6bfac
+eggs|vermiculite and water|placed in a mixture of|059aaeb19b7f4dbcbd279f1ed6a6bfac
+embryos|stages|The embryos were sacrificed between stages 2 and 16.|851729560a3d4cf89d0d895ef0577b6d
+fixatives|morphological stains|A variety of fixatives were used for the various morphological stains.|851729560a3d4cf89d0d895ef0577b6d
+fixatives|histochemical and immunocytochemical experiments|However, best results for histochemical and immunocytochemical experiments were obtained with 100 methanol as the fixative.|851729560a3d4cf89d0d895ef0577b6d
+embryos|tissues|Embyros were first staged and then dissected free from surrounding tissues using a fine tungsten needle, microscissors, and jewelers forceps.|851729560a3d4cf89d0d895ef0577b6d
+brains|isthmus|Except at the earliest stages, brains were divided at the isthmus and the forebrain and midbrain were processed as a single unit.|851729560a3d4cf89d0d895ef0577b6d
+brains|histochemistry and immunocytochemistry|In brains stored at 70 C, best results for histochemistry and immunocytochemistry were achieved by gradual tissue re-warming.|851729560a3d4cf89d0d895ef0577b6d
+fixatives|cresyl violet|Brains stained for cresyl violet were placed in a variety of fixatives: 10 formalin; 4 para-formaldehyde; 4 glutaraldehyde; or Bouins solution.|851729560a3d4cf89d0d895ef0577b6d
+brains|gelatin|embedded in|a069c2b3bb334c1fb53930c7b5c37bf4
+blocks|sucrose|placed overnight in|a069c2b3bb334c1fb53930c7b5c37bf4
+blocks|pbs (0.1 m at ph 7.2)|in|a069c2b3bb334c1fb53930c7b5c37bf4
+brains|diencephalon|illustrating plane of section|a069c2b3bb334c1fb53930c7b5c37bf4
+stage 12 brain|sagittal plane|illustrates the|a069c2b3bb334c1fb53930c7b5c37bf4
+stage 12 brain|lateral photo|shows the|a069c2b3bb334c1fb53930c7b5c37bf4
+abbreviations used in figures|acetyl tub|used for|a069c2b3bb334c1fb53930c7b5c37bf4
+abbreviations used in figures|ache|used for|a069c2b3bb334c1fb53930c7b5c37bf4
+abbreviations used in figures|cv|used for|a069c2b3bb334c1fb53930c7b5c37bf4
+abbreviations used in figures|d|used for|a069c2b3bb334c1fb53930c7b5c37bf4
+synencephalon|anterior|part of|01d6bd1e83fb4943b3a6aadac8754ee0
+synencephalon|posterior|part of|01d6bd1e83fb4943b3a6aadac8754ee0
+t|telencephalon|related to|01d6bd1e83fb4943b3a6aadac8754ee0
+p|prosencephalon|part of|01d6bd1e83fb4943b3a6aadac8754ee0
+peanut agglutinin histochemistry|methodology|described previously|67302590f02d4f2aa7df97600df0b5c5
+free floating sections|washed|in three changes of PBS|67302590f02d4f2aa7df97600df0b5c5
+hrp-peanut lectin|incubated|for 1224 h|67302590f02d4f2aa7df97600df0b5c5
+tissue|washed|in three changes of PBS|67302590f02d4f2aa7df97600df0b5c5
+dab solution|incubation|consisting of 100 mg DAB in 10 ml of distilled water plus l ml of Triton X-100 plus 20 ml of 0.2 M cacodylic buffer (pH 5.6) plus 6 ! l of 30 hydrogen peroxide for 30 s|67302590f02d4f2aa7df97600df0b5c5
+sections|transferred|to a solution of 70 alcohol for 1 min|67302590f02d4f2aa7df97600df0b5c5
+slides|mounted|out of distilled water onto chrome-alum coated slides|67302590f02d4f2aa7df97600df0b5c5
+immunocytochemical|experiment|Methods for immunocytochemical experiments were identical to procedures described...|6f85c4dcc6ef4a50b6e3f6dd2b2c75df
+primary antibody|secondary antibody|...incubated with the secondary antibody (goat anti-mouse IgG, Vector Labs, ...) at a concentration of 1:100 for 1 h.|6f85c4dcc6ef4a50b6e3f6dd2b2c75df
+pap complex|primary antibody|...incubated in a peroxidase-antiperoxidase (PAP) complex appropriate for the primary antibody...|6f85c4dcc6ef4a50b6e3f6dd2b2c75df
+dab solution|reaction|...reacted for 30 s in a DAB solution (see above) after which the reaction was stopped by transfer to a solution of 70% alcohol...|6f85c4dcc6ef4a50b6e3f6dd2b2c75df
+mounting|sections|Mounted sections processed for either histochemistry or immunocytochemistry were dehydrated through a series of graded alcohols, cleared in xylene, and then coverslipped.|6f85c4dcc6ef4a50b6e3f6dd2b2c75df
+antibodies|monoclonal mouse anti-acetylated tubulin|Immunoreactivity was observed with|e2fd82b047a947d0962d50fba778955a
+antibodies|mouse monoclonal anti-vimentin|Immunoreactivity was observed with|e2fd82b047a947d0962d50fba778955a
+antibodies|mouse monoclonal anti-acetylcholinesterase|Immunoreactivity was observed with|e2fd82b047a947d0962d50fba778955a
+antibodies|polyclonal rabbit anti-calretinin|Immunoreactivity was observed with|e2fd82b047a947d0962d50fba778955a
+antibodies|monoclonal mouse anti-neural cell adhesion molecule (n-cam)|The following antibodies were unsuccess- ful in labeling|e2fd82b047a947d0962d50fba778955a
+antibodies|monoclonal mouse anti-glial fibrillary acid protein (gfap)|The following antibodies were unsuccess- ful in labeling|e2fd82b047a947d0962d50fba778955a
+antibodies|monoclonal mouse anti-growth-associated protein 43 (gap 43)|The following antibodies were unsuccess- ful in labeling|e2fd82b047a947d0962d50fba778955a
+controls for nonspecific staining|substitution of normal rabbit or mouse serum|One was substitution of|e2fd82b047a947d0962d50fba778955a
+controls for nonspecific staining|omission of the primary antibody from the reaction|A second was omission of|e2fd82b047a947d0962d50fba778955a
+forebrain|tissue|is a type of|ae6ce89e9aa7412aa614acfeb09777ef
+bright field illumination|histological analysis process|used for|ae6ce89e9aa7412aa614acfeb09777ef
+camera lucida drawing tube|leitz microscope|attached to|ae6ce89e9aa7412aa614acfeb09777ef
+olympus microscope|digital camera|used with|ae6ce89e9aa7412aa614acfeb09777ef
+color images|black and white photos|converted to|ae6ce89e9aa7412aa614acfeb09777ef
+photos|adobe photoshop 7.0|imported into|ae6ce89e9aa7412aa614acfeb09777ef
+panels|images|grouped in|ae6ce89e9aa7412aa614acfeb09777ef
+forebrain|rostrocaudal|divides|d676f1dfb0f04bea87c6169b2dafc96c
+forebrain|dorsoventral|defines|d676f1dfb0f04bea87c6169b2dafc96c
+transverse diencephalic segments|presumed alar and basal plate|corresponds to|d676f1dfb0f04bea87c6169b2dafc96c
+telencephalon|secondary prosencephalon|part of|d676f1dfb0f04bea87c6169b2dafc96c
+hypothalamus|secondary prosencephalon|part of|d676f1dfb0f04bea87c6169b2dafc96c
+diencephalon|parencephalon|includes|d676f1dfb0f04bea87c6169b2dafc96c
+diencephalon|syn-encephalon|includes|d676f1dfb0f04bea87c6169b2dafc96c
+parencephalon|anterior zones|divides into|d676f1dfb0f04bea87c6169b2dafc96c
+parencephalon|posterior zones|divides into|d676f1dfb0f04bea87c6169b2dafc96c
+zona limitans interparencephalica|border|separates|d676f1dfb0f04bea87c6169b2dafc96c
+antibodies|histochemical markers|are screened for their usefulness|ce3d196133ea47f9afc8bc69d6f79cc0
+diencephalic subdivisions|markers|were identified by the use of these markers|ce3d196133ea47f9afc8bc69d6f79cc0
+others' observations|selection of markers|guided the process of marker selection|ce3d196133ea47f9afc8bc69d6f79cc0
+early hindbrain development|alligator pritz, 1999|was analyzed using these stains|ce3d196133ea47f9afc8bc69d6f79cc0
+anti-neural cell adhesion molecule|diencephalic borders|labeled the boundaries in chick|ce3d196133ea47f9afc8bc69d6f79cc0
+alligator diencephalon development|antibodies|unsuccessfully used to mark diencephalon boundaries|ce3d196133ea47f9afc8bc69d6f79cc0
+alligator|diencephalon development|The present analysis refers to the development of Alligator's Diencephalon.|4b95c1dd87db4188b9b85c57805cbf1f
+peanut agglutinin|histo-chemical preparations|Peanut agglutinin is used in histo-chemical preparations to distinguish odd from even segments in chick.|4b95c1dd87db4188b9b85c57805cbf1f
+diencephalon|chick|The diencephalon of Alligator was stained differently than that of chick.|4b95c1dd87db4188b9b85c57805cbf1f
+presumptive alar|basal plate|Features that distinguished presumptive alar from basal plate were less distinct than transverse diencephalic zones or their respective borders.|4b95c1dd87db4188b9b85c57805cbf1f
+transverse dience- phalic zones|respective borders|The separation between these zones and their borders was highlighted by a staining pattern.|4b95c1dd87db4188b9b85c57805cbf1f
+acetylated tubulin|longitudinal fibers|The antibody to acetylated tubulin stained longitudinal fibers early in compartmentalization.|4b95c1dd87db4188b9b85c57805cbf1f
+early diencephalon development|single segment stage|A reliable and accurate assessment of early diencephalon development was made during the Single Segment Stage.|4b95c1dd87db4188b9b85c57805cbf1f
+telencephalon|diencephalon|distinguished by the course and distribution of fibers visualized by acetylated tubulin immuno-reactivity|c483eb09d1434086bb1c8e8e70772c49
+mesencephalon|telencephalon|separated caudally from the telencephalon|c483eb09d1434086bb1c8e8e70772c49
+diencephalon|telencephalon|distinguished rostrally from the telencephalon|c483eb09d1434086bb1c8e8e70772c49
+single segment stage|two segment stage|progression from a single stage to two stages|c483eb09d1434086bb1c8e8e70772c49
+parencephalon|synencephalon|becomes subdivided into|9d14c6d621f341738a6fce0d9aa90a05
+diencephalon|parencephalon|subdivided into an anterior parencephalon|9d14c6d621f341738a6fce0d9aa90a05
+diencephalon|synencephalon|subdivided into a posterior synen- cephalon|9d14c6d621f341738a6fce0d9aa90a05
+mesencephalon|parencephalon|suggested border with|9d14c6d621f341738a6fce0d9aa90a05
+secondary prosencephalon|parencephalon|suggested border with|9d14c6d621f341738a6fce0d9aa90a05
+mesencephalon|synencephalon|distinct border between|9d14c6d621f341738a6fce0d9aa90a05
+parencephalon|calretinin immunoreactive|most of the parencephalon was|9d14c6d621f341738a6fce0d9aa90a05
+ventral parencephalon|synencephalon|stained positively in and negatively in|9d14c6d621f341738a6fce0d9aa90a05
+stage|embryo|The stage is described in relation to the embryo.|7f36f56e241e4eda9cc4068e5d4f47be
+forebrain divisions|stage|The forebrain divisions are viewed at this stage.|7f36f56e241e4eda9cc4068e5d4f47be
+telencephalon|diencephalon|No subdivisions were observed in either the telencephalon or diencephalon.|7f36f56e241e4eda9cc4068e5d4f47be
+parencephalon|synencephalon|The parencephalon was immunopositive but the synencephalon was not.|7f36f56e241e4eda9cc4068e5d4f47be
+diencephalon|parencephalon|The diencephalon is composed of three divisions, including the parencephalon.|708c27f976ef4120bfa867226b6a49b7
+parencephalon|parencephalon anterior|The parencephalon subdivides into an anterior and posterior part.|708c27f976ef4120bfa867226b6a49b7
+parencephalon anterior|parencephalon posterior|Calretinin immunoreactivity marked the boundary separating the parencephalon anterior from the parencephalon posterior.|708c27f976ef4120bfa867226b6a49b7
+synencephalon|mesencephalon|Calretinin immunoreactivity also marked the border between the synencephalon and mesencephalon.|708c27f976ef4120bfa867226b6a49b7
+parencephalon posterior|synencephalon|Distinct borders between the parencephalon posterior and synencephalon were not clear in tissue stained for calretinin or acetylated tubulin.|708c27f976ef4120bfa867226b6a49b7
+zona limitans interparencephalica|parencephalon anterior|A band, the zona limitans interparencephalica, was partly seen between the parencephalon anterior and posterior.|708c27f976ef4120bfa867226b6a49b7
+diencephalic segments|alar plate regions|A longitudinal boundary dividing presumed alar from basal plate regions was most distinct in material stained for calretinin or cresyl violet.|708c27f976ef4120bfa867226b6a49b7
+alligator|diencephalon|The context discusses the development of the diencephalon in alligators.|4a877ddc5f2642a5b1997c32d8818244
+diencephalon|development|The context describes the developmental stages and characteristics of the diencephalon in alligators.|4a877ddc5f2642a5b1997c32d8818244
+neuromeric bulges|interneuromeric ventricular ridges|Tissue sectioned horizontally showed the relationship between neuromeric bulges and interneuromeric ventricular ridges.|4a877ddc5f2642a5b1997c32d8818244
+parencephalon anterior|parencephalon posterior|The context discusses the parcellation of the diencephalon into a rostral zone, the parencephalon, and into a caudal segment, the synencephalon.|4a877ddc5f2642a5b1997c32d8818244
+synencephalon|parencephalon anterior|The context discusses the parcellation of the diencephalon into a rostral zone, the parencephalon, and into a caudal segment, the synencephalon.|4a877ddc5f2642a5b1997c32d8818244
+peanut agglutinin|cresyl violet|The context states that this was clearest in material stained with peanut agglutinin and cresyl violet.|4a877ddc5f2642a5b1997c32d8818244
+diencephalon|development|relates to|d94bb4a6b2e74ee4ad662a201f0b541b
+brain|behav evol|related field of study|d94bb4a6b2e74ee4ad662a201f0b541b
+zona limitans interparencephalica|parencephalon|separates into anterior and posterior divisions|d94bb4a6b2e74ee4ad662a201f0b541b
+synencephalon|posterior portion|divides into|d94bb4a6b2e74ee4ad662a201f0b541b
+diencephalic segments|four segment stage|comprises|d94bb4a6b2e74ee4ad662a201f0b541b
+parencephalon anterior|parencephalon posterior|separates into two subdivisions|d94bb4a6b2e74ee4ad662a201f0b541b
+secondary prosencephalon|parencephalon anterior|separated by a transverse border ventrally|d94bb4a6b2e74ee4ad662a201f0b541b
+synencephalon posterior|mes-encephalon|separates into two divisions|d94bb4a6b2e74ee4ad662a201f0b541b
+pritz|brain|The Pritz Brain Behav Evol 2008;71:1531-22 is a journal that publishes research on brain and behavior|831684506fb74052b859de9c36321584
+parencephalon|anterior compartment|The parencephalon is divided into an anterior and posterior compartment|831684506fb74052b859de9c36321584
+parencephalon|posterior compartment|The parencephalon is divided into an anterior and posterior compartment|831684506fb74052b859de9c36321584
+zona limitans interparencephalica|parencephalon anterior|The zona limitans interparencephalica separates the parencephalon anterior from the parencephalon posterior|831684506fb74052b859de9c36321584
+zona limitans interparencephalica|parencephalon posterior|The zona limitans interparencephalica separates the parencephalon anterior from the parencephalon posterior|831684506fb74052b859de9c36321584
+diencephalic divisions|three segment stage|The diencephalic divisions are present at the three segment stage|831684506fb74052b859de9c36321584
+peanut agglutinin|cresyl violet|Peanut agglutinin and cresyl violet are used as staining agents|831684506fb74052b859de9c36321584
+diencephalon|division|The diencephalon is divided into different segments.|022c4dca089b4f7ab3862e11e2372700
+parencephalon|anterior segment|The parencephalon is subdivided into anterior and posterior segments.|022c4dca089b4f7ab3862e11e2372700
+synencephalon|subdivisions|Parcellation of the synencephalon is best visualized in tissue stained with an antibody to vimentin.|022c4dca089b4f7ab3862e11e2372700
+diencephalon|secondary prosencephalon|Boundaries between the diencephalon and secondary prosencephalon vary depending on the stain used.|022c4dca089b4f7ab3862e11e2372700
+diencephalon|mesencephalon|Boundaries between the diencephalon and mesencephalon, respectively, vary depending on the stain used.|022c4dca089b4f7ab3862e11e2372700
+alligator|diencephalon development|The development of the diencephalon in alligators is studied in this research.|022c4dca089b4f7ab3862e11e2372700
+diencephalic divisions|histochemical stain|were observed in horizontal sections using this|2707fc54bf384588abb9f62b8c0d2ca0
+peanut agglutinin stained sections|thickness of the most lateral portion of the positively stained diencephalic mantle layer|distinguished not only diencephalic sub-divisions but also|2707fc54bf384588abb9f62b8c0d2ca0
+anterior parencephalon|secondary prosencephalon|and between the posterior synencephalon and mes- encephalon caudally, distinguished by peanut agglutinin stained sections|2707fc54bf384588abb9f62b8c0d2ca0
+alar parencephalon posterior|other alar territories|could be distinguished from on the basis of morphological distinctness alone|2707fc54bf384588abb9f62b8c0d2ca0
+ventricular surface|pial surface|distinguished diencephalic segmental boundaries particularly those borders between|2707fc54bf384588abb9f62b8c0d2ca0
+alligator|diencephalon|develops in|03d83c94e7b447beaf2c19ae662a4c8e
+diencephalon|forebrain|part of|03d83c94e7b447beaf2c19ae662a4c8e
+zona limitans interparencephalica|parencephalon anterior|separates from|03d83c94e7b447beaf2c19ae662a4c8e
+zona limitans interparencephalica|parencephalon posterior|separates from|03d83c94e7b447beaf2c19ae662a4c8e
+calretinin immunoreactivity|dorsoventral division|labels|03d83c94e7b447beaf2c19ae662a4c8e
+acetylated tubulin immunoreactivity|longitudinal division|visualizes|03d83c94e7b447beaf2c19ae662a4c8e
+diencephalic segments|early dien-c cephalon development|changed features over the course of|513e045899fc4064bb3790bfa5458508
+presumptive alar plate|basal plate|varied differentiation according to stage of development|513e045899fc4064bb3790bfa5458508
+parencephalon|synencephalon|immunoreactivity to calretinin and acetylcholinesterase positive/negative|513e045899fc4064bb3790bfa5458508
+calretinin|diencephalon-mesencephalon border|distinguished borders regardless of segment count|513e045899fc4064bb3790bfa5458508
+acetylated tubulin|diencephalon-mesencephalon border|immunoreactivity positive|513e045899fc4064bb3790bfa5458508
+diencephalon|development|part of|435b0789645f45eea96bac9c75e8968e
+brain|evolution|related to|435b0789645f45eea96bac9c75e8968e
+alligator|diencephalon|part of|435b0789645f45eea96bac9c75e8968e
+antibodies|compartment|identified|4eee6c3dffc04783bfdb591f068dd9d2
+acetylated tubulin|microtubules|stained within fibers|4eee6c3dffc04783bfdb591f068dd9d2
+vimentin|radial glia|labeled|4eee6c3dffc04783bfdb591f068dd9d2
+calretinin|cells|marked|4eee6c3dffc04783bfdb591f068dd9d2
+acetylcholinesterase|glia or cells|marked|4eee6c3dffc04783bfdb591f068dd9d2
+peanut agglutinin|material|stained|4eee6c3dffc04783bfdb591f068dd9d2
+cresyl violet|material|stained|4eee6c3dffc04783bfdb591f068dd9d2
+plane of section|study|The plane of section employed was critical not only for the observations made in this study|bbb79d180d12458ba0ea2dfdbace342c
+vertebrates|experiments|compar- isons with similar experiments done in other vertebrates|bbb79d180d12458ba0ea2dfdbace342c
+tissue sectioned transversally|zona limi- tans interparencephalica|was useful only for documentation of the zona limi- tans interparencephalica|bbb79d180d12458ba0ea2dfdbace342c
+sagittal and horizontal planes of sections|alligator brain|The sagittal and horizontal planes of sections used in this analysis have been illustrated in a representative external view of an Alligator brain|bbb79d180d12458ba0ea2dfdbace342c
+brain growth during development|plane of section|resulting in some deviation from the planned plane of section|bbb79d180d12458ba0ea2dfdbace342c
+tissue preservation|freez- ing|related to freez- ing, tissue preservation, the amount of external tissue surrounding the brain, and differential brain growth during development|bbb79d180d12458ba0ea2dfdbace342c
+sagittal and horizontal planes|study|It was for this reason that the tissue was analyzed in both sagittal and horizon- tal planes to confirm observations and minimize misin- terpretations|bbb79d180d12458ba0ea2dfdbace342c
+forebrain compartments|borders|Even obliquely sectioned material proved useful in analyzing forebrain compartments and borders|bbb79d180d12458ba0ea2dfdbace342c
+alligator|secondary prosencephalon|part of|165a72901e4e4a57809d5d8850d3834c
+diencephalon|single compartment|transforms from|165a72901e4e4a57809d5d8850d3834c
+diencephalon|transverse subdivisions|divides into|165a72901e4e4a57809d5d8850d3834c
+diencephalon|rosto-caudal axes|relative to|165a72901e4e4a57809d5d8850d3834c
+diencephalon|dorso-ventral axes|relative to|165a72901e4e4a57809d5d8850d3834c
+cephalon|synencephalon|the cephalon and synencephalon are related|9a7eecc42a1c4f62aa70d8ebee848b58
+parencephalon|zona limitans interparencephalica|the parencephalon splits into an anterior and posterior compartment with the appearance of the zona limitans interparencephalica|9a7eecc42a1c4f62aa70d8ebee848b58
+synencephalon|anterior subdivisions|the synencephalon becomes divided into anterior and posterior subdivisions|9a7eecc42a1c4f62aa70d8ebee848b58
+diencephalon|transverse zones|the diencephalon divides into two transverse zones|9a7eecc42a1c4f62aa70d8ebee848b58
+alar plate|basal plate|a longitudinal division along a dorso-ventral axis identified a presumptive alar and basal plate|9a7eecc42a1c4f62aa70d8ebee848b58
+lampreys|sea lamprey|subdivisions in the diencephalon early in Lampreys, river lamprey, sea lamprey|9a7eecc42a1c4f62aa70d8ebee848b58
+sharkrays|marine ray|subdivisions in the diencephalon early in Sharkrays, dogfish, marine ray|9a7eecc42a1c4f62aa70d8ebee848b58
+amphibians|newt|subdivisions in the diencephalon early in Amphibians, frog|9a7eecc42a1c4f62aa70d8ebee848b58
+teleosts|zebrafish|subdivisions in the diencephalon early in Teleosts, medaka|9a7eecc42a1c4f62aa70d8ebee848b58
+reptiles|snake|subdivisions in the diencephalon early in Reptiles, sea turtle|9a7eecc42a1c4f62aa70d8ebee848b58
+medaka|reptiles|are related as types of vertebrates|d896af8edf5b4499a14e996322e289f1
+snake|sea turtle|are both reptiles|d896af8edf5b4499a14e996322e289f1
+lizard|alligator|are both reptiles|d896af8edf5b4499a14e996322e289f1
+chick|birds|is a type of bird|d896af8edf5b4499a14e996322e289f1
+mammals|hyrax|are related as types of mammals|d896af8edf5b4499a14e996322e289f1
+mouse|mammals|is a type of mammal|d896af8edf5b4499a14e996322e289f1
+bat|mammals|is a type of mammal|d896af8edf5b4499a14e996322e289f1
+hamster|mammals|is a type of mammal|d896af8edf5b4499a14e996322e289f1
+opossum|mammals|is a type of mammal|d896af8edf5b4499a14e996322e289f1
+rhesus monkey|mammals|is a type of mammal|d896af8edf5b4499a14e996322e289f1
+humans|mammals|are both types of mammals|d896af8edf5b4499a14e996322e289f1
+development|vertebrates|development in various vertebrates|b79a01b6c3a44e9daf74d5366c0c27b8
+alligator|diencephalon|alligator diencephalon development|b79a01b6c3a44e9daf74d5366c0c27b8
+brain|evol|brain evolution|b79a01b6c3a44e9daf74d5366c0c27b8
+ontogeny|table 1|ontology in relation to table 1|b79a01b6c3a44e9daf74d5366c0c27b8
+chick|vaage|investigation of chick development by Vaage|b79a01b6c3a44e9daf74d5366c0c27b8
+humans|mller and orahilly|investigation of human development by Mller and ORahilly|b79a01b6c3a44e9daf74d5366c0c27b8
+studies|early diencephalon development|studies on early diencephalon development|b79a01b6c3a44e9daf74d5366c0c27b8
+techniques|histological staining|use of histological staining techniques in studies|b79a01b6c3a44e9daf74d5366c0c27b8
+alligator|obser-vations|are largely consistent with|e59f28709c894dc2aea5ae5414a11618
+chick vaage, 1969|obser-vations|consistently with|e59f28709c894dc2aea5ae5414a11618
+puelles et al., 1987|obser-vations|consistent with|e59f28709c894dc2aea5ae5414a11618
+larsen et al., 2001|obser-vations|consistent with|e59f28709c894dc2aea5ae5414a11618
+humans mller and orahilly, 1997|obser-vations|at least in documenting|e59f28709c894dc2aea5ae5414a11618
+parencephalon|synencephalon|subsequent further separation|e59f28709c894dc2aea5ae5414a11618
+parencephalon|anterior and posterior component|into an anterior and posterior component|e59f28709c894dc2aea5ae5414a11618
+synencephalon|anterior and posterior portion|further parcellation into an anterior and posterior portion|e59f28709c894dc2aea5ae5414a11618
+humans mller and orahilly, 1997|d1and d2|divided into two parts: D1 and D2|e59f28709c894dc2aea5ae5414a11618
+d2 compartment mller and orahilly, 1997|diencephalon|comparable to the diencephalon|e59f28709c894dc2aea5ae5414a11618
+alligator|present study|comparable to the present study|e59f28709c894dc2aea5ae5414a11618
+alligator|chick|separating the parencephalon anterior and posterior in|d56c4394a14d44baac97d052da1d9b32
+alligator|humans|onset of diencephalic segmentation|d56c4394a14d44baac97d052da1d9b32
+chick|diencephalon|pre-sumptive alar and basal plate|d56c4394a14d44baac97d052da1d9b32
+humans|diencephalic segmentation|onset of diencephalic segmentation|d56c4394a14d44baac97d052da1d9b32
+hamburger|hamilton|authors of the staging scheme used|4333bee8c0494b538c813e3b426a9eee
+mller|orahilly|authors of the staging scheme used|4333bee8c0494b538c813e3b426a9eee
+vaage|living embryos|study based on|4333bee8c0494b538c813e3b426a9eee
+vaage|wax reconstructions|study based on|4333bee8c0494b538c813e3b426a9eee
+vaage|fixed and partly sectioned material|study based on|4333bee8c0494b538c813e3b426a9eee
+ferguson|alligator|study subject|4333bee8c0494b538c813e3b426a9eee
+hamburger|chick|study subject|4333bee8c0494b538c813e3b426a9eee
+alligator|ferguson|describes the development stages in|77bdc15292014378a81717fc39f649ff
+chick|hamburger and hamilton|classical descriptions of development stages|77bdc15292014378a81717fc39f649ff
+diencephalon|development|early stages of|77bdc15292014378a81717fc39f649ff
+chick stages|hours|approximated based on classical descriptions|77bdc15292014378a81717fc39f649ff
+temperature|species|did not influence staging|77bdc15292014378a81717fc39f649ff
+egg age|stage|vary after stage 8 and before|77bdc15292014378a81717fc39f649ff
+stage 11.5|day 12.5|occurs at|77bdc15292014378a81717fc39f649ff
+alligator study|chick (vaage, 1969)|provides a time frame for compartment and boundary formation in the diencephalon|77bdc15292014378a81717fc39f649ff
+humans (mller and orahilly, 1997)|diencephalon development|relation to gestation|77bdc15292014378a81717fc39f649ff
+diencephalic neuromeres|chick counterparts|appear at the same stage|70bccee6f6d54978a5a22ea39171d8fb
+present observations|early diencephalon development in chick and humans|differ in whether synencephalon remains a single unit or divides into two|70bccee6f6d54978a5a22ea39171d8fb
+synencephalon|anterior segment|divides into|70bccee6f6d54978a5a22ea39171d8fb
+synencephalon|posterior segment|divides into|70bccee6f6d54978a5a22ea39171d8fb
+others' experimental data|division into anterior and posterior components|supports|70bccee6f6d54978a5a22ea39171d8fb
+most studies|single division|recognize|70bccee6f6d54978a5a22ea39171d8fb
+alligator|diencephalic development|has relation with|0fb8898454be437ea8cda90c5fc7aa2b
+parencephalon anterior|ventral thalamus or prethalamus|is destined to become|0fb8898454be437ea8cda90c5fc7aa2b
+parencephalon posterior|dorsal thalamus and epithalamus or thalamus|is the presumptive|0fb8898454be437ea8cda90c5fc7aa2b
+synencephalon|anlage for pretectum|is anlage for|0fb8898454be437ea8cda90c5fc7aa2b
+synencephalon|pretectum anterior and pretectum posterior|has two divisions recognized as|0fb8898454be437ea8cda90c5fc7aa2b
+parencephalon anterior|parencephalon posterior|is separated by|f1fa2dacb94c413e906eca383de62bd2
+zona limitans interparencephalica|zona limitans intrathalamica|might correspond to part or all of|f1fa2dacb94c413e906eca383de62bd2
+zona limitans interparencephalica|additional markers|required to confirm relationship with|f1fa2dacb94c413e906eca383de62bd2
+this region|separate compartment|has suggested to be|f1fa2dacb94c413e906eca383de62bd2
+present observations|purely morphological data|cannot determine the status of|f1fa2dacb94c413e906eca383de62bd2
+diencephalon|development|has development|7f7fd241cb5b4346a36c31cd7259fd6a
+transverse plane|single segment|is a view of|7f7fd241cb5b4346a36c31cd7259fd6a
+presumptive alar plate|components|comprises|7f7fd241cb5b4346a36c31cd7259fd6a
+presumptive basal plate region|components|part of|7f7fd241cb5b4346a36c31cd7259fd6a
+neuromeres|forebrain|related to|7f7fd241cb5b4346a36c31cd7259fd6a
+prosomeres|forebrain|related to|7f7fd241cb5b4346a36c31cd7259fd6a
+alligator|diencephalon development|study subject of|7f7fd241cb5b4346a36c31cd7259fd6a
+keynes|lumsden|co-researchers who have suggested criteria for developmental significance|0143cc5f03bb47eba20c806de7ef7c12
+neuromere|developmental significance|relation between the two, where neuromeres need to meet certain criteria to be of developmental significance|0143cc5f03bb47eba20c806de7ef7c12
+compartments|segmental pattern|pattern of cell proliferation in compartments|0143cc5f03bb47eba20c806de7ef7c12
+neuromeres|cell proliferation|precedence or production relationship between neuromeres and cell proliferation|0143cc5f03bb47eba20c806de7ef7c12
+borders|barriers to cell mixing|function of borders in creating lineage restrictions|0143cc5f03bb47eba20c806de7ef7c12
+regulatory genes|neuromere(s)|expression pattern relationship between regulatory genes and neuromere(s)|0143cc5f03bb47eba20c806de7ef7c12
+rhombomeres|developing chick hindbrain|relationship between rhombomeres and the developing chick hindbrain, where they satisfy certain criteria|0143cc5f03bb47eba20c806de7ef7c12
+forebrain|diencephalon|sub-division of forebrain with different interpretations in diencephalon development|0143cc5f03bb47eba20c806de7ef7c12
+neuromeres|diencephalon|The first researchers to examine this problem using methodology to address the four criteria to determine whether neuromeres in the diencephalon were of developmental significance.|e6898cb7de914da7883af4a131ea03af
+neuromeres|lineage restrictions|boundaries between neuromeres represent lineage restrictions|e6898cb7de914da7883af4a131ea03af
+regulatory genes|borders|certain putative regulatory genes corresponding to borders|e6898cb7de914da7883af4a131ea03af
+diencephalic segments|fiber tracts|specific fiber tracts formed boundaries between segments|e6898cb7de914da7883af4a131ea03af
+parencephalon anterior (d1)|parencephalon posterior (d2)|the four diencephalic compartments were labeled D1 to D4, and corresponded to the parencephalon anterior (D1), paren- cephalon posterior (D2)|e6898cb7de914da7883af4a131ea03af
+synencephalon anterior (d3)|synencephalon posterior (d4)|the four diencephalic compartments were labeled D1 to D4, and corresponded to the parencephalon anterior (D1), paren- cephalon posterior (D2), synencephalon anterior (D3), and synencephalon posterior (D4)|e6898cb7de914da7883af4a131ea03af
+hypothalamus|parencephalon anterior (d1)|The hypothalamus was considered part of D1 in this analysis.|e6898cb7de914da7883af4a131ea03af
+chick|larsen et al.|was re-investigated by using many of the same techniques|5c21a9eddc714dc088a2916880749445
+morphology|gene expression|employed by using these techniques|5c21a9eddc714dc088a2916880749445
+cell lineage restriction|acquisition of boundary specific phenotype|were employed by using these techniques|5c21a9eddc714dc088a2916880749445
+figdor and stern 1993|larsen et al. 2001|obtained different results and reached different conclusions regarding diencephalon compartment development|5c21a9eddc714dc088a2916880749445
+diencephalon|compartment development|differed in the conclusions reached regarding this development|5c21a9eddc714dc088a2916880749445
+synencephalon|parencephalon|exhibited neuromeric characters at its interface with the midbrain, but did not restrict cell mixing nor exhibit lineage restriction at their boundary|5c21a9eddc714dc088a2916880749445
+zona limitans intrathalamica|anterior and posterior parts|divided the parencephalon into these two parts|5c21a9eddc714dc088a2916880749445
+synencephalon|mesencephalon|displayed no cell lineage restriction nor cell boundary phenotype at their border|5c21a9eddc714dc088a2916880749445
+apical location|rhombomere borders|S-phase nuclei were localized at this location only in the zona limitans intrathalamica and at the synencephalonmesencephalon border|5c21a9eddc714dc088a2916880749445
+diencephalon|pattern of development|The diencephalon did not display a sectarian pattern of development|39e7e53a93a1405fbf9c331bc5080069
+alar parts|basal parts|Both alar and basal parts of each of the diencephalic segments showed neuroepithelial cell restriction at inter-segmental boundaries|39e7e53a93a1405fbf9c331bc5080069
+grafts|size limitation|One limitation is the size of the grafts|39e7e53a93a1405fbf9c331bc5080069
+cellular behavior|injury to embryonic donor tissue|The potential change in cellular behavior that might occur as a result of injury to embryonic donor tissue and the subsequent integration of the graft|39e7e53a93a1405fbf9c331bc5080069
+prosomeric model|morphological observations|The prosomeric model was initially based on morphological observations in chick|39e7e53a93a1405fbf9c331bc5080069
+prosomeric model|other vertebrates|The prosomeric model was subsequently extended to other vertebrates|39e7e53a93a1405fbf9c331bc5080069
+pritz brain behav evol|journal|The context refers to this journal article|c3c4e29e9d7f4c34adf86b82734173ab
+gene expression mapping|influence|Gene expression mapping heavily influenced the territories and boundaries of prosomere 1, 2, and 3|c3c4e29e9d7f4c34adf86b82734173ab
+prosomere 1 (synencephalon)|territory|The territory of prosomere 1 was re-evaluated and re-defined|c3c4e29e9d7f4c34adf86b82734173ab
+prosomere 2 (parencephalon posteri- or)|territory|The territory of prosomere 2 was re-evaluated and re-defined|c3c4e29e9d7f4c34adf86b82734173ab
+prosomere 3 (parencephalon anterior)|territory|The territory of prosomere 3 was re-evaluated and re-defined|c3c4e29e9d7f4c34adf86b82734173ab
+puelles and rubenstein, 2003|reference|This reference is cited in the context as providing information on the prosomeric model|c3c4e29e9d7f4c34adf86b82734173ab
+prosomeric model|approach|The prosomeric model was an approach to correlate morphological observations with gene expression data|c3c4e29e9d7f4c34adf86b82734173ab
+neuromeres|features|Other developmentally significant features of neuromeres have yet to be investigated|c3c4e29e9d7f4c34adf86b82734173ab
+alligator|diencephalic subdivisions|The time course and pattern of formation of diencephalic subdivisions from a single compartment in Alligator were examined|c3c4e29e9d7f4c34adf86b82734173ab
+secondary prosencephalon|diencephalon|had more readily identifiable boundaries and compartments|73b41fbc2a3f43fe8b74cf2a73ae83aa
+secondary prosencephalic subdivisions|forebrain|were not described initially based on the appearance of acetylcholine-positive neuroblasts|73b41fbc2a3f43fe8b74cf2a73ae83aa
+gene expression patterns|transverse regions|postulated within the secondary prosencephalon|73b41fbc2a3f43fe8b74cf2a73ae83aa
+molecularly distinct transverse regions|secondary prosencephalic subdivisions|were best interpreted as non-neuromeric subdivisions because interneuromeric boundaries did not extend from the roof plate to the floor plate|73b41fbc2a3f43fe8b74cf2a73ae83aa
+acetylcholine-positive neuroblasts|secondary prosencephalic subdivisions|initially used to describe the appearance of neuroblasts|73b41fbc2a3f43fe8b74cf2a73ae83aa
+mller|orahilly|shared the same observation|424d248cab6145a4be1be43e63b0250b
+vaage|puelles et al.|made similar observations|424d248cab6145a4be1be43e63b0250b
+larsen et al.|present study|shared the same findings|424d248cab6145a4be1be43e63b0250b
+alligator|diencephalon|related to|424d248cab6145a4be1be43e63b0250b
+amniotes|vertebrates|belong to the same group|424d248cab6145a4be1be43e63b0250b
+alligator diencephalon|adult diencephalons|distinguish from each other|424d248cab6145a4be1be43e63b0250b
+molecular events|different adult diencephalons|responsible for|424d248cab6145a4be1be43e63b0250b
+molecules|birds|Early origins of modern|62232c1f6a924cccbc868b193a11f9b4
+mammals|birds|Early origins of modern|62232c1f6a924cccbc868b193a11f9b4
+neuromeres|vertebrates|Central tube in vertebrates|62232c1f6a924cccbc868b193a11f9b4
+migration areas|vertebrate central tube|Development of neuromeres|62232c1f6a924cccbc868b193a11f9b4
+early histogenesis|central nervous system|Morphogenesis of the cen- tral nervous system in vertebrates|62232c1f6a924cccbc868b193a11f9b4
+dlx-1|forebrain|Spatially restricted expression in mouse forebrain|62232c1f6a924cccbc868b193a11f9b4
+dlx-2|forebrain|Spatially restricted expression in mouse forebrain|62232c1f6a924cccbc868b193a11f9b4
+gbx-2|forebrain|Spatially restricted expression in mouse forebrain|62232c1f6a924cccbc868b193a11f9b4
+wnt-3|forebrain|Spatially restricted expression in mouse forebrain|62232c1f6a924cccbc868b193a11f9b4
+crocodilians|reproduction|Embryology and reproductive biology|62232c1f6a924cccbc868b193a11f9b4
+segmental organization|diencephalon|Embryonic day 12.5 mouse forebrain|62232c1f6a924cccbc868b193a11f9b4
+gribnau aa|morphogen-esis of the brain|Studied morphogenesis of the brain in staged rhesus monkey.|f8e5c5a891af42c88b757da5771a4f52
+hamburger v|normal stages in the development of the chick embryo|Described a series of normal stages in the development of the chick embryo.|f8e5c5a891af42c88b757da5771a4f52
+hedges sb|molecular evidence for the origin of birds|Presented molecular evidence for the origin of birds.|f8e5c5a891af42c88b757da5771a4f52
+kage t|morphogenesis and regionalization of the medaka embry- onic brain|Explored morphogenesis and regionalization of the medaka embryonic brain.|f8e5c5a891af42c88b757da5771a4f52
+keynes r|segmentation and the origin of regional diversity in the vertebrate central nervous system|Investigated segmentation and the origin of regional diversity in the vertebrate central nervous system.|f8e5c5a891af42c88b757da5771a4f52
+keyser a|development of the dien- cephalon of the chinese hamster|Explored the development of the dien-cephalon of the Chinese hamster.|f8e5c5a891af42c88b757da5771a4f52
+kiecker c|hedgehog signalling from the zli regulates diencephalic re- gional identity|Described how hedgehog signaling from the ZLI regulates diencephalic regional identity.|f8e5c5a891af42c88b757da5771a4f52
+kiecker c|compartments and their boundaries in vertebrate brain de- velopment|Explored compartments and their boundaries in vertebrate brain development.|f8e5c5a891af42c88b757da5771a4f52
+kumar s|molecular time-scale for vertebrate evolution|Presented a molecular time-scale for vertebrate evolution.|f8e5c5a891af42c88b757da5771a4f52
+larsen cw|boundary formation and compartition in the avian diencephalon|Investigated boundary formation and compartition in the avian diencephalon.|f8e5c5a891af42c88b757da5771a4f52
+diencephalon|avian|The diencephalon is studied in the context of avian development.|59a0ce942d734346b45b28ec67a0862d
+boundary formation|compartition|Boundary formation and compartition are related processes in the developing diencephalon.|59a0ce942d734346b45b28ec67a0862d
+patterning|developing diencephalon|The developing diencephalon requires proper patterning to occur.|59a0ce942d734346b45b28ec67a0862d
+segmentation|hindbrain|Segmentation is a process that occurs in the developing hindbrain.|59a0ce942d734346b45b28ec67a0862d
+neuromeres|human embryos|The timing and sequence of appearance of neuromeres are studied in human embryos.|59a0ce942d734346b45b28ec67a0862d
+morphogenesis|central nervous system|Morphogenesis is a process that occurs in the development of the central nervous system.|59a0ce942d734346b45b28ec67a0862d
+cell|culture|are related in the context of studying mammalian cells|db5b578ebb1e4aceb4fff77f854b203f
+micro-tubules|'-tubulin|have a relationship as components of mammalian cells|db5b578ebb1e4aceb4fff77f854b203f
+lamprey|forebrain|are related in the context of studying its development and anatomy|db5b578ebb1e4aceb4fff77f854b203f
+reptilian|embryo|are related in the context of studying rhombomere development|db5b578ebb1e4aceb4fff77f854b203f
+vertebrate|central nervous system|are related in the context of comparing and understanding their development|db5b578ebb1e4aceb4fff77f854b203f
+forebrain|development|have a relationship in the context of studying brain segmentation and anatomy|db5b578ebb1e4aceb4fff77f854b203f
+chick|embryo|are related in the context of studying early embryonic development|db5b578ebb1e4aceb4fff77f854b203f
+mouse|forebrain|are related in the context of studying gene expression and development|db5b578ebb1e4aceb4fff77f854b203f
+embryology|zwischenhirn|study about|54a980742dfb4db38d12cdce557a6993
+evolution|development|theory of|54a980742dfb4db38d12cdce557a6993
+forebrain|patterning|model for|54a980742dfb4db38d12cdce557a6993
+hedgehog signalling|diencephalon patterning|orchestrates|54a980742dfb4db38d12cdce557a6993
+thalamus|cortical function|exploration of role in|54a980742dfb4db38d12cdce557a6993
+neural precursor cells|neurofilament proteins|expression in|54a980742dfb4db38d12cdce557a6993
+neural tube segmentation|chick embryos|study of|54a980742dfb4db38d12cdce557a6993
+origin of birds and crocodiles|nature|new look at in|54a980742dfb4db38d12cdce557a6993
+whetstone kn|martin ld|co-authors in a scientific paper|0c09260dae3c45d1a1b6ccc424e91e61
+birds|crocodiles|related concepts (origin)|0c09260dae3c45d1a1b6ccc424e91e61
+zebrafish forebrain|prosomeric domains|related concepts (development)|0c09260dae3c45d1a1b6ccc424e91e61
+lunatic fringe|forebrain|regulator of neural proliferation|0c09260dae3c45d1a1b6ccc424e91e61
+shh|zli|dependent formation|0c09260dae3c45d1a1b6ccc424e91e61
+dorsal diencephalon|zli|opposing signals|0c09260dae3c45d1a1b6ccc424e91e61

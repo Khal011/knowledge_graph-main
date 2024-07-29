@@ -1,0 +1,1367 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 900px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="abbreviations used in figures">abbreviations used in figures</option>
+                                
+                                    <option value="acetyl tub">acetyl tub</option>
+                                
+                                    <option value="ache">ache</option>
+                                
+                                    <option value="cv">cv</option>
+                                
+                                    <option value="d">d</option>
+                                
+                                    <option value="acetylated tubulin">acetylated tubulin</option>
+                                
+                                    <option value="diencephalon-mesencephalon border">diencephalon-mesencephalon border</option>
+                                
+                                    <option value="longitudinal fibers">longitudinal fibers</option>
+                                
+                                    <option value="microtubules">microtubules</option>
+                                
+                                    <option value="acetylated tubulin immunoreactivity">acetylated tubulin immunoreactivity</option>
+                                
+                                    <option value="longitudinal division">longitudinal division</option>
+                                
+                                    <option value="acetylcholine-positive neuroblasts">acetylcholine-positive neuroblasts</option>
+                                
+                                    <option value="secondary prosencephalic subdivisions">secondary prosencephalic subdivisions</option>
+                                
+                                    <option value="acetylcholinesterase">acetylcholinesterase</option>
+                                
+                                    <option value="glia or cells">glia or cells</option>
+                                
+                                    <option value="alar parencephalon posterior">alar parencephalon posterior</option>
+                                
+                                    <option value="other alar territories">other alar territories</option>
+                                
+                                    <option value="alar parts">alar parts</option>
+                                
+                                    <option value="basal parts">basal parts</option>
+                                
+                                    <option value="alar plate">alar plate</option>
+                                
+                                    <option value="basal plate">basal plate</option>
+                                
+                                    <option value="alligator">alligator</option>
+                                
+                                    <option value="chick">chick</option>
+                                
+                                    <option value="diencephalic development">diencephalic development</option>
+                                
+                                    <option value="diencephalic subdivisions">diencephalic subdivisions</option>
+                                
+                                    <option value="diencephalon">diencephalon</option>
+                                
+                                    <option value="diencephalon development">diencephalon development</option>
+                                
+                                    <option value="ferguson">ferguson</option>
+                                
+                                    <option value="humans">humans</option>
+                                
+                                    <option value="obser-vations">obser-vations</option>
+                                
+                                    <option value="present study">present study</option>
+                                
+                                    <option value="secondary prosencephalon">secondary prosencephalon</option>
+                                
+                                    <option value="development">development</option>
+                                
+                                    <option value="early diencephalon development">early diencephalon development</option>
+                                
+                                    <option value="lizard">lizard</option>
+                                
+                                    <option value="vertebrates">vertebrates</option>
+                                
+                                    <option value="alligator diencephalon">alligator diencephalon</option>
+                                
+                                    <option value="adult diencephalons">adult diencephalons</option>
+                                
+                                    <option value="alligator diencephalon development">alligator diencephalon development</option>
+                                
+                                    <option value="antibodies">antibodies</option>
+                                
+                                    <option value="alligator eggs">alligator eggs</option>
+                                
+                                    <option value="rockefeller wildlife refuge">rockefeller wildlife refuge</option>
+                                
+                                    <option value="alligator mississipiensis">alligator mississipiensis</option>
+                                
+                                    <option value="reptiles">reptiles</option>
+                                
+                                    <option value="american alligator">american alligator</option>
+                                
+                                    <option value="alligator study">alligator study</option>
+                                
+                                    <option value="chick (vaage, 1969)">chick (vaage, 1969)</option>
+                                
+                                    <option value="amniotes">amniotes</option>
+                                
+                                    <option value="amphibians">amphibians</option>
+                                
+                                    <option value="newt">newt</option>
+                                
+                                    <option value="anterior parencephalon">anterior parencephalon</option>
+                                
+                                    <option value="anti-neural cell adhesion molecule">anti-neural cell adhesion molecule</option>
+                                
+                                    <option value="diencephalic borders">diencephalic borders</option>
+                                
+                                    <option value="compartment">compartment</option>
+                                
+                                    <option value="histochemical markers">histochemical markers</option>
+                                
+                                    <option value="monoclonal mouse anti-acetylated tubulin">monoclonal mouse anti-acetylated tubulin</option>
+                                
+                                    <option value="monoclonal mouse anti-glial fibrillary acid protein (gfap)">monoclonal mouse anti-glial fibrillary acid protein (gfap)</option>
+                                
+                                    <option value="monoclonal mouse anti-growth-associated protein 43 (gap 43)">monoclonal mouse anti-growth-associated protein 43 (gap 43)</option>
+                                
+                                    <option value="monoclonal mouse anti-neural cell adhesion molecule (n-cam)">monoclonal mouse anti-neural cell adhesion molecule (n-cam)</option>
+                                
+                                    <option value="mouse monoclonal anti-acetylcholinesterase">mouse monoclonal anti-acetylcholinesterase</option>
+                                
+                                    <option value="mouse monoclonal anti-vimentin">mouse monoclonal anti-vimentin</option>
+                                
+                                    <option value="polyclonal rabbit anti-calretinin">polyclonal rabbit anti-calretinin</option>
+                                
+                                    <option value="apical location">apical location</option>
+                                
+                                    <option value="rhombomere borders">rhombomere borders</option>
+                                
+                                    <option value="bat">bat</option>
+                                
+                                    <option value="mammals">mammals</option>
+                                
+                                    <option value="bird">bird</option>
+                                
+                                    <option value="birds">birds</option>
+                                
+                                    <option value="crocodiles">crocodiles</option>
+                                
+                                    <option value="crocodilians">crocodilians</option>
+                                
+                                    <option value="molecules">molecules</option>
+                                
+                                    <option value="blocks">blocks</option>
+                                
+                                    <option value="pbs (0.1 m at ph 7.2)">pbs (0.1 m at ph 7.2)</option>
+                                
+                                    <option value="sucrose">sucrose</option>
+                                
+                                    <option value="borders">borders</option>
+                                
+                                    <option value="barriers to cell mixing">barriers to cell mixing</option>
+                                
+                                    <option value="forebrain compartments">forebrain compartments</option>
+                                
+                                    <option value="regulatory genes">regulatory genes</option>
+                                
+                                    <option value="boundary formation">boundary formation</option>
+                                
+                                    <option value="compartition">compartition</option>
+                                
+                                    <option value="brain">brain</option>
+                                
+                                    <option value="behav evol">behav evol</option>
+                                
+                                    <option value="evol">evol</option>
+                                
+                                    <option value="evolution">evolution</option>
+                                
+                                    <option value="pritz">pritz</option>
+                                
+                                    <option value="brain growth during development">brain growth during development</option>
+                                
+                                    <option value="plane of section">plane of section</option>
+                                
+                                    <option value="brains">brains</option>
+                                
+                                    <option value="gelatin">gelatin</option>
+                                
+                                    <option value="histochemistry and immunocytochemistry">histochemistry and immunocytochemistry</option>
+                                
+                                    <option value="isthmus">isthmus</option>
+                                
+                                    <option value="bright field illumination">bright field illumination</option>
+                                
+                                    <option value="histological analysis process">histological analysis process</option>
+                                
+                                    <option value="calretinin">calretinin</option>
+                                
+                                    <option value="cells">cells</option>
+                                
+                                    <option value="calretinin immunoreactivity">calretinin immunoreactivity</option>
+                                
+                                    <option value="dorsoventral division">dorsoventral division</option>
+                                
+                                    <option value="camera lucida drawing tube">camera lucida drawing tube</option>
+                                
+                                    <option value="leitz microscope">leitz microscope</option>
+                                
+                                    <option value="cell">cell</option>
+                                
+                                    <option value="culture">culture</option>
+                                
+                                    <option value="cell lineage restriction">cell lineage restriction</option>
+                                
+                                    <option value="acquisition of boundary specific phenotype">acquisition of boundary specific phenotype</option>
+                                
+                                    <option value="cellular behavior">cellular behavior</option>
+                                
+                                    <option value="injury to embryonic donor tissue">injury to embryonic donor tissue</option>
+                                
+                                    <option value="cephalon">cephalon</option>
+                                
+                                    <option value="synencephalon">synencephalon</option>
+                                
+                                    <option value="embryo">embryo</option>
+                                
+                                    <option value="hamburger and hamilton">hamburger and hamilton</option>
+                                
+                                    <option value="larsen et al.">larsen et al.</option>
+                                
+                                    <option value="vaage">vaage</option>
+                                
+                                    <option value="hamburger">hamburger</option>
+                                
+                                    <option value="chick stages">chick stages</option>
+                                
+                                    <option value="hours">hours</option>
+                                
+                                    <option value="chick vaage, 1969">chick vaage, 1969</option>
+                                
+                                    <option value="color images">color images</option>
+                                
+                                    <option value="black and white photos">black and white photos</option>
+                                
+                                    <option value="compartments">compartments</option>
+                                
+                                    <option value="segmental pattern">segmental pattern</option>
+                                
+                                    <option value="controls for nonspecific staining">controls for nonspecific staining</option>
+                                
+                                    <option value="omission of the primary antibody from the reaction">omission of the primary antibody from the reaction</option>
+                                
+                                    <option value="substitution of normal rabbit or mouse serum">substitution of normal rabbit or mouse serum</option>
+                                
+                                    <option value="cresyl violet">cresyl violet</option>
+                                
+                                    <option value="material">material</option>
+                                
+                                    <option value="fixatives">fixatives</option>
+                                
+                                    <option value="peanut agglutinin">peanut agglutinin</option>
+                                
+                                    <option value="reproduction">reproduction</option>
+                                
+                                    <option value="d2 compartment mller and orahilly, 1997">d2 compartment mller and orahilly, 1997</option>
+                                
+                                    <option value="dab solution">dab solution</option>
+                                
+                                    <option value="incubation">incubation</option>
+                                
+                                    <option value="reaction">reaction</option>
+                                
+                                    <option value="ontogeny">ontogeny</option>
+                                
+                                    <option value="events">events</option>
+                                
+                                    <option value="forebrain">forebrain</option>
+                                
+                                    <option value="diencephalic compartment">diencephalic compartment</option>
+                                
+                                    <option value="par-encephalon">par-encephalon</option>
+                                
+                                    <option value="diencephalic divisions">diencephalic divisions</option>
+                                
+                                    <option value="histochemical stain">histochemical stain</option>
+                                
+                                    <option value="three segment stage">three segment stage</option>
+                                
+                                    <option value="diencephalic neuromeres">diencephalic neuromeres</option>
+                                
+                                    <option value="chick counterparts">chick counterparts</option>
+                                
+                                    <option value="diencephalic segments">diencephalic segments</option>
+                                
+                                    <option value="alar plate regions">alar plate regions</option>
+                                
+                                    <option value="early dien-c cephalon development">early dien-c cephalon development</option>
+                                
+                                    <option value="fiber tracts">fiber tracts</option>
+                                
+                                    <option value="four segment stage">four segment stage</option>
+                                
+                                    <option value="developmentally significant criteria">developmentally significant criteria</option>
+                                
+                                    <option value="markers">markers</option>
+                                
+                                    <option value="avian">avian</option>
+                                
+                                    <option value="compartment development">compartment development</option>
+                                
+                                    <option value="division">division</option>
+                                
+                                    <option value="dorso-ventral axes">dorso-ventral axes</option>
+                                
+                                    <option value="mesencephalon">mesencephalon</option>
+                                
+                                    <option value="parencephalon">parencephalon</option>
+                                
+                                    <option value="pattern of development">pattern of development</option>
+                                
+                                    <option value="rosto-caudal axes">rosto-caudal axes</option>
+                                
+                                    <option value="single compartment">single compartment</option>
+                                
+                                    <option value="syn-encephalon">syn-encephalon</option>
+                                
+                                    <option value="telencephalon">telencephalon</option>
+                                
+                                    <option value="transverse subdivisions">transverse subdivisions</option>
+                                
+                                    <option value="transverse zones">transverse zones</option>
+                                
+                                    <option value="early stages of development">early stages of development</option>
+                                
+                                    <option value="neuromeres">neuromeres</option>
+                                
+                                    <option value="organization">organization</option>
+                                
+                                    <option value="pretectum">pretectum</option>
+                                
+                                    <option value="segmental organization">segmental organization</option>
+                                
+                                    <option value="early diencephalon development in alligator">early diencephalon development in alligator</option>
+                                
+                                    <option value="humans (mller and orahilly, 1997)">humans (mller and orahilly, 1997)</option>
+                                
+                                    <option value="dlx-1">dlx-1</option>
+                                
+                                    <option value="dlx-2">dlx-2</option>
+                                
+                                    <option value="dorsal diencephalon">dorsal diencephalon</option>
+                                
+                                    <option value="zli">zli</option>
+                                
+                                    <option value="birds (chick)">birds (chick)</option>
+                                
+                                    <option value="mammals (humans)">mammals (humans)</option>
+                                
+                                    <option value="single segment stage">single segment stage</option>
+                                
+                                    <option value="studies">studies</option>
+                                
+                                    <option value="early hindbrain development">early hindbrain development</option>
+                                
+                                    <option value="alligator pritz, 1999">alligator pritz, 1999</option>
+                                
+                                    <option value="early histogenesis">early histogenesis</option>
+                                
+                                    <option value="central nervous system">central nervous system</option>
+                                
+                                    <option value="egg age">egg age</option>
+                                
+                                    <option value="stage">stage</option>
+                                
+                                    <option value="eggs">eggs</option>
+                                
+                                    <option value="vermiculite and water">vermiculite and water</option>
+                                
+                                    <option value="embryology">embryology</option>
+                                
+                                    <option value="zwischenhirn">zwischenhirn</option>
+                                
+                                    <option value="embryos">embryos</option>
+                                
+                                    <option value="stages">stages</option>
+                                
+                                    <option value="tissues">tissues</option>
+                                
+                                    <option value="figdor and stern 1993">figdor and stern 1993</option>
+                                
+                                    <option value="larsen et al. 2001">larsen et al. 2001</option>
+                                
+                                    <option value="histochemical and immunocytochemical experiments">histochemical and immunocytochemical experiments</option>
+                                
+                                    <option value="morphological stains">morphological stains</option>
+                                
+                                    <option value="dorsoventral">dorsoventral</option>
+                                
+                                    <option value="patterning">patterning</option>
+                                
+                                    <option value="rostrocaudal">rostrocaudal</option>
+                                
+                                    <option value="tissue">tissue</option>
+                                
+                                    <option value="gbx-2">gbx-2</option>
+                                
+                                    <option value="lamprey">lamprey</option>
+                                
+                                    <option value="lunatic fringe">lunatic fringe</option>
+                                
+                                    <option value="morphological techniques">morphological techniques</option>
+                                
+                                    <option value="mouse">mouse</option>
+                                
+                                    <option value="prosomeres">prosomeres</option>
+                                
+                                    <option value="wnt-3">wnt-3</option>
+                                
+                                    <option value="forebrain divisions">forebrain divisions</option>
+                                
+                                    <option value="free floating sections">free floating sections</option>
+                                
+                                    <option value="washed">washed</option>
+                                
+                                    <option value="gene expression mapping">gene expression mapping</option>
+                                
+                                    <option value="influence">influence</option>
+                                
+                                    <option value="gene expression patterns">gene expression patterns</option>
+                                
+                                    <option value="transverse regions">transverse regions</option>
+                                
+                                    <option value="gene or transcription factor expression">gene or transcription factor expression</option>
+                                
+                                    <option value="individual units">individual units</option>
+                                
+                                    <option value="grafts">grafts</option>
+                                
+                                    <option value="size limitation">size limitation</option>
+                                
+                                    <option value="gribnau aa">gribnau aa</option>
+                                
+                                    <option value="morphogen-esis of the brain">morphogen-esis of the brain</option>
+                                
+                                    <option value="hamilton">hamilton</option>
+                                
+                                    <option value="hamburger v">hamburger v</option>
+                                
+                                    <option value="normal stages in the development of the chick embryo">normal stages in the development of the chick embryo</option>
+                                
+                                    <option value="hamster">hamster</option>
+                                
+                                    <option value="hedgehog signalling">hedgehog signalling</option>
+                                
+                                    <option value="diencephalon patterning">diencephalon patterning</option>
+                                
+                                    <option value="hedges sb">hedges sb</option>
+                                
+                                    <option value="molecular evidence for the origin of birds">molecular evidence for the origin of birds</option>
+                                
+                                    <option value="hindbrain">hindbrain</option>
+                                
+                                    <option value="rhombomeres">rhombomeres</option>
+                                
+                                    <option value="segmentation">segmentation</option>
+                                
+                                    <option value="hrp-peanut lectin">hrp-peanut lectin</option>
+                                
+                                    <option value="incubated">incubated</option>
+                                
+                                    <option value="diencephalic segmentation">diencephalic segmentation</option>
+                                
+                                    <option value="mller and orahilly">mller and orahilly</option>
+                                
+                                    <option value="humans mller and orahilly, 1997">humans mller and orahilly, 1997</option>
+                                
+                                    <option value="d1and d2">d1and d2</option>
+                                
+                                    <option value="hypothalamus">hypothalamus</option>
+                                
+                                    <option value="parencephalon anterior (d1)">parencephalon anterior (d1)</option>
+                                
+                                    <option value="immunocytochemical">immunocytochemical</option>
+                                
+                                    <option value="experiment">experiment</option>
+                                
+                                    <option value="kage t">kage t</option>
+                                
+                                    <option value="morphogenesis and regionalization of the medaka embry- onic brain">morphogenesis and regionalization of the medaka embry- onic brain</option>
+                                
+                                    <option value="keynes">keynes</option>
+                                
+                                    <option value="lumsden">lumsden</option>
+                                
+                                    <option value="keynes and lumsden (1990)">keynes and lumsden (1990)</option>
+                                
+                                    <option value="develop-mentally significant criteria">develop-mentally significant criteria</option>
+                                
+                                    <option value="keynes r">keynes r</option>
+                                
+                                    <option value="segmentation and the origin of regional diversity in the vertebrate central nervous system">segmentation and the origin of regional diversity in the vertebrate central nervous system</option>
+                                
+                                    <option value="keyser a">keyser a</option>
+                                
+                                    <option value="development of the dien- cephalon of the chinese hamster">development of the dien- cephalon of the chinese hamster</option>
+                                
+                                    <option value="kiecker c">kiecker c</option>
+                                
+                                    <option value="compartments and their boundaries in vertebrate brain de- velopment">compartments and their boundaries in vertebrate brain de- velopment</option>
+                                
+                                    <option value="hedgehog signalling from the zli regulates diencephalic re- gional identity">hedgehog signalling from the zli regulates diencephalic re- gional identity</option>
+                                
+                                    <option value="kumar s">kumar s</option>
+                                
+                                    <option value="molecular time-scale for vertebrate evolution">molecular time-scale for vertebrate evolution</option>
+                                
+                                    <option value="lampreys">lampreys</option>
+                                
+                                    <option value="sea lamprey">sea lamprey</option>
+                                
+                                    <option value="larsen cw">larsen cw</option>
+                                
+                                    <option value="boundary formation and compartition in the avian diencephalon">boundary formation and compartition in the avian diencephalon</option>
+                                
+                                    <option value="larsen et al., 2001">larsen et al., 2001</option>
+                                
+                                    <option value="mammal">mammal</option>
+                                
+                                    <option value="hyrax">hyrax</option>
+                                
+                                    <option value="opossum">opossum</option>
+                                
+                                    <option value="rhesus monkey">rhesus monkey</option>
+                                
+                                    <option value="medaka">medaka</option>
+                                
+                                    <option value="micro-tubules">micro-tubules</option>
+                                
+                                    <option value="'-tubulin">'-tubulin</option>
+                                
+                                    <option value="migration areas">migration areas</option>
+                                
+                                    <option value="vertebrate central tube">vertebrate central tube</option>
+                                
+                                    <option value="mller">mller</option>
+                                
+                                    <option value="orahilly">orahilly</option>
+                                
+                                    <option value="molecular events">molecular events</option>
+                                
+                                    <option value="different adult diencephalons">different adult diencephalons</option>
+                                
+                                    <option value="molecularly distinct transverse regions">molecularly distinct transverse regions</option>
+                                
+                                    <option value="morpho-logic features">morpho-logic features</option>
+                                
+                                    <option value="divisions of the diencephalon">divisions of the diencephalon</option>
+                                
+                                    <option value="morphogenesis">morphogenesis</option>
+                                
+                                    <option value="morphology">morphology</option>
+                                
+                                    <option value="gene expression">gene expression</option>
+                                
+                                    <option value="most studies">most studies</option>
+                                
+                                    <option value="single division">single division</option>
+                                
+                                    <option value="mounting">mounting</option>
+                                
+                                    <option value="sections">sections</option>
+                                
+                                    <option value="national institute of health guidelines">national institute of health guidelines</option>
+                                
+                                    <option value="procedures and protocols">procedures and protocols</option>
+                                
+                                    <option value="neural precursor cells">neural precursor cells</option>
+                                
+                                    <option value="neurofilament proteins">neurofilament proteins</option>
+                                
+                                    <option value="neural tube segmentation">neural tube segmentation</option>
+                                
+                                    <option value="chick embryos">chick embryos</option>
+                                
+                                    <option value="neuromere">neuromere</option>
+                                
+                                    <option value="developmental significance">developmental significance</option>
+                                
+                                    <option value="cell proliferation">cell proliferation</option>
+                                
+                                    <option value="features">features</option>
+                                
+                                    <option value="human embryos">human embryos</option>
+                                
+                                    <option value="lineage restrictions">lineage restrictions</option>
+                                
+                                    <option value="neuromeric bulges">neuromeric bulges</option>
+                                
+                                    <option value="interneuromeric ventricular ridges">interneuromeric ventricular ridges</option>
+                                
+                                    <option value="neuronal cell types">neuronal cell types</option>
+                                
+                                    <option value="aggregates">aggregates</option>
+                                
+                                    <option value="olympus microscope">olympus microscope</option>
+                                
+                                    <option value="digital camera">digital camera</option>
+                                
+                                    <option value="table 1">table 1</option>
+                                
+                                    <option value="origin of birds and crocodiles">origin of birds and crocodiles</option>
+                                
+                                    <option value="nature">nature</option>
+                                
+                                    <option value="others' experimental data">others' experimental data</option>
+                                
+                                    <option value="division into anterior and posterior components">division into anterior and posterior components</option>
+                                
+                                    <option value="others' observations">others' observations</option>
+                                
+                                    <option value="selection of markers">selection of markers</option>
+                                
+                                    <option value="p">p</option>
+                                
+                                    <option value="prosencephalon">prosencephalon</option>
+                                
+                                    <option value="panels">panels</option>
+                                
+                                    <option value="images">images</option>
+                                
+                                    <option value="pap complex">pap complex</option>
+                                
+                                    <option value="primary antibody">primary antibody</option>
+                                
+                                    <option value="anterior and posterior component">anterior and posterior component</option>
+                                
+                                    <option value="anterior compartment">anterior compartment</option>
+                                
+                                    <option value="anterior segment">anterior segment</option>
+                                
+                                    <option value="anterior unit">anterior unit</option>
+                                
+                                    <option value="anterior zones">anterior zones</option>
+                                
+                                    <option value="calretinin immunoreactive">calretinin immunoreactive</option>
+                                
+                                    <option value="parencephalon anterior">parencephalon anterior</option>
+                                
+                                    <option value="posterior compartment">posterior compartment</option>
+                                
+                                    <option value="posterior unit">posterior unit</option>
+                                
+                                    <option value="posterior zones">posterior zones</option>
+                                
+                                    <option value="zona limitans interparencephalica">zona limitans interparencephalica</option>
+                                
+                                    <option value="parencephalon posterior">parencephalon posterior</option>
+                                
+                                    <option value="ventral thalamus or prethalamus">ventral thalamus or prethalamus</option>
+                                
+                                    <option value="parencephalon posterior (d2)">parencephalon posterior (d2)</option>
+                                
+                                    <option value="dorsal thalamus and epithalamus or thalamus">dorsal thalamus and epithalamus or thalamus</option>
+                                
+                                    <option value="developing diencephalon">developing diencephalon</option>
+                                
+                                    <option value="histo-chemical preparations">histo-chemical preparations</option>
+                                
+                                    <option value="peanut agglutinin histochemistry">peanut agglutinin histochemistry</option>
+                                
+                                    <option value="methodology">methodology</option>
+                                
+                                    <option value="peanut agglutinin stained sections">peanut agglutinin stained sections</option>
+                                
+                                    <option value="thickness of the most lateral portion of the positively stained diencephalic mantle layer">thickness of the most lateral portion of the positively stained diencephalic mantle layer</option>
+                                
+                                    <option value="photos">photos</option>
+                                
+                                    <option value="adobe photoshop 7.0">adobe photoshop 7.0</option>
+                                
+                                    <option value="study">study</option>
+                                
+                                    <option value="present observations">present observations</option>
+                                
+                                    <option value="early diencephalon development in chick and humans">early diencephalon development in chick and humans</option>
+                                
+                                    <option value="purely morphological data">purely morphological data</option>
+                                
+                                    <option value="presumptive alar">presumptive alar</option>
+                                
+                                    <option value="presumptive alar plate">presumptive alar plate</option>
+                                
+                                    <option value="components">components</option>
+                                
+                                    <option value="presumptive basal plate region">presumptive basal plate region</option>
+                                
+                                    <option value="secondary antibody">secondary antibody</option>
+                                
+                                    <option value="pritz brain behav evol">pritz brain behav evol</option>
+                                
+                                    <option value="journal">journal</option>
+                                
+                                    <option value="animal care committee">animal care committee</option>
+                                
+                                    <option value="prosomere 1 (synencephalon)">prosomere 1 (synencephalon)</option>
+                                
+                                    <option value="territory">territory</option>
+                                
+                                    <option value="prosomere 2 (parencephalon posteri- or)">prosomere 2 (parencephalon posteri- or)</option>
+                                
+                                    <option value="prosomere 3 (parencephalon anterior)">prosomere 3 (parencephalon anterior)</option>
+                                
+                                    <option value="prosomeric model">prosomeric model</option>
+                                
+                                    <option value="approach">approach</option>
+                                
+                                    <option value="morphological observations">morphological observations</option>
+                                
+                                    <option value="other vertebrates">other vertebrates</option>
+                                
+                                    <option value="puelles and rubenstein, 2003">puelles and rubenstein, 2003</option>
+                                
+                                    <option value="reference">reference</option>
+                                
+                                    <option value="puelles et al., 1987">puelles et al., 1987</option>
+                                
+                                    <option value="neuromere(s)">neuromere(s)</option>
+                                
+                                    <option value="snake">snake</option>
+                                
+                                    <option value="reptilian">reptilian</option>
+                                
+                                    <option value="developing chick hindbrain">developing chick hindbrain</option>
+                                
+                                    <option value="sagittal and horizontal planes">sagittal and horizontal planes</option>
+                                
+                                    <option value="sagittal and horizontal planes of sections">sagittal and horizontal planes of sections</option>
+                                
+                                    <option value="alligator brain">alligator brain</option>
+                                
+                                    <option value="transferred">transferred</option>
+                                
+                                    <option value="sharkrays">sharkrays</option>
+                                
+                                    <option value="marine ray">marine ray</option>
+                                
+                                    <option value="shh">shh</option>
+                                
+                                    <option value="two segment stage">two segment stage</option>
+                                
+                                    <option value="slides">slides</option>
+                                
+                                    <option value="mounted">mounted</option>
+                                
+                                    <option value="sea turtle">sea turtle</option>
+                                
+                                    <option value="stage 11.5">stage 11.5</option>
+                                
+                                    <option value="day 12.5">day 12.5</option>
+                                
+                                    <option value="stage 12 brain">stage 12 brain</option>
+                                
+                                    <option value="lateral photo">lateral photo</option>
+                                
+                                    <option value="sagittal plane">sagittal plane</option>
+                                
+                                    <option value="anlage for pretectum">anlage for pretectum</option>
+                                
+                                    <option value="anterior">anterior</option>
+                                
+                                    <option value="anterior and posterior portion">anterior and posterior portion</option>
+                                
+                                    <option value="anterior subdivisions">anterior subdivisions</option>
+                                
+                                    <option value="posterior">posterior</option>
+                                
+                                    <option value="posterior portion">posterior portion</option>
+                                
+                                    <option value="posterior segment">posterior segment</option>
+                                
+                                    <option value="pretectum anterior and pretectum posterior">pretectum anterior and pretectum posterior</option>
+                                
+                                    <option value="subdivisions">subdivisions</option>
+                                
+                                    <option value="ventral parencephalon">ventral parencephalon</option>
+                                
+                                    <option value="synencephalon anterior (d3)">synencephalon anterior (d3)</option>
+                                
+                                    <option value="synencephalon posterior (d4)">synencephalon posterior (d4)</option>
+                                
+                                    <option value="synencephalon posterior">synencephalon posterior</option>
+                                
+                                    <option value="mes-encephalon">mes-encephalon</option>
+                                
+                                    <option value="t">t</option>
+                                
+                                    <option value="techniques">techniques</option>
+                                
+                                    <option value="histological staining">histological staining</option>
+                                
+                                    <option value="teleosts">teleosts</option>
+                                
+                                    <option value="zebrafish">zebrafish</option>
+                                
+                                    <option value="temperature">temperature</option>
+                                
+                                    <option value="species">species</option>
+                                
+                                    <option value="thalamus">thalamus</option>
+                                
+                                    <option value="cortical function">cortical function</option>
+                                
+                                    <option value="this region">this region</option>
+                                
+                                    <option value="separate compartment">separate compartment</option>
+                                
+                                    <option value="tissue preservation">tissue preservation</option>
+                                
+                                    <option value="freez- ing">freez- ing</option>
+                                
+                                    <option value="tissue sectioned transversally">tissue sectioned transversally</option>
+                                
+                                    <option value="zona limi- tans interparencephalica">zona limi- tans interparencephalica</option>
+                                
+                                    <option value="transversal diencephalic subdivisions">transversal diencephalic subdivisions</option>
+                                
+                                    <option value="identification">identification</option>
+                                
+                                    <option value="transverse dience- phalic zones">transverse dience- phalic zones</option>
+                                
+                                    <option value="respective borders">respective borders</option>
+                                
+                                    <option value="transverse diencephalic segments">transverse diencephalic segments</option>
+                                
+                                    <option value="presumed alar and basal plate">presumed alar and basal plate</option>
+                                
+                                    <option value="transverse plane">transverse plane</option>
+                                
+                                    <option value="single segment">single segment</option>
+                                
+                                    <option value="fixed and partly sectioned material">fixed and partly sectioned material</option>
+                                
+                                    <option value="living embryos">living embryos</option>
+                                
+                                    <option value="puelles et al.">puelles et al.</option>
+                                
+                                    <option value="wax reconstructions">wax reconstructions</option>
+                                
+                                    <option value="ventricular surface">ventricular surface</option>
+                                
+                                    <option value="pial surface">pial surface</option>
+                                
+                                    <option value="vertebrate">vertebrate</option>
+                                
+                                    <option value="experiments">experiments</option>
+                                
+                                    <option value="vimentin">vimentin</option>
+                                
+                                    <option value="radial glia">radial glia</option>
+                                
+                                    <option value="whetstone kn">whetstone kn</option>
+                                
+                                    <option value="martin ld">martin ld</option>
+                                
+                                    <option value="zebrafish forebrain">zebrafish forebrain</option>
+                                
+                                    <option value="prosomeric domains">prosomeric domains</option>
+                                
+                                    <option value="additional markers">additional markers</option>
+                                
+                                    <option value="border">border</option>
+                                
+                                    <option value="zona limitans intrathalamica">zona limitans intrathalamica</option>
+                                
+                                    <option value="anterior and posterior parts">anterior and posterior parts</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"group": 2, "id": "abbreviations used in figures", "label": "abbreviations used in figures", "shape": "dot", "size": 4}, {"group": 2, "id": "acetyl tub", "label": "acetyl tub", "shape": "dot", "size": 1}, {"group": 2, "id": "ache", "label": "ache", "shape": "dot", "size": 1}, {"group": 2, "id": "cv", "label": "cv", "shape": "dot", "size": 1}, {"group": 2, "id": "d", "label": "d", "shape": "dot", "size": 1}, {"group": 3, "id": "acetylated tubulin", "label": "acetylated tubulin", "shape": "dot", "size": 3}, {"group": 3, "id": "diencephalon-mesencephalon border", "label": "diencephalon-mesencephalon border", "shape": "dot", "size": 2}, {"group": 3, "id": "longitudinal fibers", "label": "longitudinal fibers", "shape": "dot", "size": 1}, {"group": 3, "id": "microtubules", "label": "microtubules", "shape": "dot", "size": 1}, {"group": 4, "id": "acetylated tubulin immunoreactivity", "label": "acetylated tubulin immunoreactivity", "shape": "dot", "size": 1}, {"group": 4, "id": "longitudinal division", "label": "longitudinal division", "shape": "dot", "size": 1}, {"group": 5, "id": "acetylcholine-positive neuroblasts", "label": "acetylcholine-positive neuroblasts", "shape": "dot", "size": 1}, {"group": 5, "id": "secondary prosencephalic subdivisions", "label": "secondary prosencephalic subdivisions", "shape": "dot", "size": 3}, {"group": 6, "id": "acetylcholinesterase", "label": "acetylcholinesterase", "shape": "dot", "size": 1}, {"group": 6, "id": "glia or cells", "label": "glia or cells", "shape": "dot", "size": 1}, {"group": 12, "id": "alar parencephalon posterior", "label": "alar parencephalon posterior", "shape": "dot", "size": 1}, {"group": 12, "id": "other alar territories", "label": "other alar territories", "shape": "dot", "size": 1}, {"group": 13, "id": "alar parts", "label": "alar parts", "shape": "dot", "size": 1}, {"group": 13, "id": "basal parts", "label": "basal parts", "shape": "dot", "size": 1}, {"group": 14, "id": "alar plate", "label": "alar plate", "shape": "dot", "size": 1}, {"group": 14, "id": "basal plate", "label": "basal plate", "shape": "dot", "size": 3}, {"group": 5, "id": "alligator", "label": "alligator", "shape": "dot", "size": 14}, {"group": 27, "id": "chick", "label": "chick", "shape": "dot", "size": 9}, {"group": 5, "id": "diencephalic development", "label": "diencephalic development", "shape": "dot", "size": 1}, {"group": 5, "id": "diencephalic subdivisions", "label": "diencephalic subdivisions", "shape": "dot", "size": 3}, {"group": 5, "id": "diencephalon", "label": "diencephalon", "shape": "dot", "size": 31}, {"group": 5, "id": "diencephalon development", "label": "diencephalon development", "shape": "dot", "size": 3}, {"group": 5, "id": "ferguson", "label": "ferguson", "shape": "dot", "size": 1}, {"group": 5, "id": "humans", "label": "humans", "shape": "dot", "size": 4}, {"group": 5, "id": "obser-vations", "label": "obser-vations", "shape": "dot", "size": 5}, {"group": 27, "id": "present study", "label": "present study", "shape": "dot", "size": 3}, {"group": 8, "id": "secondary prosencephalon", "label": "secondary prosencephalon", "shape": "dot", "size": 7}, {"group": 5, "id": "development", "label": "development", "shape": "dot", "size": 7}, {"group": 27, "id": "early diencephalon development", "label": "early diencephalon development", "shape": "dot", "size": 5}, {"group": 5, "id": "lizard", "label": "lizard", "shape": "dot", "size": 1}, {"group": 5, "id": "vertebrates", "label": "vertebrates", "shape": "dot", "size": 7}, {"group": 10, "id": "alligator diencephalon", "label": "alligator diencephalon", "shape": "dot", "size": 1}, {"group": 10, "id": "adult diencephalons", "label": "adult diencephalons", "shape": "dot", "size": 1}, {"group": 17, "id": "alligator diencephalon development", "label": "alligator diencephalon development", "shape": "dot", "size": 1}, {"group": 17, "id": "antibodies", "label": "antibodies", "shape": "dot", "size": 10}, {"group": 18, "id": "alligator eggs", "label": "alligator eggs", "shape": "dot", "size": 1}, {"group": 18, "id": "rockefeller wildlife refuge", "label": "rockefeller wildlife refuge", "shape": "dot", "size": 1}, {"group": 5, "id": "alligator mississipiensis", "label": "alligator mississipiensis", "shape": "dot", "size": 2}, {"group": 5, "id": "reptiles", "label": "reptiles", "shape": "dot", "size": 4}, {"group": 5, "id": "american alligator", "label": "american alligator", "shape": "dot", "size": 1}, {"group": 20, "id": "alligator study", "label": "alligator study", "shape": "dot", "size": 1}, {"group": 20, "id": "chick (vaage, 1969)", "label": "chick (vaage, 1969)", "shape": "dot", "size": 1}, {"group": 5, "id": "amniotes", "label": "amniotes", "shape": "dot", "size": 1}, {"group": 21, "id": "amphibians", "label": "amphibians", "shape": "dot", "size": 1}, {"group": 21, "id": "newt", "label": "newt", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior parencephalon", "label": "anterior parencephalon", "shape": "dot", "size": 1}, {"group": 23, "id": "anti-neural cell adhesion molecule", "label": "anti-neural cell adhesion molecule", "shape": "dot", "size": 1}, {"group": 23, "id": "diencephalic borders", "label": "diencephalic borders", "shape": "dot", "size": 1}, {"group": 17, "id": "compartment", "label": "compartment", "shape": "dot", "size": 1}, {"group": 17, "id": "histochemical markers", "label": "histochemical markers", "shape": "dot", "size": 1}, {"group": 17, "id": "monoclonal mouse anti-acetylated tubulin", "label": "monoclonal mouse anti-acetylated tubulin", "shape": "dot", "size": 1}, {"group": 17, "id": "monoclonal mouse anti-glial fibrillary acid protein (gfap)", "label": "monoclonal mouse anti-glial fibrillary acid protein (gfap)", "shape": "dot", "size": 1}, {"group": 17, "id": "monoclonal mouse anti-growth-associated protein 43 (gap 43)", "label": "monoclonal mouse anti-growth-associated protein 43 (gap 43)", "shape": "dot", "size": 1}, {"group": 17, "id": "monoclonal mouse anti-neural cell adhesion molecule (n-cam)", "label": "monoclonal mouse anti-neural cell adhesion molecule (n-cam)", "shape": "dot", "size": 1}, {"group": 17, "id": "mouse monoclonal anti-acetylcholinesterase", "label": "mouse monoclonal anti-acetylcholinesterase", "shape": "dot", "size": 1}, {"group": 17, "id": "mouse monoclonal anti-vimentin", "label": "mouse monoclonal anti-vimentin", "shape": "dot", "size": 1}, {"group": 17, "id": "polyclonal rabbit anti-calretinin", "label": "polyclonal rabbit anti-calretinin", "shape": "dot", "size": 1}, {"group": 24, "id": "apical location", "label": "apical location", "shape": "dot", "size": 1}, {"group": 24, "id": "rhombomere borders", "label": "rhombomere borders", "shape": "dot", "size": 1}, {"group": 5, "id": "bat", "label": "bat", "shape": "dot", "size": 1}, {"group": 5, "id": "mammals", "label": "mammals", "shape": "dot", "size": 9}, {"group": 27, "id": "bird", "label": "bird", "shape": "dot", "size": 1}, {"group": 27, "id": "birds", "label": "birds", "shape": "dot", "size": 6}, {"group": 27, "id": "crocodiles", "label": "crocodiles", "shape": "dot", "size": 1}, {"group": 27, "id": "crocodilians", "label": "crocodilians", "shape": "dot", "size": 2}, {"group": 27, "id": "molecules", "label": "molecules", "shape": "dot", "size": 1}, {"group": 29, "id": "blocks", "label": "blocks", "shape": "dot", "size": 2}, {"group": 29, "id": "pbs (0.1 m at ph 7.2)", "label": "pbs (0.1 m at ph 7.2)", "shape": "dot", "size": 1}, {"group": 29, "id": "sucrose", "label": "sucrose", "shape": "dot", "size": 1}, {"group": 26, "id": "borders", "label": "borders", "shape": "dot", "size": 3}, {"group": 26, "id": "barriers to cell mixing", "label": "barriers to cell mixing", "shape": "dot", "size": 1}, {"group": 26, "id": "forebrain compartments", "label": "forebrain compartments", "shape": "dot", "size": 1}, {"group": 26, "id": "regulatory genes", "label": "regulatory genes", "shape": "dot", "size": 2}, {"group": 30, "id": "boundary formation", "label": "boundary formation", "shape": "dot", "size": 1}, {"group": 30, "id": "compartition", "label": "compartition", "shape": "dot", "size": 1}, {"group": 5, "id": "brain", "label": "brain", "shape": "dot", "size": 4}, {"group": 5, "id": "behav evol", "label": "behav evol", "shape": "dot", "size": 1}, {"group": 5, "id": "evol", "label": "evol", "shape": "dot", "size": 1}, {"group": 5, "id": "evolution", "label": "evolution", "shape": "dot", "size": 4}, {"group": 5, "id": "pritz", "label": "pritz", "shape": "dot", "size": 1}, {"group": 32, "id": "brain growth during development", "label": "brain growth during development", "shape": "dot", "size": 1}, {"group": 32, "id": "plane of section", "label": "plane of section", "shape": "dot", "size": 2}, {"group": 5, "id": "brains", "label": "brains", "shape": "dot", "size": 4}, {"group": 5, "id": "gelatin", "label": "gelatin", "shape": "dot", "size": 1}, {"group": 5, "id": "histochemistry and immunocytochemistry", "label": "histochemistry and immunocytochemistry", "shape": "dot", "size": 1}, {"group": 5, "id": "isthmus", "label": "isthmus", "shape": "dot", "size": 1}, {"group": 33, "id": "bright field illumination", "label": "bright field illumination", "shape": "dot", "size": 1}, {"group": 33, "id": "histological analysis process", "label": "histological analysis process", "shape": "dot", "size": 1}, {"group": 3, "id": "calretinin", "label": "calretinin", "shape": "dot", "size": 2}, {"group": 3, "id": "cells", "label": "cells", "shape": "dot", "size": 1}, {"group": 34, "id": "calretinin immunoreactivity", "label": "calretinin immunoreactivity", "shape": "dot", "size": 1}, {"group": 34, "id": "dorsoventral division", "label": "dorsoventral division", "shape": "dot", "size": 1}, {"group": 35, "id": "camera lucida drawing tube", "label": "camera lucida drawing tube", "shape": "dot", "size": 1}, {"group": 35, "id": "leitz microscope", "label": "leitz microscope", "shape": "dot", "size": 1}, {"group": 36, "id": "cell", "label": "cell", "shape": "dot", "size": 1}, {"group": 36, "id": "culture", "label": "culture", "shape": "dot", "size": 1}, {"group": 7, "id": "cell lineage restriction", "label": "cell lineage restriction", "shape": "dot", "size": 1}, {"group": 7, "id": "acquisition of boundary specific phenotype", "label": "acquisition of boundary specific phenotype", "shape": "dot", "size": 1}, {"group": 37, "id": "cellular behavior", "label": "cellular behavior", "shape": "dot", "size": 1}, {"group": 37, "id": "injury to embryonic donor tissue", "label": "injury to embryonic donor tissue", "shape": "dot", "size": 1}, {"group": 8, "id": "cephalon", "label": "cephalon", "shape": "dot", "size": 1}, {"group": 8, "id": "synencephalon", "label": "synencephalon", "shape": "dot", "size": 18}, {"group": 27, "id": "embryo", "label": "embryo", "shape": "dot", "size": 3}, {"group": 27, "id": "hamburger and hamilton", "label": "hamburger and hamilton", "shape": "dot", "size": 1}, {"group": 27, "id": "larsen et al.", "label": "larsen et al.", "shape": "dot", "size": 2}, {"group": 27, "id": "vaage", "label": "vaage", "shape": "dot", "size": 5}, {"group": 27, "id": "hamburger", "label": "hamburger", "shape": "dot", "size": 2}, {"group": 41, "id": "chick stages", "label": "chick stages", "shape": "dot", "size": 1}, {"group": 41, "id": "hours", "label": "hours", "shape": "dot", "size": 1}, {"group": 5, "id": "chick vaage, 1969", "label": "chick vaage, 1969", "shape": "dot", "size": 1}, {"group": 28, "id": "color images", "label": "color images", "shape": "dot", "size": 1}, {"group": 28, "id": "black and white photos", "label": "black and white photos", "shape": "dot", "size": 1}, {"group": 42, "id": "compartments", "label": "compartments", "shape": "dot", "size": 1}, {"group": 42, "id": "segmental pattern", "label": "segmental pattern", "shape": "dot", "size": 1}, {"group": 44, "id": "controls for nonspecific staining", "label": "controls for nonspecific staining", "shape": "dot", "size": 2}, {"group": 44, "id": "omission of the primary antibody from the reaction", "label": "omission of the primary antibody from the reaction", "shape": "dot", "size": 1}, {"group": 44, "id": "substitution of normal rabbit or mouse serum", "label": "substitution of normal rabbit or mouse serum", "shape": "dot", "size": 1}, {"group": 46, "id": "cresyl violet", "label": "cresyl violet", "shape": "dot", "size": 3}, {"group": 46, "id": "material", "label": "material", "shape": "dot", "size": 2}, {"group": 46, "id": "fixatives", "label": "fixatives", "shape": "dot", "size": 3}, {"group": 46, "id": "peanut agglutinin", "label": "peanut agglutinin", "shape": "dot", "size": 3}, {"group": 27, "id": "reproduction", "label": "reproduction", "shape": "dot", "size": 1}, {"group": 5, "id": "d2 compartment mller and orahilly, 1997", "label": "d2 compartment mller and orahilly, 1997", "shape": "dot", "size": 1}, {"group": 47, "id": "dab solution", "label": "dab solution", "shape": "dot", "size": 2}, {"group": 47, "id": "incubation", "label": "incubation", "shape": "dot", "size": 1}, {"group": 47, "id": "reaction", "label": "reaction", "shape": "dot", "size": 1}, {"group": 5, "id": "ontogeny", "label": "ontogeny", "shape": "dot", "size": 3}, {"group": 5, "id": "events", "label": "events", "shape": "dot", "size": 1}, {"group": 5, "id": "forebrain", "label": "forebrain", "shape": "dot", "size": 19}, {"group": 8, "id": "diencephalic compartment", "label": "diencephalic compartment", "shape": "dot", "size": 2}, {"group": 8, "id": "par-encephalon", "label": "par-encephalon", "shape": "dot", "size": 1}, {"group": 53, "id": "diencephalic divisions", "label": "diencephalic divisions", "shape": "dot", "size": 2}, {"group": 53, "id": "histochemical stain", "label": "histochemical stain", "shape": "dot", "size": 1}, {"group": 53, "id": "three segment stage", "label": "three segment stage", "shape": "dot", "size": 1}, {"group": 39, "id": "diencephalic neuromeres", "label": "diencephalic neuromeres", "shape": "dot", "size": 1}, {"group": 39, "id": "chick counterparts", "label": "chick counterparts", "shape": "dot", "size": 1}, {"group": 15, "id": "diencephalic segments", "label": "diencephalic segments", "shape": "dot", "size": 4}, {"group": 15, "id": "alar plate regions", "label": "alar plate regions", "shape": "dot", "size": 1}, {"group": 15, "id": "early dien-c cephalon development", "label": "early dien-c cephalon development", "shape": "dot", "size": 1}, {"group": 15, "id": "fiber tracts", "label": "fiber tracts", "shape": "dot", "size": 1}, {"group": 15, "id": "four segment stage", "label": "four segment stage", "shape": "dot", "size": 1}, {"group": 5, "id": "developmentally significant criteria", "label": "developmentally significant criteria", "shape": "dot", "size": 1}, {"group": 5, "id": "markers", "label": "markers", "shape": "dot", "size": 1}, {"group": 5, "id": "avian", "label": "avian", "shape": "dot", "size": 1}, {"group": 5, "id": "compartment development", "label": "compartment development", "shape": "dot", "size": 1}, {"group": 5, "id": "division", "label": "division", "shape": "dot", "size": 1}, {"group": 5, "id": "dorso-ventral axes", "label": "dorso-ventral axes", "shape": "dot", "size": 1}, {"group": 8, "id": "mesencephalon", "label": "mesencephalon", "shape": "dot", "size": 4}, {"group": 8, "id": "parencephalon", "label": "parencephalon", "shape": "dot", "size": 15}, {"group": 5, "id": "pattern of development", "label": "pattern of development", "shape": "dot", "size": 1}, {"group": 5, "id": "rosto-caudal axes", "label": "rosto-caudal axes", "shape": "dot", "size": 1}, {"group": 5, "id": "single compartment", "label": "single compartment", "shape": "dot", "size": 1}, {"group": 5, "id": "syn-encephalon", "label": "syn-encephalon", "shape": "dot", "size": 1}, {"group": 8, "id": "telencephalon", "label": "telencephalon", "shape": "dot", "size": 4}, {"group": 5, "id": "transverse subdivisions", "label": "transverse subdivisions", "shape": "dot", "size": 1}, {"group": 5, "id": "transverse zones", "label": "transverse zones", "shape": "dot", "size": 1}, {"group": 5, "id": "early stages of development", "label": "early stages of development", "shape": "dot", "size": 1}, {"group": 5, "id": "neuromeres", "label": "neuromeres", "shape": "dot", "size": 7}, {"group": 5, "id": "organization", "label": "organization", "shape": "dot", "size": 2}, {"group": 5, "id": "pretectum", "label": "pretectum", "shape": "dot", "size": 1}, {"group": 5, "id": "segmental organization", "label": "segmental organization", "shape": "dot", "size": 1}, {"group": 5, "id": "early diencephalon development in alligator", "label": "early diencephalon development in alligator", "shape": "dot", "size": 1}, {"group": 5, "id": "humans (mller and orahilly, 1997)", "label": "humans (mller and orahilly, 1997)", "shape": "dot", "size": 1}, {"group": 5, "id": "dlx-1", "label": "dlx-1", "shape": "dot", "size": 1}, {"group": 5, "id": "dlx-2", "label": "dlx-2", "shape": "dot", "size": 1}, {"group": 59, "id": "dorsal diencephalon", "label": "dorsal diencephalon", "shape": "dot", "size": 1}, {"group": 59, "id": "zli", "label": "zli", "shape": "dot", "size": 2}, {"group": 27, "id": "birds (chick)", "label": "birds (chick)", "shape": "dot", "size": 1}, {"group": 27, "id": "mammals (humans)", "label": "mammals (humans)", "shape": "dot", "size": 1}, {"group": 27, "id": "single segment stage", "label": "single segment stage", "shape": "dot", "size": 2}, {"group": 27, "id": "studies", "label": "studies", "shape": "dot", "size": 2}, {"group": 19, "id": "early hindbrain development", "label": "early hindbrain development", "shape": "dot", "size": 1}, {"group": 19, "id": "alligator pritz, 1999", "label": "alligator pritz, 1999", "shape": "dot", "size": 1}, {"group": 38, "id": "early histogenesis", "label": "early histogenesis", "shape": "dot", "size": 1}, {"group": 38, "id": "central nervous system", "label": "central nervous system", "shape": "dot", "size": 3}, {"group": 27, "id": "egg age", "label": "egg age", "shape": "dot", "size": 1}, {"group": 27, "id": "stage", "label": "stage", "shape": "dot", "size": 3}, {"group": 61, "id": "eggs", "label": "eggs", "shape": "dot", "size": 1}, {"group": 61, "id": "vermiculite and water", "label": "vermiculite and water", "shape": "dot", "size": 1}, {"group": 62, "id": "embryology", "label": "embryology", "shape": "dot", "size": 1}, {"group": 62, "id": "zwischenhirn", "label": "zwischenhirn", "shape": "dot", "size": 1}, {"group": 63, "id": "embryos", "label": "embryos", "shape": "dot", "size": 2}, {"group": 63, "id": "stages", "label": "stages", "shape": "dot", "size": 1}, {"group": 63, "id": "tissues", "label": "tissues", "shape": "dot", "size": 1}, {"group": 65, "id": "figdor and stern 1993", "label": "figdor and stern 1993", "shape": "dot", "size": 1}, {"group": 65, "id": "larsen et al. 2001", "label": "larsen et al. 2001", "shape": "dot", "size": 1}, {"group": 46, "id": "histochemical and immunocytochemical experiments", "label": "histochemical and immunocytochemical experiments", "shape": "dot", "size": 1}, {"group": 46, "id": "morphological stains", "label": "morphological stains", "shape": "dot", "size": 1}, {"group": 5, "id": "dorsoventral", "label": "dorsoventral", "shape": "dot", "size": 1}, {"group": 5, "id": "patterning", "label": "patterning", "shape": "dot", "size": 2}, {"group": 5, "id": "rostrocaudal", "label": "rostrocaudal", "shape": "dot", "size": 1}, {"group": 5, "id": "tissue", "label": "tissue", "shape": "dot", "size": 2}, {"group": 5, "id": "gbx-2", "label": "gbx-2", "shape": "dot", "size": 1}, {"group": 5, "id": "lamprey", "label": "lamprey", "shape": "dot", "size": 1}, {"group": 5, "id": "lunatic fringe", "label": "lunatic fringe", "shape": "dot", "size": 1}, {"group": 5, "id": "morphological techniques", "label": "morphological techniques", "shape": "dot", "size": 1}, {"group": 5, "id": "mouse", "label": "mouse", "shape": "dot", "size": 3}, {"group": 5, "id": "prosomeres", "label": "prosomeres", "shape": "dot", "size": 1}, {"group": 5, "id": "wnt-3", "label": "wnt-3", "shape": "dot", "size": 1}, {"group": 27, "id": "forebrain divisions", "label": "forebrain divisions", "shape": "dot", "size": 1}, {"group": 5, "id": "free floating sections", "label": "free floating sections", "shape": "dot", "size": 1}, {"group": 5, "id": "washed", "label": "washed", "shape": "dot", "size": 2}, {"group": 68, "id": "gene expression mapping", "label": "gene expression mapping", "shape": "dot", "size": 1}, {"group": 68, "id": "influence", "label": "influence", "shape": "dot", "size": 1}, {"group": 69, "id": "gene expression patterns", "label": "gene expression patterns", "shape": "dot", "size": 1}, {"group": 69, "id": "transverse regions", "label": "transverse regions", "shape": "dot", "size": 1}, {"group": 70, "id": "gene or transcription factor expression", "label": "gene or transcription factor expression", "shape": "dot", "size": 1}, {"group": 70, "id": "individual units", "label": "individual units", "shape": "dot", "size": 1}, {"group": 71, "id": "grafts", "label": "grafts", "shape": "dot", "size": 1}, {"group": 71, "id": "size limitation", "label": "size limitation", "shape": "dot", "size": 1}, {"group": 72, "id": "gribnau aa", "label": "gribnau aa", "shape": "dot", "size": 1}, {"group": 72, "id": "morphogen-esis of the brain", "label": "morphogen-esis of the brain", "shape": "dot", "size": 1}, {"group": 27, "id": "hamilton", "label": "hamilton", "shape": "dot", "size": 1}, {"group": 73, "id": "hamburger v", "label": "hamburger v", "shape": "dot", "size": 1}, {"group": 73, "id": "normal stages in the development of the chick embryo", "label": "normal stages in the development of the chick embryo", "shape": "dot", "size": 1}, {"group": 5, "id": "hamster", "label": "hamster", "shape": "dot", "size": 1}, {"group": 54, "id": "hedgehog signalling", "label": "hedgehog signalling", "shape": "dot", "size": 1}, {"group": 54, "id": "diencephalon patterning", "label": "diencephalon patterning", "shape": "dot", "size": 1}, {"group": 74, "id": "hedges sb", "label": "hedges sb", "shape": "dot", "size": 1}, {"group": 74, "id": "molecular evidence for the origin of birds", "label": "molecular evidence for the origin of birds", "shape": "dot", "size": 1}, {"group": 50, "id": "hindbrain", "label": "hindbrain", "shape": "dot", "size": 2}, {"group": 50, "id": "rhombomeres", "label": "rhombomeres", "shape": "dot", "size": 2}, {"group": 50, "id": "segmentation", "label": "segmentation", "shape": "dot", "size": 1}, {"group": 76, "id": "hrp-peanut lectin", "label": "hrp-peanut lectin", "shape": "dot", "size": 1}, {"group": 76, "id": "incubated", "label": "incubated", "shape": "dot", "size": 1}, {"group": 5, "id": "diencephalic segmentation", "label": "diencephalic segmentation", "shape": "dot", "size": 1}, {"group": 5, "id": "mller and orahilly", "label": "mller and orahilly", "shape": "dot", "size": 1}, {"group": 5, "id": "humans mller and orahilly, 1997", "label": "humans mller and orahilly, 1997", "shape": "dot", "size": 2}, {"group": 5, "id": "d1and d2", "label": "d1and d2", "shape": "dot", "size": 1}, {"group": 8, "id": "hypothalamus", "label": "hypothalamus", "shape": "dot", "size": 2}, {"group": 8, "id": "parencephalon anterior (d1)", "label": "parencephalon anterior (d1)", "shape": "dot", "size": 2}, {"group": 64, "id": "immunocytochemical", "label": "immunocytochemical", "shape": "dot", "size": 1}, {"group": 64, "id": "experiment", "label": "experiment", "shape": "dot", "size": 1}, {"group": 81, "id": "kage t", "label": "kage t", "shape": "dot", "size": 1}, {"group": 81, "id": "morphogenesis and regionalization of the medaka embry- onic brain", "label": "morphogenesis and regionalization of the medaka embry- onic brain", "shape": "dot", "size": 1}, {"group": 82, "id": "keynes", "label": "keynes", "shape": "dot", "size": 1}, {"group": 82, "id": "lumsden", "label": "lumsden", "shape": "dot", "size": 1}, {"group": 49, "id": "keynes and lumsden (1990)", "label": "keynes and lumsden (1990)", "shape": "dot", "size": 1}, {"group": 49, "id": "develop-mentally significant criteria", "label": "develop-mentally significant criteria", "shape": "dot", "size": 1}, {"group": 83, "id": "keynes r", "label": "keynes r", "shape": "dot", "size": 1}, {"group": 83, "id": "segmentation and the origin of regional diversity in the vertebrate central nervous system", "label": "segmentation and the origin of regional diversity in the vertebrate central nervous system", "shape": "dot", "size": 1}, {"group": 51, "id": "keyser a", "label": "keyser a", "shape": "dot", "size": 1}, {"group": 51, "id": "development of the dien- cephalon of the chinese hamster", "label": "development of the dien- cephalon of the chinese hamster", "shape": "dot", "size": 1}, {"group": 43, "id": "kiecker c", "label": "kiecker c", "shape": "dot", "size": 2}, {"group": 43, "id": "compartments and their boundaries in vertebrate brain de- velopment", "label": "compartments and their boundaries in vertebrate brain de- velopment", "shape": "dot", "size": 1}, {"group": 43, "id": "hedgehog signalling from the zli regulates diencephalic re- gional identity", "label": "hedgehog signalling from the zli regulates diencephalic re- gional identity", "shape": "dot", "size": 1}, {"group": 84, "id": "kumar s", "label": "kumar s", "shape": "dot", "size": 1}, {"group": 84, "id": "molecular time-scale for vertebrate evolution", "label": "molecular time-scale for vertebrate evolution", "shape": "dot", "size": 1}, {"group": 85, "id": "lampreys", "label": "lampreys", "shape": "dot", "size": 1}, {"group": 85, "id": "sea lamprey", "label": "sea lamprey", "shape": "dot", "size": 1}, {"group": 31, "id": "larsen cw", "label": "larsen cw", "shape": "dot", "size": 1}, {"group": 31, "id": "boundary formation and compartition in the avian diencephalon", "label": "boundary formation and compartition in the avian diencephalon", "shape": "dot", "size": 1}, {"group": 5, "id": "larsen et al., 2001", "label": "larsen et al., 2001", "shape": "dot", "size": 1}, {"group": 5, "id": "mammal", "label": "mammal", "shape": "dot", "size": 1}, {"group": 5, "id": "hyrax", "label": "hyrax", "shape": "dot", "size": 1}, {"group": 5, "id": "opossum", "label": "opossum", "shape": "dot", "size": 1}, {"group": 5, "id": "rhesus monkey", "label": "rhesus monkey", "shape": "dot", "size": 1}, {"group": 5, "id": "medaka", "label": "medaka", "shape": "dot", "size": 1}, {"group": 1, "id": "micro-tubules", "label": "micro-tubules", "shape": "dot", "size": 1}, {"group": 1, "id": "\u0027-tubulin", "label": "\u0027-tubulin", "shape": "dot", "size": 1}, {"group": 91, "id": "migration areas", "label": "migration areas", "shape": "dot", "size": 1}, {"group": 91, "id": "vertebrate central tube", "label": "vertebrate central tube", "shape": "dot", "size": 1}, {"group": 92, "id": "mller", "label": "mller", "shape": "dot", "size": 1}, {"group": 92, "id": "orahilly", "label": "orahilly", "shape": "dot", "size": 1}, {"group": 55, "id": "molecular events", "label": "molecular events", "shape": "dot", "size": 1}, {"group": 55, "id": "different adult diencephalons", "label": "different adult diencephalons", "shape": "dot", "size": 1}, {"group": 5, "id": "molecularly distinct transverse regions", "label": "molecularly distinct transverse regions", "shape": "dot", "size": 1}, {"group": 58, "id": "morpho-logic features", "label": "morpho-logic features", "shape": "dot", "size": 1}, {"group": 58, "id": "divisions of the diencephalon", "label": "divisions of the diencephalon", "shape": "dot", "size": 1}, {"group": 38, "id": "morphogenesis", "label": "morphogenesis", "shape": "dot", "size": 1}, {"group": 67, "id": "morphology", "label": "morphology", "shape": "dot", "size": 1}, {"group": 67, "id": "gene expression", "label": "gene expression", "shape": "dot", "size": 1}, {"group": 93, "id": "most studies", "label": "most studies", "shape": "dot", "size": 1}, {"group": 93, "id": "single division", "label": "single division", "shape": "dot", "size": 1}, {"group": 95, "id": "mounting", "label": "mounting", "shape": "dot", "size": 1}, {"group": 95, "id": "sections", "label": "sections", "shape": "dot", "size": 2}, {"group": 22, "id": "national institute of health guidelines", "label": "national institute of health guidelines", "shape": "dot", "size": 1}, {"group": 22, "id": "procedures and protocols", "label": "procedures and protocols", "shape": "dot", "size": 2}, {"group": 97, "id": "neural precursor cells", "label": "neural precursor cells", "shape": "dot", "size": 1}, {"group": 97, "id": "neurofilament proteins", "label": "neurofilament proteins", "shape": "dot", "size": 1}, {"group": 40, "id": "neural tube segmentation", "label": "neural tube segmentation", "shape": "dot", "size": 1}, {"group": 40, "id": "chick embryos", "label": "chick embryos", "shape": "dot", "size": 1}, {"group": 52, "id": "neuromere", "label": "neuromere", "shape": "dot", "size": 1}, {"group": 52, "id": "developmental significance", "label": "developmental significance", "shape": "dot", "size": 1}, {"group": 5, "id": "cell proliferation", "label": "cell proliferation", "shape": "dot", "size": 1}, {"group": 5, "id": "features", "label": "features", "shape": "dot", "size": 1}, {"group": 5, "id": "human embryos", "label": "human embryos", "shape": "dot", "size": 1}, {"group": 5, "id": "lineage restrictions", "label": "lineage restrictions", "shape": "dot", "size": 1}, {"group": 79, "id": "neuromeric bulges", "label": "neuromeric bulges", "shape": "dot", "size": 1}, {"group": 79, "id": "interneuromeric ventricular ridges", "label": "interneuromeric ventricular ridges", "shape": "dot", "size": 1}, {"group": 11, "id": "neuronal cell types", "label": "neuronal cell types", "shape": "dot", "size": 1}, {"group": 11, "id": "aggregates", "label": "aggregates", "shape": "dot", "size": 1}, {"group": 56, "id": "olympus microscope", "label": "olympus microscope", "shape": "dot", "size": 1}, {"group": 56, "id": "digital camera", "label": "digital camera", "shape": "dot", "size": 1}, {"group": 5, "id": "table 1", "label": "table 1", "shape": "dot", "size": 1}, {"group": 96, "id": "origin of birds and crocodiles", "label": "origin of birds and crocodiles", "shape": "dot", "size": 1}, {"group": 96, "id": "nature", "label": "nature", "shape": "dot", "size": 1}, {"group": 57, "id": "others\u0027 experimental data", "label": "others\u0027 experimental data", "shape": "dot", "size": 1}, {"group": 57, "id": "division into anterior and posterior components", "label": "division into anterior and posterior components", "shape": "dot", "size": 1}, {"group": 98, "id": "others\u0027 observations", "label": "others\u0027 observations", "shape": "dot", "size": 1}, {"group": 98, "id": "selection of markers", "label": "selection of markers", "shape": "dot", "size": 1}, {"group": 99, "id": "p", "label": "p", "shape": "dot", "size": 1}, {"group": 99, "id": "prosencephalon", "label": "prosencephalon", "shape": "dot", "size": 1}, {"group": 78, "id": "panels", "label": "panels", "shape": "dot", "size": 1}, {"group": 78, "id": "images", "label": "images", "shape": "dot", "size": 1}, {"group": 100, "id": "pap complex", "label": "pap complex", "shape": "dot", "size": 1}, {"group": 100, "id": "primary antibody", "label": "primary antibody", "shape": "dot", "size": 2}, {"group": 8, "id": "anterior and posterior component", "label": "anterior and posterior component", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior compartment", "label": "anterior compartment", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior segment", "label": "anterior segment", "shape": "dot", "size": 2}, {"group": 8, "id": "anterior unit", "label": "anterior unit", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior zones", "label": "anterior zones", "shape": "dot", "size": 1}, {"group": 8, "id": "calretinin immunoreactive", "label": "calretinin immunoreactive", "shape": "dot", "size": 1}, {"group": 8, "id": "parencephalon anterior", "label": "parencephalon anterior", "shape": "dot", "size": 6}, {"group": 8, "id": "posterior compartment", "label": "posterior compartment", "shape": "dot", "size": 1}, {"group": 8, "id": "posterior unit", "label": "posterior unit", "shape": "dot", "size": 1}, {"group": 8, "id": "posterior zones", "label": "posterior zones", "shape": "dot", "size": 1}, {"group": 8, "id": "zona limitans interparencephalica", "label": "zona limitans interparencephalica", "shape": "dot", "size": 6}, {"group": 8, "id": "parencephalon posterior", "label": "parencephalon posterior", "shape": "dot", "size": 4}, {"group": 8, "id": "ventral thalamus or prethalamus", "label": "ventral thalamus or prethalamus", "shape": "dot", "size": 1}, {"group": 8, "id": "parencephalon posterior (d2)", "label": "parencephalon posterior (d2)", "shape": "dot", "size": 1}, {"group": 8, "id": "dorsal thalamus and epithalamus or thalamus", "label": "dorsal thalamus and epithalamus or thalamus", "shape": "dot", "size": 1}, {"group": 5, "id": "developing diencephalon", "label": "developing diencephalon", "shape": "dot", "size": 1}, {"group": 46, "id": "histo-chemical preparations", "label": "histo-chemical preparations", "shape": "dot", "size": 1}, {"group": 90, "id": "peanut agglutinin histochemistry", "label": "peanut agglutinin histochemistry", "shape": "dot", "size": 1}, {"group": 90, "id": "methodology", "label": "methodology", "shape": "dot", "size": 1}, {"group": 101, "id": "peanut agglutinin stained sections", "label": "peanut agglutinin stained sections", "shape": "dot", "size": 1}, {"group": 101, "id": "thickness of the most lateral portion of the positively stained diencephalic mantle layer", "label": "thickness of the most lateral portion of the positively stained diencephalic mantle layer", "shape": "dot", "size": 1}, {"group": 9, "id": "photos", "label": "photos", "shape": "dot", "size": 1}, {"group": 9, "id": "adobe photoshop 7.0", "label": "adobe photoshop 7.0", "shape": "dot", "size": 1}, {"group": 32, "id": "study", "label": "study", "shape": "dot", "size": 2}, {"group": 60, "id": "present observations", "label": "present observations", "shape": "dot", "size": 2}, {"group": 60, "id": "early diencephalon development in chick and humans", "label": "early diencephalon development in chick and humans", "shape": "dot", "size": 1}, {"group": 60, "id": "purely morphological data", "label": "purely morphological data", "shape": "dot", "size": 1}, {"group": 14, "id": "presumptive alar", "label": "presumptive alar", "shape": "dot", "size": 1}, {"group": 14, "id": "presumptive alar plate", "label": "presumptive alar plate", "shape": "dot", "size": 2}, {"group": 14, "id": "components", "label": "components", "shape": "dot", "size": 2}, {"group": 14, "id": "presumptive basal plate region", "label": "presumptive basal plate region", "shape": "dot", "size": 1}, {"group": 100, "id": "secondary antibody", "label": "secondary antibody", "shape": "dot", "size": 1}, {"group": 80, "id": "pritz brain behav evol", "label": "pritz brain behav evol", "shape": "dot", "size": 1}, {"group": 80, "id": "journal", "label": "journal", "shape": "dot", "size": 1}, {"group": 22, "id": "animal care committee", "label": "animal care committee", "shape": "dot", "size": 1}, {"group": 104, "id": "prosomere 1 (synencephalon)", "label": "prosomere 1 (synencephalon)", "shape": "dot", "size": 1}, {"group": 104, "id": "territory", "label": "territory", "shape": "dot", "size": 3}, {"group": 104, "id": "prosomere 2 (parencephalon posteri- or)", "label": "prosomere 2 (parencephalon posteri- or)", "shape": "dot", "size": 1}, {"group": 104, "id": "prosomere 3 (parencephalon anterior)", "label": "prosomere 3 (parencephalon anterior)", "shape": "dot", "size": 1}, {"group": 25, "id": "prosomeric model", "label": "prosomeric model", "shape": "dot", "size": 3}, {"group": 25, "id": "approach", "label": "approach", "shape": "dot", "size": 1}, {"group": 25, "id": "morphological observations", "label": "morphological observations", "shape": "dot", "size": 1}, {"group": 25, "id": "other vertebrates", "label": "other vertebrates", "shape": "dot", "size": 1}, {"group": 106, "id": "puelles and rubenstein, 2003", "label": "puelles and rubenstein, 2003", "shape": "dot", "size": 1}, {"group": 106, "id": "reference", "label": "reference", "shape": "dot", "size": 1}, {"group": 5, "id": "puelles et al., 1987", "label": "puelles et al., 1987", "shape": "dot", "size": 1}, {"group": 26, "id": "neuromere(s)", "label": "neuromere(s)", "shape": "dot", "size": 1}, {"group": 5, "id": "snake", "label": "snake", "shape": "dot", "size": 2}, {"group": 27, "id": "reptilian", "label": "reptilian", "shape": "dot", "size": 1}, {"group": 50, "id": "developing chick hindbrain", "label": "developing chick hindbrain", "shape": "dot", "size": 1}, {"group": 32, "id": "sagittal and horizontal planes", "label": "sagittal and horizontal planes", "shape": "dot", "size": 1}, {"group": 16, "id": "sagittal and horizontal planes of sections", "label": "sagittal and horizontal planes of sections", "shape": "dot", "size": 1}, {"group": 16, "id": "alligator brain", "label": "alligator brain", "shape": "dot", "size": 1}, {"group": 95, "id": "transferred", "label": "transferred", "shape": "dot", "size": 1}, {"group": 87, "id": "sharkrays", "label": "sharkrays", "shape": "dot", "size": 1}, {"group": 87, "id": "marine ray", "label": "marine ray", "shape": "dot", "size": 1}, {"group": 59, "id": "shh", "label": "shh", "shape": "dot", "size": 1}, {"group": 27, "id": "two segment stage", "label": "two segment stage", "shape": "dot", "size": 1}, {"group": 94, "id": "slides", "label": "slides", "shape": "dot", "size": 1}, {"group": 94, "id": "mounted", "label": "mounted", "shape": "dot", "size": 1}, {"group": 5, "id": "sea turtle", "label": "sea turtle", "shape": "dot", "size": 1}, {"group": 48, "id": "stage 11.5", "label": "stage 11.5", "shape": "dot", "size": 1}, {"group": 48, "id": "day 12.5", "label": "day 12.5", "shape": "dot", "size": 1}, {"group": 86, "id": "stage 12 brain", "label": "stage 12 brain", "shape": "dot", "size": 2}, {"group": 86, "id": "lateral photo", "label": "lateral photo", "shape": "dot", "size": 1}, {"group": 86, "id": "sagittal plane", "label": "sagittal plane", "shape": "dot", "size": 1}, {"group": 8, "id": "anlage for pretectum", "label": "anlage for pretectum", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior", "label": "anterior", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior and posterior portion", "label": "anterior and posterior portion", "shape": "dot", "size": 1}, {"group": 8, "id": "anterior subdivisions", "label": "anterior subdivisions", "shape": "dot", "size": 1}, {"group": 8, "id": "posterior", "label": "posterior", "shape": "dot", "size": 1}, {"group": 8, "id": "posterior portion", "label": "posterior portion", "shape": "dot", "size": 1}, {"group": 8, "id": "posterior segment", "label": "posterior segment", "shape": "dot", "size": 1}, {"group": 8, "id": "pretectum anterior and pretectum posterior", "label": "pretectum anterior and pretectum posterior", "shape": "dot", "size": 1}, {"group": 8, "id": "subdivisions", "label": "subdivisions", "shape": "dot", "size": 1}, {"group": 8, "id": "ventral parencephalon", "label": "ventral parencephalon", "shape": "dot", "size": 1}, {"group": 112, "id": "synencephalon anterior (d3)", "label": "synencephalon anterior (d3)", "shape": "dot", "size": 1}, {"group": 112, "id": "synencephalon posterior (d4)", "label": "synencephalon posterior (d4)", "shape": "dot", "size": 1}, {"group": 89, "id": "synencephalon posterior", "label": "synencephalon posterior", "shape": "dot", "size": 1}, {"group": 89, "id": "mes-encephalon", "label": "mes-encephalon", "shape": "dot", "size": 1}, {"group": 8, "id": "t", "label": "t", "shape": "dot", "size": 1}, {"group": 75, "id": "techniques", "label": "techniques", "shape": "dot", "size": 1}, {"group": 75, "id": "histological staining", "label": "histological staining", "shape": "dot", "size": 1}, {"group": 113, "id": "teleosts", "label": "teleosts", "shape": "dot", "size": 1}, {"group": 113, "id": "zebrafish", "label": "zebrafish", "shape": "dot", "size": 1}, {"group": 111, "id": "temperature", "label": "temperature", "shape": "dot", "size": 1}, {"group": 111, "id": "species", "label": "species", "shape": "dot", "size": 1}, {"group": 45, "id": "thalamus", "label": "thalamus", "shape": "dot", "size": 1}, {"group": 45, "id": "cortical function", "label": "cortical function", "shape": "dot", "size": 1}, {"group": 109, "id": "this region", "label": "this region", "shape": "dot", "size": 1}, {"group": 109, "id": "separate compartment", "label": "separate compartment", "shape": "dot", "size": 1}, {"group": 66, "id": "tissue preservation", "label": "tissue preservation", "shape": "dot", "size": 1}, {"group": 66, "id": "freez- ing", "label": "freez- ing", "shape": "dot", "size": 1}, {"group": 114, "id": "tissue sectioned transversally", "label": "tissue sectioned transversally", "shape": "dot", "size": 1}, {"group": 114, "id": "zona limi- tans interparencephalica", "label": "zona limi- tans interparencephalica", "shape": "dot", "size": 1}, {"group": 77, "id": "transversal diencephalic subdivisions", "label": "transversal diencephalic subdivisions", "shape": "dot", "size": 1}, {"group": 77, "id": "identification", "label": "identification", "shape": "dot", "size": 1}, {"group": 108, "id": "transverse dience- phalic zones", "label": "transverse dience- phalic zones", "shape": "dot", "size": 1}, {"group": 108, "id": "respective borders", "label": "respective borders", "shape": "dot", "size": 1}, {"group": 103, "id": "transverse diencephalic segments", "label": "transverse diencephalic segments", "shape": "dot", "size": 1}, {"group": 103, "id": "presumed alar and basal plate", "label": "presumed alar and basal plate", "shape": "dot", "size": 1}, {"group": 110, "id": "transverse plane", "label": "transverse plane", "shape": "dot", "size": 1}, {"group": 110, "id": "single segment", "label": "single segment", "shape": "dot", "size": 1}, {"group": 27, "id": "fixed and partly sectioned material", "label": "fixed and partly sectioned material", "shape": "dot", "size": 1}, {"group": 27, "id": "living embryos", "label": "living embryos", "shape": "dot", "size": 1}, {"group": 27, "id": "puelles et al.", "label": "puelles et al.", "shape": "dot", "size": 1}, {"group": 27, "id": "wax reconstructions", "label": "wax reconstructions", "shape": "dot", "size": 1}, {"group": 102, "id": "ventricular surface", "label": "ventricular surface", "shape": "dot", "size": 1}, {"group": 102, "id": "pial surface", "label": "pial surface", "shape": "dot", "size": 1}, {"group": 38, "id": "vertebrate", "label": "vertebrate", "shape": "dot", "size": 1}, {"group": 5, "id": "experiments", "label": "experiments", "shape": "dot", "size": 1}, {"group": 107, "id": "vimentin", "label": "vimentin", "shape": "dot", "size": 1}, {"group": 107, "id": "radial glia", "label": "radial glia", "shape": "dot", "size": 1}, {"group": 88, "id": "whetstone kn", "label": "whetstone kn", "shape": "dot", "size": 1}, {"group": 88, "id": "martin ld", "label": "martin ld", "shape": "dot", "size": 1}, {"group": 105, "id": "zebrafish forebrain", "label": "zebrafish forebrain", "shape": "dot", "size": 1}, {"group": 105, "id": "prosomeric domains", "label": "prosomeric domains", "shape": "dot", "size": 1}, {"group": 8, "id": "additional markers", "label": "additional markers", "shape": "dot", "size": 1}, {"group": 8, "id": "border", "label": "border", "shape": "dot", "size": 1}, {"group": 8, "id": "zona limitans intrathalamica", "label": "zona limitans intrathalamica", "shape": "dot", "size": 2}, {"group": 8, "id": "anterior and posterior parts", "label": "anterior and posterior parts", "shape": "dot", "size": 1}]);
+                  edges = new vis.DataSet([{"from": "abbreviations used in figures", "title": "used for", "to": "acetyl tub", "width": 1.0}, {"from": "abbreviations used in figures", "title": "used for", "to": "ache", "width": 1.0}, {"from": "abbreviations used in figures", "title": "used for", "to": "cv", "width": 1.0}, {"from": "abbreviations used in figures", "title": "used for", "to": "d", "width": 1.0}, {"from": "acetylated tubulin", "title": "immunoreactivity positive", "to": "diencephalon-mesencephalon border", "width": 1.0}, {"from": "acetylated tubulin", "title": "The antibody to acetylated tubulin stained longitudinal fibers early in compartmentalization.", "to": "longitudinal fibers", "width": 1.0}, {"from": "acetylated tubulin", "title": "stained within fibers", "to": "microtubules", "width": 1.0}, {"from": "acetylated tubulin immunoreactivity", "title": "visualizes", "to": "longitudinal division", "width": 1.0}, {"from": "acetylcholine-positive neuroblasts", "title": "initially used to describe the appearance of neuroblasts", "to": "secondary prosencephalic subdivisions", "width": 1.0}, {"from": "acetylcholinesterase", "title": "marked", "to": "glia or cells", "width": 1.0}, {"from": "alar parencephalon posterior", "title": "could be distinguished from on the basis of morphological distinctness alone", "to": "other alar territories", "width": 1.0}, {"from": "alar parts", "title": "Both alar and basal parts of each of the diencephalic segments showed neuroepithelial cell restriction at inter-segmental boundaries", "to": "basal parts", "width": 1.0}, {"from": "alar plate", "title": "a longitudinal division along a dorso-ventral axis identified a presumptive alar and basal plate", "to": "basal plate", "width": 1.0}, {"from": "alligator", "title": "separating the parencephalon anterior and posterior in", "to": "chick", "width": 1.0}, {"from": "alligator", "title": "has relation with", "to": "diencephalic development", "width": 1.0}, {"from": "alligator", "title": "The time course and pattern of formation of diencephalic subdivisions from a single compartment in Alligator were examined", "to": "diencephalic subdivisions", "width": 1.0}, {"from": "alligator", "title": "development in,part of,The context discusses the development of the diencephalon in alligators.,develops in,part of,alligator diencephalon development,related to", "to": "diencephalon", "width": 7.0}, {"from": "alligator", "title": "The present analysis refers to the development of Alligator\u0027s Diencephalon.,The development of the diencephalon in alligators is studied in this research.,study subject of", "to": "diencephalon development", "width": 3.0}, {"from": "alligator", "title": "study subject", "to": "ferguson", "width": 1.0}, {"from": "alligator", "title": "onset of diencephalic segmentation", "to": "humans", "width": 1.0}, {"from": "alligator", "title": "are largely consistent with", "to": "obser-vations", "width": 1.0}, {"from": "alligator", "title": "comparable to the present study", "to": "present study", "width": 1.0}, {"from": "alligator", "title": "part of", "to": "secondary prosencephalon", "width": 1.0}, {"from": "alligator", "title": "happens in", "to": "development", "width": 1.0}, {"from": "alligator", "title": "in", "to": "early diencephalon development", "width": 1.0}, {"from": "alligator", "title": "are both reptiles", "to": "lizard", "width": 1.0}, {"from": "alligator", "title": "comparable with", "to": "vertebrates", "width": 1.0}, {"from": "alligator diencephalon", "title": "distinguish from each other", "to": "adult diencephalons", "width": 1.0}, {"from": "alligator diencephalon development", "title": "unsuccessfully used to mark diencephalon boundaries", "to": "antibodies", "width": 1.0}, {"from": "alligator eggs", "title": "obtained from", "to": "rockefeller wildlife refuge", "width": 1.0}, {"from": "alligator mississipiensis", "title": "Alligator mississipiensis is a type of reptile", "to": "reptiles", "width": 1.0}, {"from": "alligator mississipiensis", "title": "representative of the order", "to": "american alligator", "width": 1.0}, {"from": "alligator study", "title": "provides a time frame for compartment and boundary formation in the diencephalon", "to": "chick (vaage, 1969)", "width": 1.0}, {"from": "amniotes", "title": "belong to the same group", "to": "vertebrates", "width": 1.0}, {"from": "amphibians", "title": "subdivisions in the diencephalon early in Amphibians, frog", "to": "newt", "width": 1.0}, {"from": "anterior parencephalon", "title": "and between the posterior synencephalon and mes- encephalon caudally, distinguished by peanut agglutinin stained sections", "to": "secondary prosencephalon", "width": 1.0}, {"from": "anti-neural cell adhesion molecule", "title": "labeled the boundaries in chick", "to": "diencephalic borders", "width": 1.0}, {"from": "antibodies", "title": "identified", "to": "compartment", "width": 1.0}, {"from": "antibodies", "title": "are screened for their usefulness", "to": "histochemical markers", "width": 1.0}, {"from": "antibodies", "title": "Immunoreactivity was observed with", "to": "monoclonal mouse anti-acetylated tubulin", "width": 1.0}, {"from": "antibodies", "title": "The following antibodies were unsuccess- ful in labeling", "to": "monoclonal mouse anti-glial fibrillary acid protein (gfap)", "width": 1.0}, {"from": "antibodies", "title": "The following antibodies were unsuccess- ful in labeling", "to": "monoclonal mouse anti-growth-associated protein 43 (gap 43)", "width": 1.0}, {"from": "antibodies", "title": "The following antibodies were unsuccess- ful in labeling", "to": "monoclonal mouse anti-neural cell adhesion molecule (n-cam)", "width": 1.0}, {"from": "antibodies", "title": "Immunoreactivity was observed with", "to": "mouse monoclonal anti-acetylcholinesterase", "width": 1.0}, {"from": "antibodies", "title": "Immunoreactivity was observed with", "to": "mouse monoclonal anti-vimentin", "width": 1.0}, {"from": "antibodies", "title": "Immunoreactivity was observed with", "to": "polyclonal rabbit anti-calretinin", "width": 1.0}, {"from": "apical location", "title": "S-phase nuclei were localized at this location only in the zona limitans intrathalamica and at the synencephalonmesencephalon border", "to": "rhombomere borders", "width": 1.0}, {"from": "bat", "title": "is a type of mammal", "to": "mammals", "width": 1.0}, {"from": "bird", "title": "example for birds", "to": "chick", "width": 1.0}, {"from": "birds", "title": "related concepts (origin)", "to": "crocodiles", "width": 1.0}, {"from": "birds", "title": "development in", "to": "diencephalon", "width": 1.0}, {"from": "birds", "title": "diverged early in phylogeny,Early origins of modern", "to": "mammals", "width": 2.0}, {"from": "birds", "title": "is a type of bird", "to": "chick", "width": 1.0}, {"from": "birds", "title": "reptilian group most closely related to birds", "to": "crocodilians", "width": 1.0}, {"from": "birds", "title": "Early origins of modern", "to": "molecules", "width": 1.0}, {"from": "blocks", "title": "in", "to": "pbs (0.1 m at ph 7.2)", "width": 1.0}, {"from": "blocks", "title": "placed overnight in", "to": "sucrose", "width": 1.0}, {"from": "borders", "title": "function of borders in creating lineage restrictions", "to": "barriers to cell mixing", "width": 1.0}, {"from": "borders", "title": "Even obliquely sectioned material proved useful in analyzing forebrain compartments and borders", "to": "forebrain compartments", "width": 1.0}, {"from": "borders", "title": "certain putative regulatory genes corresponding to borders", "to": "regulatory genes", "width": 1.0}, {"from": "boundary formation", "title": "Boundary formation and compartition are related processes in the developing diencephalon.", "to": "compartition", "width": 1.0}, {"from": "brain", "title": "related field of study", "to": "behav evol", "width": 1.0}, {"from": "brain", "title": "brain evolution", "to": "evol", "width": 1.0}, {"from": "brain", "title": "related to", "to": "evolution", "width": 1.0}, {"from": "brain", "title": "The Pritz Brain Behav Evol 2008;71:1531-22 is a journal that publishes research on brain and behavior", "to": "pritz", "width": 1.0}, {"from": "brain growth during development", "title": "resulting in some deviation from the planned plane of section", "to": "plane of section", "width": 1.0}, {"from": "brains", "title": "illustrating plane of section", "to": "diencephalon", "width": 1.0}, {"from": "brains", "title": "embedded in", "to": "gelatin", "width": 1.0}, {"from": "brains", "title": "In brains stored at 70 C, best results for histochemistry and immunocytochemistry were achieved by gradual tissue re-warming.", "to": "histochemistry and immunocytochemistry", "width": 1.0}, {"from": "brains", "title": "Except at the earliest stages, brains were divided at the isthmus and the forebrain and midbrain were processed as a single unit.", "to": "isthmus", "width": 1.0}, {"from": "bright field illumination", "title": "used for", "to": "histological analysis process", "width": 1.0}, {"from": "calretinin", "title": "marked", "to": "cells", "width": 1.0}, {"from": "calretinin", "title": "distinguished borders regardless of segment count", "to": "diencephalon-mesencephalon border", "width": 1.0}, {"from": "calretinin immunoreactivity", "title": "labels", "to": "dorsoventral division", "width": 1.0}, {"from": "camera lucida drawing tube", "title": "attached to", "to": "leitz microscope", "width": 1.0}, {"from": "cell", "title": "are related in the context of studying mammalian cells", "to": "culture", "width": 1.0}, {"from": "cell lineage restriction", "title": "were employed by using these techniques", "to": "acquisition of boundary specific phenotype", "width": 1.0}, {"from": "cellular behavior", "title": "The potential change in cellular behavior that might occur as a result of injury to embryonic donor tissue and the subsequent integration of the graft", "to": "injury to embryonic donor tissue", "width": 1.0}, {"from": "cephalon", "title": "the cephalon and synencephalon are related", "to": "synencephalon", "width": 1.0}, {"from": "chick", "title": "The diencephalon of Alligator was stained differently than that of chick.", "to": "diencephalon", "width": 1.0}, {"from": "chick", "title": "are related in the context of studying early embryonic development", "to": "embryo", "width": 1.0}, {"from": "chick", "title": "classical descriptions of development stages", "to": "hamburger and hamilton", "width": 1.0}, {"from": "chick", "title": "was re-investigated by using many of the same techniques", "to": "larsen et al.", "width": 1.0}, {"from": "chick", "title": "investigation of chick development by Vaage", "to": "vaage", "width": 1.0}, {"from": "chick", "title": "study subject", "to": "hamburger", "width": 1.0}, {"from": "chick stages", "title": "approximated based on classical descriptions", "to": "hours", "width": 1.0}, {"from": "chick vaage, 1969", "title": "consistently with", "to": "obser-vations", "width": 1.0}, {"from": "color images", "title": "converted to", "to": "black and white photos", "width": 1.0}, {"from": "compartments", "title": "pattern of cell proliferation in compartments", "to": "segmental pattern", "width": 1.0}, {"from": "controls for nonspecific staining", "title": "A second was omission of", "to": "omission of the primary antibody from the reaction", "width": 1.0}, {"from": "controls for nonspecific staining", "title": "One was substitution of", "to": "substitution of normal rabbit or mouse serum", "width": 1.0}, {"from": "cresyl violet", "title": "stained", "to": "material", "width": 1.0}, {"from": "cresyl violet", "title": "Brains stained for cresyl violet were placed in a variety of fixatives: 10 formalin; 4 para-formaldehyde; 4 glutaraldehyde; or Bouins solution.", "to": "fixatives", "width": 1.0}, {"from": "cresyl violet", "title": "The context states that this was clearest in material stained with peanut agglutinin and cresyl violet.,Peanut agglutinin and cresyl violet are used as staining agents", "to": "peanut agglutinin", "width": 2.0}, {"from": "crocodilians", "title": "Embryology and reproductive biology", "to": "reproduction", "width": 1.0}, {"from": "d2 compartment mller and orahilly, 1997", "title": "comparable to the diencephalon", "to": "diencephalon", "width": 1.0}, {"from": "dab solution", "title": "consisting of 100 mg DAB in 10 ml of distilled water plus l ml of Triton X-100 plus 20 ml of 0.2 M cacodylic buffer (pH 5.6) plus 6 ! l of 30 hydrogen peroxide for 30 s", "to": "incubation", "width": 1.0}, {"from": "dab solution", "title": "...reacted for 30 s in a DAB solution (see above) after which the reaction was stopped by transfer to a solution of 70% alcohol...", "to": "reaction", "width": 1.0}, {"from": "development", "title": "related to", "to": "ontogeny", "width": 1.0}, {"from": "development", "title": "development in various vertebrates", "to": "vertebrates", "width": 1.0}, {"from": "development", "title": "The development of the diencephalon was investigated in the context of Alligator mississipiensis embryos,The context describes the developmental stages and characteristics of the diencephalon in alligators.,relates to,part of,early stages of,has development", "to": "diencephalon", "width": 6.0}, {"from": "development", "title": "produces", "to": "events", "width": 1.0}, {"from": "development", "title": "theory of", "to": "evolution", "width": 1.0}, {"from": "development", "title": "have a relationship in the context of studying brain segmentation and anatomy", "to": "forebrain", "width": 1.0}, {"from": "diencephalic compartment", "title": "divides into", "to": "par-encephalon", "width": 1.0}, {"from": "diencephalic compartment", "title": "divides into", "to": "synencephalon", "width": 1.0}, {"from": "diencephalic divisions", "title": "were observed in horizontal sections using this", "to": "histochemical stain", "width": 1.0}, {"from": "diencephalic divisions", "title": "The diencephalic divisions are present at the three segment stage", "to": "three segment stage", "width": 1.0}, {"from": "diencephalic neuromeres", "title": "appear at the same stage", "to": "chick counterparts", "width": 1.0}, {"from": "diencephalic segments", "title": "A longitudinal boundary dividing presumed alar from basal plate regions was most distinct in material stained for calretinin or cresyl violet.", "to": "alar plate regions", "width": 1.0}, {"from": "diencephalic segments", "title": "changed features over the course of", "to": "early dien-c cephalon development", "width": 1.0}, {"from": "diencephalic segments", "title": "specific fiber tracts formed boundaries between segments", "to": "fiber tracts", "width": 1.0}, {"from": "diencephalic segments", "title": "comprises", "to": "four segment stage", "width": 1.0}, {"from": "diencephalic subdivisions", "title": "represent", "to": "developmentally significant criteria", "width": 1.0}, {"from": "diencephalic subdivisions", "title": "were identified by the use of these markers", "to": "markers", "width": 1.0}, {"from": "diencephalon", "title": "The diencephalon is studied in the context of avian development.", "to": "avian", "width": 1.0}, {"from": "diencephalon", "title": "differed in the conclusions reached regarding this development", "to": "compartment development", "width": 1.0}, {"from": "diencephalon", "title": "The diencephalon is divided into different segments.", "to": "division", "width": 1.0}, {"from": "diencephalon", "title": "relative to", "to": "dorso-ventral axes", "width": 1.0}, {"from": "diencephalon", "title": "sub-division of forebrain with different interpretations in diencephalon development", "to": "forebrain", "width": 1.0}, {"from": "diencephalon", "title": "Boundaries between the diencephalon and mesencephalon, respectively, vary depending on the stain used.", "to": "mesencephalon", "width": 1.0}, {"from": "diencephalon", "title": "The study examined the ontogeny of the diencephalon in Alligator mississipiensis", "to": "ontogeny", "width": 1.0}, {"from": "diencephalon", "title": "includes,subdivided into an anterior parencephalon,The diencephalon is composed of three divisions, including the parencephalon.", "to": "parencephalon", "width": 3.0}, {"from": "diencephalon", "title": "The diencephalon did not display a sectarian pattern of development", "to": "pattern of development", "width": 1.0}, {"from": "diencephalon", "title": "relative to", "to": "rosto-caudal axes", "width": 1.0}, {"from": "diencephalon", "title": "had more readily identifiable boundaries and compartments", "to": "secondary prosencephalon", "width": 1.0}, {"from": "diencephalon", "title": "transforms from", "to": "single compartment", "width": 1.0}, {"from": "diencephalon", "title": "includes", "to": "syn-encephalon", "width": 1.0}, {"from": "diencephalon", "title": "subdivided into a posterior synen- cephalon", "to": "synencephalon", "width": 1.0}, {"from": "diencephalon", "title": "distinguished by the course and distribution of fibers visualized by acetylated tubulin immuno-reactivity,No subdivisions were observed in either the telencephalon or diencephalon.", "to": "telencephalon", "width": 2.0}, {"from": "diencephalon", "title": "divides into", "to": "transverse subdivisions", "width": 1.0}, {"from": "diencephalon", "title": "the diencephalon divides into two transverse zones", "to": "transverse zones", "width": 1.0}, {"from": "diencephalon", "title": "the diencephalon shares common characters in all vertebrates during early development and changes occur later in time which are specific for that group or species", "to": "vertebrates", "width": 1.0}, {"from": "diencephalon", "title": "pertains to", "to": "early stages of development", "width": 1.0}, {"from": "diencephalon", "title": "development in", "to": "mammals", "width": 1.0}, {"from": "diencephalon", "title": "The first researchers to examine this problem using methodology to address the four criteria to determine whether neuromeres in the diencephalon were of developmental significance.", "to": "neuromeres", "width": 1.0}, {"from": "diencephalon", "title": "pertains to", "to": "organization", "width": 1.0}, {"from": "diencephalon", "title": "The pretectum is a part of the diencephalon", "to": "pretectum", "width": 1.0}, {"from": "diencephalon", "title": "development in", "to": "reptiles", "width": 1.0}, {"from": "diencephalon", "title": "Embryonic day 12.5 mouse forebrain", "to": "segmental organization", "width": 1.0}, {"from": "diencephalon development", "title": "details report on", "to": "early diencephalon development in alligator", "width": 1.0}, {"from": "diencephalon development", "title": "relation to gestation", "to": "humans (mller and orahilly, 1997)", "width": 1.0}, {"from": "dlx-1", "title": "Spatially restricted expression in mouse forebrain", "to": "forebrain", "width": 1.0}, {"from": "dlx-2", "title": "Spatially restricted expression in mouse forebrain", "to": "forebrain", "width": 1.0}, {"from": "dorsal diencephalon", "title": "opposing signals", "to": "zli", "width": 1.0}, {"from": "early diencephalon development", "title": "occurs in", "to": "birds (chick)", "width": 1.0}, {"from": "early diencephalon development", "title": "follows a similar pattern to", "to": "mammals (humans)", "width": 1.0}, {"from": "early diencephalon development", "title": "A reliable and accurate assessment of early diencephalon development was made during the Single Segment Stage.", "to": "single segment stage", "width": 1.0}, {"from": "early diencephalon development", "title": "studies on early diencephalon development", "to": "studies", "width": 1.0}, {"from": "early hindbrain development", "title": "was analyzed using these stains", "to": "alligator pritz, 1999", "width": 1.0}, {"from": "early histogenesis", "title": "Morphogenesis of the cen- tral nervous system in vertebrates", "to": "central nervous system", "width": 1.0}, {"from": "egg age", "title": "vary after stage 8 and before", "to": "stage", "width": 1.0}, {"from": "eggs", "title": "placed in a mixture of", "to": "vermiculite and water", "width": 1.0}, {"from": "embryology", "title": "study about", "to": "zwischenhirn", "width": 1.0}, {"from": "embryos", "title": "The embryos were sacrificed between stages 2 and 16.", "to": "stages", "width": 1.0}, {"from": "embryos", "title": "Embyros were first staged and then dissected free from surrounding tissues using a fine tungsten needle, microscissors, and jewelers forceps.", "to": "tissues", "width": 1.0}, {"from": "evolution", "title": "The evolution of the forebrain, including the diencephalon, was studied in the context of Alligator mississipiensis embryos", "to": "forebrain", "width": 1.0}, {"from": "evolution", "title": "unravel the organization and evolution of the forebrain in vertebrates", "to": "organization", "width": 1.0}, {"from": "figdor and stern 1993", "title": "obtained different results and reached different conclusions regarding diencephalon compartment development", "to": "larsen et al. 2001", "width": 1.0}, {"from": "fixatives", "title": "However, best results for histochemical and immunocytochemical experiments were obtained with 100 methanol as the fixative.", "to": "histochemical and immunocytochemical experiments", "width": 1.0}, {"from": "fixatives", "title": "A variety of fixatives were used for the various morphological stains.", "to": "morphological stains", "width": 1.0}, {"from": "forebrain", "title": "defines", "to": "dorsoventral", "width": 1.0}, {"from": "forebrain", "title": "model for", "to": "patterning", "width": 1.0}, {"from": "forebrain", "title": "divides", "to": "rostrocaudal", "width": 1.0}, {"from": "forebrain", "title": "is a type of", "to": "tissue", "width": 1.0}, {"from": "forebrain", "title": "the forebrain of vertebrates", "to": "vertebrates", "width": 1.0}, {"from": "forebrain", "title": "Spatially restricted expression in mouse forebrain", "to": "gbx-2", "width": 1.0}, {"from": "forebrain", "title": "are related in the context of studying its development and anatomy", "to": "lamprey", "width": 1.0}, {"from": "forebrain", "title": "regulator of neural proliferation", "to": "lunatic fringe", "width": 1.0}, {"from": "forebrain", "title": "applied to the forebrain", "to": "morphological techniques", "width": 1.0}, {"from": "forebrain", "title": "are related in the context of studying gene expression and development", "to": "mouse", "width": 1.0}, {"from": "forebrain", "title": "related to", "to": "neuromeres", "width": 1.0}, {"from": "forebrain", "title": "related to", "to": "prosomeres", "width": 1.0}, {"from": "forebrain", "title": "were not described initially based on the appearance of acetylcholine-positive neuroblasts", "to": "secondary prosencephalic subdivisions", "width": 1.0}, {"from": "forebrain", "title": "Spatially restricted expression in mouse forebrain", "to": "wnt-3", "width": 1.0}, {"from": "forebrain divisions", "title": "The forebrain divisions are viewed at this stage.", "to": "stage", "width": 1.0}, {"from": "free floating sections", "title": "in three changes of PBS", "to": "washed", "width": 1.0}, {"from": "gene expression mapping", "title": "Gene expression mapping heavily influenced the territories and boundaries of prosomere 1, 2, and 3", "to": "influence", "width": 1.0}, {"from": "gene expression patterns", "title": "postulated within the secondary prosencephalon", "to": "transverse regions", "width": 1.0}, {"from": "gene or transcription factor expression", "title": "investigate", "to": "individual units", "width": 1.0}, {"from": "grafts", "title": "One limitation is the size of the grafts", "to": "size limitation", "width": 1.0}, {"from": "gribnau aa", "title": "Studied morphogenesis of the brain in staged rhesus monkey.", "to": "morphogen-esis of the brain", "width": 1.0}, {"from": "hamburger", "title": "authors of the staging scheme used", "to": "hamilton", "width": 1.0}, {"from": "hamburger v", "title": "Described a series of normal stages in the development of the chick embryo.", "to": "normal stages in the development of the chick embryo", "width": 1.0}, {"from": "hamster", "title": "is a type of mammal", "to": "mammals", "width": 1.0}, {"from": "hedgehog signalling", "title": "orchestrates", "to": "diencephalon patterning", "width": 1.0}, {"from": "hedges sb", "title": "Presented molecular evidence for the origin of birds.", "to": "molecular evidence for the origin of birds", "width": 1.0}, {"from": "hindbrain", "title": "can be seen", "to": "rhombomeres", "width": 1.0}, {"from": "hindbrain", "title": "Segmentation is a process that occurs in the developing hindbrain.", "to": "segmentation", "width": 1.0}, {"from": "hrp-peanut lectin", "title": "for 1224 h", "to": "incubated", "width": 1.0}, {"from": "humans", "title": "onset of diencephalic segmentation", "to": "diencephalic segmentation", "width": 1.0}, {"from": "humans", "title": "are both types of mammals", "to": "mammals", "width": 1.0}, {"from": "humans", "title": "investigation of human development by Mller and ORahilly", "to": "mller and orahilly", "width": 1.0}, {"from": "humans mller and orahilly, 1997", "title": "divided into two parts: D1 and D2", "to": "d1and d2", "width": 1.0}, {"from": "humans mller and orahilly, 1997", "title": "at least in documenting", "to": "obser-vations", "width": 1.0}, {"from": "hypothalamus", "title": "The hypothalamus was considered part of D1 in this analysis.", "to": "parencephalon anterior (d1)", "width": 1.0}, {"from": "hypothalamus", "title": "part of", "to": "secondary prosencephalon", "width": 1.0}, {"from": "immunocytochemical", "title": "Methods for immunocytochemical experiments were identical to procedures described...", "to": "experiment", "width": 1.0}, {"from": "kage t", "title": "Explored morphogenesis and regionalization of the medaka embryonic brain.", "to": "morphogenesis and regionalization of the medaka embry- onic brain", "width": 1.0}, {"from": "keynes", "title": "co-researchers who have suggested criteria for developmental significance", "to": "lumsden", "width": 1.0}, {"from": "keynes and lumsden (1990)", "title": "enumerated", "to": "develop-mentally significant criteria", "width": 1.0}, {"from": "keynes r", "title": "Investigated segmentation and the origin of regional diversity in the vertebrate central nervous system.", "to": "segmentation and the origin of regional diversity in the vertebrate central nervous system", "width": 1.0}, {"from": "keyser a", "title": "Explored the development of the dien-cephalon of the Chinese hamster.", "to": "development of the dien- cephalon of the chinese hamster", "width": 1.0}, {"from": "kiecker c", "title": "Explored compartments and their boundaries in vertebrate brain development.", "to": "compartments and their boundaries in vertebrate brain de- velopment", "width": 1.0}, {"from": "kiecker c", "title": "Described how hedgehog signaling from the ZLI regulates diencephalic regional identity.", "to": "hedgehog signalling from the zli regulates diencephalic re- gional identity", "width": 1.0}, {"from": "kumar s", "title": "Presented a molecular time-scale for vertebrate evolution.", "to": "molecular time-scale for vertebrate evolution", "width": 1.0}, {"from": "lampreys", "title": "subdivisions in the diencephalon early in Lampreys, river lamprey, sea lamprey", "to": "sea lamprey", "width": 1.0}, {"from": "larsen cw", "title": "Investigated boundary formation and compartition in the avian diencephalon.", "to": "boundary formation and compartition in the avian diencephalon", "width": 1.0}, {"from": "larsen et al.", "title": "shared the same findings", "to": "present study", "width": 1.0}, {"from": "larsen et al., 2001", "title": "consistent with", "to": "obser-vations", "width": 1.0}, {"from": "mammal", "title": "representative example", "to": "mouse", "width": 1.0}, {"from": "mammals", "title": "are related as types of mammals", "to": "hyrax", "width": 1.0}, {"from": "mammals", "title": "is a type of mammal", "to": "mouse", "width": 1.0}, {"from": "mammals", "title": "is a type of mammal", "to": "opossum", "width": 1.0}, {"from": "mammals", "title": "is a type of mammal", "to": "rhesus monkey", "width": 1.0}, {"from": "medaka", "title": "are related as types of vertebrates", "to": "reptiles", "width": 1.0}, {"from": "mesencephalon", "title": "suggested border with", "to": "parencephalon", "width": 1.0}, {"from": "mesencephalon", "title": "Calretinin immunoreactivity also marked the border between the synencephalon and mesencephalon.,displayed no cell lineage restriction nor cell boundary phenotype at their border", "to": "synencephalon", "width": 2.0}, {"from": "mesencephalon", "title": "separated caudally from the telencephalon", "to": "telencephalon", "width": 1.0}, {"from": "micro-tubules", "title": "have a relationship as components of mammalian cells", "to": "\u0027-tubulin", "width": 1.0}, {"from": "migration areas", "title": "Development of neuromeres", "to": "vertebrate central tube", "width": 1.0}, {"from": "mller", "title": "authors of the staging scheme used,shared the same observation", "to": "orahilly", "width": 2.0}, {"from": "molecular events", "title": "responsible for", "to": "different adult diencephalons", "width": 1.0}, {"from": "molecularly distinct transverse regions", "title": "were best interpreted as non-neuromeric subdivisions because interneuromeric boundaries did not extend from the roof plate to the floor plate", "to": "secondary prosencephalic subdivisions", "width": 1.0}, {"from": "morpho-logic features", "title": "identify", "to": "divisions of the diencephalon", "width": 1.0}, {"from": "morphogenesis", "title": "Morphogenesis is a process that occurs in the development of the central nervous system.", "to": "central nervous system", "width": 1.0}, {"from": "morphology", "title": "employed by using these techniques", "to": "gene expression", "width": 1.0}, {"from": "most studies", "title": "recognize", "to": "single division", "width": 1.0}, {"from": "mounting", "title": "Mounted sections processed for either histochemistry or immunocytochemistry were dehydrated through a series of graded alcohols, cleared in xylene, and then coverslipped.", "to": "sections", "width": 1.0}, {"from": "national institute of health guidelines", "title": "conform to", "to": "procedures and protocols", "width": 1.0}, {"from": "neural precursor cells", "title": "expression in", "to": "neurofilament proteins", "width": 1.0}, {"from": "neural tube segmentation", "title": "study of", "to": "chick embryos", "width": 1.0}, {"from": "neuromere", "title": "relation between the two, where neuromeres need to meet certain criteria to be of developmental significance", "to": "developmental significance", "width": 1.0}, {"from": "neuromeres", "title": "precedence or production relationship between neuromeres and cell proliferation", "to": "cell proliferation", "width": 1.0}, {"from": "neuromeres", "title": "Other developmentally significant features of neuromeres have yet to be investigated", "to": "features", "width": 1.0}, {"from": "neuromeres", "title": "The timing and sequence of appearance of neuromeres are studied in human embryos.", "to": "human embryos", "width": 1.0}, {"from": "neuromeres", "title": "boundaries between neuromeres represent lineage restrictions", "to": "lineage restrictions", "width": 1.0}, {"from": "neuromeres", "title": "Central tube in vertebrates", "to": "vertebrates", "width": 1.0}, {"from": "neuromeric bulges", "title": "Tissue sectioned horizontally showed the relationship between neuromeric bulges and interneuromeric ventricular ridges.", "to": "interneuromeric ventricular ridges", "width": 1.0}, {"from": "neuronal cell types", "title": "analysis of neuronal cell types and aggregates", "to": "aggregates", "width": 1.0}, {"from": "olympus microscope", "title": "used with", "to": "digital camera", "width": 1.0}, {"from": "ontogeny", "title": "ontology in relation to table 1", "to": "table 1", "width": 1.0}, {"from": "origin of birds and crocodiles", "title": "new look at in", "to": "nature", "width": 1.0}, {"from": "others\u0027 experimental data", "title": "supports", "to": "division into anterior and posterior components", "width": 1.0}, {"from": "others\u0027 observations", "title": "guided the process of marker selection", "to": "selection of markers", "width": 1.0}, {"from": "p", "title": "part of", "to": "prosencephalon", "width": 1.0}, {"from": "panels", "title": "grouped in", "to": "images", "width": 1.0}, {"from": "pap complex", "title": "...incubated in a peroxidase-antiperoxidase (PAP) complex appropriate for the primary antibody...", "to": "primary antibody", "width": 1.0}, {"from": "parencephalon", "title": "into an anterior and posterior component", "to": "anterior and posterior component", "width": 1.0}, {"from": "parencephalon", "title": "The parencephalon is divided into an anterior and posterior compartment", "to": "anterior compartment", "width": 1.0}, {"from": "parencephalon", "title": "The parencephalon is subdivided into anterior and posterior segments.", "to": "anterior segment", "width": 1.0}, {"from": "parencephalon", "title": "subdivides into", "to": "anterior unit", "width": 1.0}, {"from": "parencephalon", "title": "divides into", "to": "anterior zones", "width": 1.0}, {"from": "parencephalon", "title": "most of the parencephalon was", "to": "calretinin immunoreactive", "width": 1.0}, {"from": "parencephalon", "title": "The parencephalon subdivides into an anterior and posterior part.", "to": "parencephalon anterior", "width": 1.0}, {"from": "parencephalon", "title": "The parencephalon is divided into an anterior and posterior compartment", "to": "posterior compartment", "width": 1.0}, {"from": "parencephalon", "title": "subdivides into", "to": "posterior unit", "width": 1.0}, {"from": "parencephalon", "title": "divides into", "to": "posterior zones", "width": 1.0}, {"from": "parencephalon", "title": "exhibited neuromeric characters at its interface with the midbrain, but did not restrict cell mixing nor exhibit lineage restriction at their boundary", "to": "synencephalon", "width": 1.0}, {"from": "parencephalon", "title": "separates into anterior and posterior divisions", "to": "zona limitans interparencephalica", "width": 1.0}, {"from": "parencephalon", "title": "suggested border with", "to": "secondary prosencephalon", "width": 1.0}, {"from": "parencephalon anterior", "title": "Calretinin immunoreactivity marked the boundary separating the parencephalon anterior from the parencephalon posterior.,The context discusses the parcellation of the diencephalon into a rostral zone, the parencephalon, and into a caudal segment, the synencephalon.,separates into two subdivisions,is separated by", "to": "parencephalon posterior", "width": 4.0}, {"from": "parencephalon anterior", "title": "is destined to become", "to": "ventral thalamus or prethalamus", "width": 1.0}, {"from": "parencephalon anterior", "title": "separated by a transverse border ventrally", "to": "secondary prosencephalon", "width": 1.0}, {"from": "parencephalon anterior", "title": "The context discusses the parcellation of the diencephalon into a rostral zone, the parencephalon, and into a caudal segment, the synencephalon.", "to": "synencephalon", "width": 1.0}, {"from": "parencephalon anterior", "title": "A band, the zona limitans interparencephalica, was partly seen between the parencephalon anterior and posterior.,The zona limitans interparencephalica separates the parencephalon anterior from the parencephalon posterior,separates from", "to": "zona limitans interparencephalica", "width": 3.0}, {"from": "parencephalon anterior (d1)", "title": "the four diencephalic compartments were labeled D1 to D4, and corresponded to the parencephalon anterior (D1), paren- cephalon posterior (D2)", "to": "parencephalon posterior (d2)", "width": 1.0}, {"from": "parencephalon posterior", "title": "is the presumptive", "to": "dorsal thalamus and epithalamus or thalamus", "width": 1.0}, {"from": "parencephalon posterior", "title": "Distinct borders between the parencephalon posterior and synencephalon were not clear in tissue stained for calretinin or acetylated tubulin.", "to": "synencephalon", "width": 1.0}, {"from": "parencephalon posterior", "title": "The zona limitans interparencephalica separates the parencephalon anterior from the parencephalon posterior,separates from", "to": "zona limitans interparencephalica", "width": 2.0}, {"from": "patterning", "title": "The developing diencephalon requires proper patterning to occur.", "to": "developing diencephalon", "width": 1.0}, {"from": "peanut agglutinin", "title": "Peanut agglutinin is used in histo-chemical preparations to distinguish odd from even segments in chick.", "to": "histo-chemical preparations", "width": 1.0}, {"from": "peanut agglutinin", "title": "stained", "to": "material", "width": 1.0}, {"from": "peanut agglutinin histochemistry", "title": "described previously", "to": "methodology", "width": 1.0}, {"from": "peanut agglutinin stained sections", "title": "distinguished not only diencephalic sub-divisions but also", "to": "thickness of the most lateral portion of the positively stained diencephalic mantle layer", "width": 1.0}, {"from": "photos", "title": "imported into", "to": "adobe photoshop 7.0", "width": 1.0}, {"from": "plane of section", "title": "The plane of section employed was critical not only for the observations made in this study", "to": "study", "width": 1.0}, {"from": "present observations", "title": "differ in whether synencephalon remains a single unit or divides into two", "to": "early diencephalon development in chick and humans", "width": 1.0}, {"from": "present observations", "title": "cannot determine the status of", "to": "purely morphological data", "width": 1.0}, {"from": "presumptive alar", "title": "Features that distinguished presumptive alar from basal plate were less distinct than transverse diencephalic zones or their respective borders.", "to": "basal plate", "width": 1.0}, {"from": "presumptive alar plate", "title": "varied differentiation according to stage of development", "to": "basal plate", "width": 1.0}, {"from": "presumptive alar plate", "title": "comprises", "to": "components", "width": 1.0}, {"from": "presumptive basal plate region", "title": "part of", "to": "components", "width": 1.0}, {"from": "primary antibody", "title": "...incubated with the secondary antibody (goat anti-mouse IgG, Vector Labs, ...) at a concentration of 1:100 for 1 h.", "to": "secondary antibody", "width": 1.0}, {"from": "pritz brain behav evol", "title": "The context refers to this journal article", "to": "journal", "width": 1.0}, {"from": "procedures and protocols", "title": "reviewed and approved", "to": "animal care committee", "width": 1.0}, {"from": "prosomere 1 (synencephalon)", "title": "The territory of prosomere 1 was re-evaluated and re-defined", "to": "territory", "width": 1.0}, {"from": "prosomere 2 (parencephalon posteri- or)", "title": "The territory of prosomere 2 was re-evaluated and re-defined", "to": "territory", "width": 1.0}, {"from": "prosomere 3 (parencephalon anterior)", "title": "The territory of prosomere 3 was re-evaluated and re-defined", "to": "territory", "width": 1.0}, {"from": "prosomeric model", "title": "The prosomeric model was an approach to correlate morphological observations with gene expression data", "to": "approach", "width": 1.0}, {"from": "prosomeric model", "title": "The prosomeric model was initially based on morphological observations in chick", "to": "morphological observations", "width": 1.0}, {"from": "prosomeric model", "title": "The prosomeric model was subsequently extended to other vertebrates", "to": "other vertebrates", "width": 1.0}, {"from": "puelles and rubenstein, 2003", "title": "This reference is cited in the context as providing information on the prosomeric model", "to": "reference", "width": 1.0}, {"from": "puelles et al., 1987", "title": "consistent with", "to": "obser-vations", "width": 1.0}, {"from": "regulatory genes", "title": "expression pattern relationship between regulatory genes and neuromere(s)", "to": "neuromere(s)", "width": 1.0}, {"from": "reptiles", "title": "subdivisions in the diencephalon early in Reptiles, sea turtle", "to": "snake", "width": 1.0}, {"from": "reptilian", "title": "are related in the context of studying rhombomere development", "to": "embryo", "width": 1.0}, {"from": "rhombomeres", "title": "relationship between rhombomeres and the developing chick hindbrain, where they satisfy certain criteria", "to": "developing chick hindbrain", "width": 1.0}, {"from": "sagittal and horizontal planes", "title": "It was for this reason that the tissue was analyzed in both sagittal and horizon- tal planes to confirm observations and minimize misin- terpretations", "to": "study", "width": 1.0}, {"from": "sagittal and horizontal planes of sections", "title": "The sagittal and horizontal planes of sections used in this analysis have been illustrated in a representative external view of an Alligator brain", "to": "alligator brain", "width": 1.0}, {"from": "secondary prosencephalon", "title": "part of", "to": "telencephalon", "width": 1.0}, {"from": "sections", "title": "to a solution of 70 alcohol for 1 min", "to": "transferred", "width": 1.0}, {"from": "sharkrays", "title": "subdivisions in the diencephalon early in Sharkrays, dogfish, marine ray", "to": "marine ray", "width": 1.0}, {"from": "shh", "title": "dependent formation", "to": "zli", "width": 1.0}, {"from": "single segment stage", "title": "progression from a single stage to two stages", "to": "two segment stage", "width": 1.0}, {"from": "slides", "title": "out of distilled water onto chrome-alum coated slides", "to": "mounted", "width": 1.0}, {"from": "snake", "title": "are both reptiles", "to": "sea turtle", "width": 1.0}, {"from": "stage", "title": "The stage is described in relation to the embryo.", "to": "embryo", "width": 1.0}, {"from": "stage 11.5", "title": "occurs at", "to": "day 12.5", "width": 1.0}, {"from": "stage 12 brain", "title": "shows the", "to": "lateral photo", "width": 1.0}, {"from": "stage 12 brain", "title": "illustrates the", "to": "sagittal plane", "width": 1.0}, {"from": "studies", "title": "include", "to": "present study", "width": 1.0}, {"from": "synencephalon", "title": "is anlage for", "to": "anlage for pretectum", "width": 1.0}, {"from": "synencephalon", "title": "part of", "to": "anterior", "width": 1.0}, {"from": "synencephalon", "title": "further parcellation into an anterior and posterior portion", "to": "anterior and posterior portion", "width": 1.0}, {"from": "synencephalon", "title": "divides into", "to": "anterior segment", "width": 1.0}, {"from": "synencephalon", "title": "the synencephalon becomes divided into anterior and posterior subdivisions", "to": "anterior subdivisions", "width": 1.0}, {"from": "synencephalon", "title": "part of", "to": "posterior", "width": 1.0}, {"from": "synencephalon", "title": "divides into", "to": "posterior portion", "width": 1.0}, {"from": "synencephalon", "title": "divides into", "to": "posterior segment", "width": 1.0}, {"from": "synencephalon", "title": "has two divisions recognized as", "to": "pretectum anterior and pretectum posterior", "width": 1.0}, {"from": "synencephalon", "title": "Parcellation of the synencephalon is best visualized in tissue stained with an antibody to vimentin.", "to": "subdivisions", "width": 1.0}, {"from": "synencephalon", "title": "stained positively in and negatively in", "to": "ventral parencephalon", "width": 1.0}, {"from": "synencephalon anterior (d3)", "title": "the four diencephalic compartments were labeled D1 to D4, and corresponded to the parencephalon anterior (D1), paren- cephalon posterior (D2), synencephalon anterior (D3), and synencephalon posterior (D4)", "to": "synencephalon posterior (d4)", "width": 1.0}, {"from": "synencephalon posterior", "title": "separates into two divisions", "to": "mes-encephalon", "width": 1.0}, {"from": "t", "title": "related to", "to": "telencephalon", "width": 1.0}, {"from": "techniques", "title": "use of histological staining techniques in studies", "to": "histological staining", "width": 1.0}, {"from": "teleosts", "title": "subdivisions in the diencephalon early in Teleosts, medaka", "to": "zebrafish", "width": 1.0}, {"from": "temperature", "title": "did not influence staging", "to": "species", "width": 1.0}, {"from": "thalamus", "title": "exploration of role in", "to": "cortical function", "width": 1.0}, {"from": "this region", "title": "has suggested to be", "to": "separate compartment", "width": 1.0}, {"from": "tissue", "title": "in three changes of PBS", "to": "washed", "width": 1.0}, {"from": "tissue preservation", "title": "related to freez- ing, tissue preservation, the amount of external tissue surrounding the brain, and differential brain growth during development", "to": "freez- ing", "width": 1.0}, {"from": "tissue sectioned transversally", "title": "was useful only for documentation of the zona limi- tans interparencephalica", "to": "zona limi- tans interparencephalica", "width": 1.0}, {"from": "transversal diencephalic subdivisions", "title": "proved elusive", "to": "identification", "width": 1.0}, {"from": "transverse dience- phalic zones", "title": "The separation between these zones and their borders was highlighted by a staining pattern.", "to": "respective borders", "width": 1.0}, {"from": "transverse diencephalic segments", "title": "corresponds to", "to": "presumed alar and basal plate", "width": 1.0}, {"from": "transverse plane", "title": "is a view of", "to": "single segment", "width": 1.0}, {"from": "vaage", "title": "study based on", "to": "fixed and partly sectioned material", "width": 1.0}, {"from": "vaage", "title": "study based on", "to": "living embryos", "width": 1.0}, {"from": "vaage", "title": "made similar observations", "to": "puelles et al.", "width": 1.0}, {"from": "vaage", "title": "study based on", "to": "wax reconstructions", "width": 1.0}, {"from": "ventricular surface", "title": "distinguished diencephalic segmental boundaries particularly those borders between", "to": "pial surface", "width": 1.0}, {"from": "vertebrate", "title": "are related in the context of comparing and understanding their development", "to": "central nervous system", "width": 1.0}, {"from": "vertebrates", "title": "compar- isons with similar experiments done in other vertebrates", "to": "experiments", "width": 1.0}, {"from": "vimentin", "title": "labeled", "to": "radial glia", "width": 1.0}, {"from": "whetstone kn", "title": "co-authors in a scientific paper", "to": "martin ld", "width": 1.0}, {"from": "zebrafish forebrain", "title": "related concepts (development)", "to": "prosomeric domains", "width": 1.0}, {"from": "zona limitans interparencephalica", "title": "required to confirm relationship with", "to": "additional markers", "width": 1.0}, {"from": "zona limitans interparencephalica", "title": "separates", "to": "border", "width": 1.0}, {"from": "zona limitans interparencephalica", "title": "might correspond to part or all of", "to": "zona limitans intrathalamica", "width": 1.0}, {"from": "zona limitans intrathalamica", "title": "divided the parencephalon into these two parts", "to": "anterior and posterior parts", "width": 1.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,1355 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 900px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="3v wall">3v wall</option>
+                                
+                                    <option value="lv wall">lv wall</option>
+                                
+                                    <option value="egfp cells">egfp cells</option>
+                                
+                                    <option value="hgfap-egfp">hgfap-egfp</option>
+                                
+                                    <option value="tdt tanycytes">tdt tanycytes</option>
+                                
+                                    <option value="telencephalon">telencephalon</option>
+                                
+                                    <option value="abdominal fluids">abdominal fluids</option>
+                                
+                                    <option value="warm saline">warm saline</option>
+                                
+                                    <option value="abdominal wall">abdominal wall</option>
+                                
+                                    <option value="skin">skin</option>
+                                
+                                    <option value="agilent 2100 bioanalyzer">agilent 2100 bioanalyzer</option>
+                                
+                                    <option value="rna quality">rna quality</option>
+                                
+                                    <option value="ai14">ai14</option>
+                                
+                                    <option value="rosa-tdtomato">rosa-tdtomato</option>
+                                
+                                    <option value="aldh1l1">aldh1l1</option>
+                                
+                                    <option value="lv">lv</option>
+                                
+                                    <option value="ventricular wall">ventricular wall</option>
+                                
+                                    <option value="aldh1l1 antibody">aldh1l1 antibody</option>
+                                
+                                    <option value="thalamus and cortex">thalamus and cortex</option>
+                                
+                                    <option value="amygdala">amygdala</option>
+                                
+                                    <option value="dentate gyrus (dg)">dentate gyrus (dg)</option>
+                                
+                                    <option value="aqp4">aqp4</option>
+                                
+                                    <option value="perivascular endfeet">perivascular endfeet</option>
+                                
+                                    <option value="santa cruz">santa cruz</option>
+                                
+                                    <option value="aquaporin-4">aquaporin-4</option>
+                                
+                                    <option value="brain">brain</option>
+                                
+                                    <option value="astrocyte">astrocyte</option>
+                                
+                                    <option value="communication elements">communication elements</option>
+                                
+                                    <option value="glia">glia</option>
+                                
+                                    <option value="lineage progression">lineage progression</option>
+                                
+                                    <option value="midline glia">midline glia</option>
+                                
+                                    <option value="specification">specification</option>
+                                
+                                    <option value="oligodendrocyte">oligodendrocyte</option>
+                                
+                                    <option value="tdt cells">tdt cells</option>
+                                
+                                    <option value="thalamus">thalamus</option>
+                                
+                                    <option value="astrocyte cortical heterogeneity">astrocyte cortical heterogeneity</option>
+                                
+                                    <option value="clonal identity">clonal identity</option>
+                                
+                                    <option value="astrocyte development">astrocyte development</option>
+                                
+                                    <option value="developing mouse diencephalon">developing mouse diencephalon</option>
+                                
+                                    <option value="guide">guide</option>
+                                
+                                    <option value="astrocyte differentiation">astrocyte differentiation</option>
+                                
+                                    <option value="npcs">npcs</option>
+                                
+                                    <option value="astrocyte features">astrocyte features</option>
+                                
+                                    <option value="egfp-expressing cells">egfp-expressing cells</option>
+                                
+                                    <option value="astrocyte lineage">astrocyte lineage</option>
+                                
+                                    <option value="development">development</option>
+                                
+                                    <option value="specification and migration process">specification and migration process</option>
+                                
+                                    <option value="startrack method">startrack method</option>
+                                
+                                    <option value="astrocyte migration">astrocyte migration</option>
+                                
+                                    <option value="developing diencephalon">developing diencephalon</option>
+                                
+                                    <option value="astrocyte progenitors">astrocyte progenitors</option>
+                                
+                                    <option value="dorsal diencephalon">dorsal diencephalon</option>
+                                
+                                    <option value="radial migration">radial migration</option>
+                                
+                                    <option value="astrocyte proliferation">astrocyte proliferation</option>
+                                
+                                    <option value="astrocyte specification">astrocyte specification</option>
+                                
+                                    <option value="diencephalon">diencephalon</option>
+                                
+                                    <option value="lentivirus">lentivirus</option>
+                                
+                                    <option value="lineage tracing">lineage tracing</option>
+                                
+                                    <option value="astrocyte-like cells">astrocyte-like cells</option>
+                                
+                                    <option value="forebrain">forebrain</option>
+                                
+                                    <option value="progeny of radial glia">progeny of radial glia</option>
+                                
+                                    <option value="radial glia">radial glia</option>
+                                
+                                    <option value="astrocytes">astrocytes</option>
+                                
+                                    <option value="brain regions">brain regions</option>
+                                
+                                    <option value="disease">disease</option>
+                                
+                                    <option value="fatty acid-binding protein 7">fatty acid-binding protein 7</option>
+                                
+                                    <option value="inducible cre recombinase">inducible cre recombinase</option>
+                                
+                                    <option value="microglia">microglia</option>
+                                
+                                    <option value="neuroblasts">neuroblasts</option>
+                                
+                                    <option value="neuroinflammatory response">neuroinflammatory response</option>
+                                
+                                    <option value="oligodendrocytes">oligodendrocytes</option>
+                                
+                                    <option value="proliferation">proliferation</option>
+                                
+                                    <option value="ventral region of the diencephalon">ventral region of the diencephalon</option>
+                                
+                                    <option value="zona incerta">zona incerta</option>
+                                
+                                    <option value="bhlh protein scl">bhlh protein scl</option>
+                                
+                                    <option value="cortex">cortex</option>
+                                
+                                    <option value="cortical glial progenitors">cortical glial progenitors</option>
+                                
+                                    <option value="pual vm">pual vm</option>
+                                
+                                    <option value="upper region of 3v wall">upper region of 3v wall</option>
+                                
+                                    <option value="astrocytes-like cell">astrocytes-like cell</option>
+                                
+                                    <option value="ventral region of diencephalon">ventral region of diencephalon</option>
+                                
+                                    <option value="astrocytic endfeet">astrocytic endfeet</option>
+                                
+                                    <option value="blood-brain barrier and cerebral blood flow">blood-brain barrier and cerebral blood flow</option>
+                                
+                                    <option value="blood-brain barrier">blood-brain barrier</option>
+                                
+                                    <option value="astrogenesis">astrogenesis</option>
+                                
+                                    <option value="cerebellum">cerebellum</option>
+                                
+                                    <option value="dorsal region of diencephalon">dorsal region of diencephalon</option>
+                                
+                                    <option value="geneset">geneset</option>
+                                
+                                    <option value="timing">timing</option>
+                                
+                                    <option value="dorsal region of developing diencephalon">dorsal region of developing diencephalon</option>
+                                
+                                    <option value="gbx2">gbx2</option>
+                                
+                                    <option value="id3">id3</option>
+                                
+                                    <option value="slc17a6">slc17a6</option>
+                                
+                                    <option value="ventral region of developing diencephalon">ventral region of developing diencephalon</option>
+                                
+                                    <option value="wif1">wif1</option>
+                                
+                                    <option value="basic helix-loop-helix transcription factors">basic helix-loop-helix transcription factors</option>
+                                
+                                    <option value="scl and olig2">scl and olig2</option>
+                                
+                                    <option value="blood vessels">blood vessels</option>
+                                
+                                    <option value="gfp astrocytes">gfp astrocytes</option>
+                                
+                                    <option value="brains">brains</option>
+                                
+                                    <option value="cryoprotected with 30 sucrose in pbs">cryoprotected with 30 sucrose in pbs</option>
+                                
+                                    <option value="bushy morphology">bushy morphology</option>
+                                
+                                    <option value="c57bl6j and icr mice">c57bl6j and icr mice</option>
+                                
+                                    <option value="shanghai slac laboratory">shanghai slac laboratory</option>
+                                
+                                    <option value="cd31">cd31</option>
+                                
+                                    <option value="bd biosciences">bd biosciences</option>
+                                
+                                    <option value="cell bodies of astrocyte progenitors">cell bodies of astrocyte progenitors</option>
+                                
+                                    <option value="multiple processes">multiple processes</option>
+                                
+                                    <option value="cell counter software plugin">cell counter software plugin</option>
+                                
+                                    <option value="imagej program">imagej program</option>
+                                
+                                    <option value="central nervous system">central nervous system</option>
+                                
+                                    <option value="bacterial artificial chromosomes">bacterial artificial chromosomes</option>
+                                
+                                    <option value="cephalon">cephalon</option>
+                                
+                                    <option value="cerebral blood flow">cerebral blood flow</option>
+                                
+                                    <option value="astrocyte-mediated control">astrocyte-mediated control</option>
+                                
+                                    <option value="regulation">regulation</option>
+                                
+                                    <option value="cerebral cortex">cerebral cortex</option>
+                                
+                                    <option value="local production of astrocytes">local production of astrocytes</option>
+                                
+                                    <option value="cerrato v">cerrato v</option>
+                                
+                                    <option value="cerebellar astrocyte heterogeneity">cerebellar astrocyte heterogeneity</option>
+                                
+                                    <option value="chinese institute for brain research">chinese institute for brain research</option>
+                                
+                                    <option value="beijing">beijing</option>
+                                
+                                    <option value="collagen iv">collagen iv</option>
+                                
+                                    <option value="millipore">millipore</option>
+                                
+                                    <option value="collagen iv blood vessels">collagen iv blood vessels</option>
+                                
+                                    <option value="egfp astrocytes">egfp astrocytes</option>
+                                
+                                    <option value="copyright holder">copyright holder</option>
+                                
+                                    <option value="permission">permission</option>
+                                
+                                    <option value="coronal sections">coronal sections</option>
+                                
+                                    <option value="cryostat (leica)">cryostat (leica)</option>
+                                
+                                    <option value="corresponding secondary species-specific antibodies">corresponding secondary species-specific antibodies</option>
+                                
+                                    <option value="alexa fluor 488, 555, or 647 (jackson immunoresearch)">alexa fluor 488, 555, or 647 (jackson immunoresearch)</option>
+                                
+                                    <option value="neurons">neurons</option>
+                                
+                                    <option value="protoplasmic astrocyte">protoplasmic astrocyte</option>
+                                
+                                    <option value="pyramidal neurons">pyramidal neurons</option>
+                                
+                                    <option value="s100 astrocytes">s100 astrocytes</option>
+                                
+                                    <option value="cortical astrocytes">cortical astrocytes</option>
+                                
+                                    <option value="progeny">progeny</option>
+                                
+                                    <option value="cortical glial cell development">cortical glial cell development</option>
+                                
+                                    <option value="decoding">decoding</option>
+                                
+                                    <option value="common lineage">common lineage</option>
+                                
+                                    <option value="cortical neuron">cortical neuron</option>
+                                
+                                    <option value="division zone">division zone</option>
+                                
+                                    <option value="cortical protoplasmic astrocytes">cortical protoplasmic astrocytes</option>
+                                
+                                    <option value="cre">cre</option>
+                                
+                                    <option value="mouse brain">mouse brain</option>
+                                
+                                    <option value="cre-mediated recombination">cre-mediated recombination</option>
+                                
+                                    <option value="astrocyte-specific">astrocyte-specific</option>
+                                
+                                    <option value="creative commons licence">creative commons licence</option>
+                                
+                                    <option value="material">material</option>
+                                
+                                    <option value="custom geneset">custom geneset</option>
+                                
+                                    <option value="positive regulation of astrogenesis and astrocyte development">positive regulation of astrogenesis and astrocyte development</option>
+                                
+                                    <option value="department">department</option>
+                                
+                                    <option value="university">university</option>
+                                
+                                    <option value="department of neurobiology">department of neurobiology</option>
+                                
+                                    <option value="zhejiang university school of medicine">zhejiang university school of medicine</option>
+                                
+                                    <option value="deseq2">deseq2</option>
+                                
+                                    <option value="pre-ranked (.rnk) file and custom geneset">pre-ranked (.rnk) file and custom geneset</option>
+                                
+                                    <option value="developmental genetics">developmental genetics</option>
+                                
+                                    <option value="glial-cell specification">glial-cell specification</option>
+                                
+                                    <option value="iue-labeled cells">iue-labeled cells</option>
+                                
+                                    <option value="radial migration pattern of astrocytes">radial migration pattern of astrocytes</option>
+                                
+                                    <option value="differentially-expressed genes">differentially-expressed genes</option>
+                                
+                                    <option value="groups">groups</option>
+                                
+                                    <option value="dorsal 3v wall">dorsal 3v wall</option>
+                                
+                                    <option value="mouse brains">mouse brains</option>
+                                
+                                    <option value="radial glia-like cells">radial glia-like cells</option>
+                                
+                                    <option value="rna-seq analysis">rna-seq analysis</option>
+                                
+                                    <option value="dr. haimin li">dr. haimin li</option>
+                                
+                                    <option value="preliminary intellectual exploration">preliminary intellectual exploration</option>
+                                
+                                    <option value="egfp">egfp</option>
+                                
+                                    <option value="progeny of egfp cells">progeny of egfp cells</option>
+                                
+                                    <option value="tanycyte-like cells">tanycyte-like cells</option>
+                                
+                                    <option value="endfeet structures">endfeet structures</option>
+                                
+                                    <option value="astrocytic morphology">astrocytic morphology</option>
+                                
+                                    <option value="hgfap- egfp plasmid">hgfap- egfp plasmid</option>
+                                
+                                    <option value="long extended basal processes">long extended basal processes</option>
+                                
+                                    <option value="nuclei">nuclei</option>
+                                
+                                    <option value="pial surface of the hypothalamus">pial surface of the hypothalamus</option>
+                                
+                                    <option value="egfp radial gliallike cells">egfp radial gliallike cells</option>
+                                
+                                    <option value="ventral portion of the 3v wall">ventral portion of the 3v wall</option>
+                                
+                                    <option value="gs">gs</option>
+                                
+                                    <option value="parenchyma of the diencephalon">parenchyma of the diencephalon</option>
+                                
+                                    <option value="hypothalamus">hypothalamus</option>
+                                
+                                    <option value="ng2 glia">ng2 glia</option>
+                                
+                                    <option value="olig2">olig2</option>
+                                
+                                    <option value="egfp-positive tanycyte-like cells">egfp-positive tanycyte-like cells</option>
+                                
+                                    <option value="adult progenitor b1 cells">adult progenitor b1 cells</option>
+                                
+                                    <option value="electroporator (ecm 830, btx)">electroporator (ecm 830, btx)</option>
+                                
+                                    <option value="uterus">uterus</option>
+                                
+                                    <option value="embryonic brains">embryonic brains</option>
+                                
+                                    <option value="4% paraformaldehyde">4% paraformaldehyde</option>
+                                
+                                    <option value="embyos">embyos</option>
+                                
+                                    <option value="home cage">home cage</option>
+                                
+                                    <option value="eyfp">eyfp</option>
+                                
+                                    <option value="3v progenitors">3v progenitors</option>
+                                
+                                    <option value="eyfp cells in the cerebral cortex">eyfp cells in the cerebral cortex</option>
+                                
+                                    <option value="mature neurons (neun)">mature neurons (neun)</option>
+                                
+                                    <option value="eyfp cells in the hypothalamus">eyfp cells in the hypothalamus</option>
+                                
+                                    <option value="neun neurons">neun neurons</option>
+                                
+                                    <option value="eyfp cells in the thalamus">eyfp cells in the thalamus</option>
+                                
+                                    <option value="glutamine synthetase-positive astrocytes">glutamine synthetase-positive astrocytes</option>
+                                
+                                    <option value="eyfp radial glia">eyfp radial glia</option>
+                                
+                                    <option value="eyfp reporter">eyfp reporter</option>
+                                
+                                    <option value="radial glial cells">radial glial cells</option>
+                                
+                                    <option value="fate specification of migrating astrocyte progenitors">fate specification of migrating astrocyte progenitors</option>
+                                
+                                    <option value="aldh1l1 antibody staining">aldh1l1 antibody staining</option>
+                                
+                                    <option value="featurecounts">featurecounts</option>
+                                
+                                    <option value="mapped reads">mapped reads</option>
+                                
+                                    <option value="mus muscu lus">mus muscu lus</option>
+                                
+                                    <option value="forebrain midline glia">forebrain midline glia</option>
+                                
+                                    <option value="commisure development">commisure development</option>
+                                
+                                    <option value="g: profiler">g: profiler</option>
+                                
+                                    <option value="pathway enrichment analysis">pathway enrichment analysis</option>
+                                
+                                    <option value="gene set enrichment analysis">gene set enrichment analysis</option>
+                                
+                                    <option value="genome-wide expression profiles">genome-wide expression profiles</option>
+                                
+                                    <option value="gfap alpha tanycytes">gfap alpha tanycytes</option>
+                                
+                                    <option value="neurogenesis">neurogenesis</option>
+                                
+                                    <option value="gfap promoter">gfap promoter</option>
+                                
+                                    <option value="astrocyte-specific expression">astrocyte-specific expression</option>
+                                
+                                    <option value="gfap promoter elements">gfap promoter elements</option>
+                                
+                                    <option value="region-specific expression">region-specific expression</option>
+                                
+                                    <option value="gfp-expressing cells">gfp-expressing cells</option>
+                                
+                                    <option value="blbp">blbp</option>
+                                
+                                    <option value="viral titers">viral titers</option>
+                                
+                                    <option value="glass micropipette">glass micropipette</option>
+                                
+                                    <option value="embryonic forebrain">embryonic forebrain</option>
+                                
+                                    <option value="glial biology">glial biology</option>
+                                
+                                    <option value="diseases">diseases</option>
+                                
+                                    <option value="glial cells">glial cells</option>
+                                
+                                    <option value="postnatal cortex">postnatal cortex</option>
+                                
+                                    <option value="glial development">glial development</option>
+                                
+                                    <option value="regeneration and repair">regeneration and repair</option>
+                                
+                                    <option value="gnanaguru g">gnanaguru g</option>
+                                
+                                    <option value="complement c3c3ar axis">complement c3c3ar axis</option>
+                                
+                                    <option value="granular neuron morphology">granular neuron morphology</option>
+                                
+                                    <option value="dentate gyrus">dentate gyrus</option>
+                                
+                                    <option value="granular neurons">granular neurons</option>
+                                
+                                    <option value="graphpad prism 8.0 software">graphpad prism 8.0 software</option>
+                                
+                                    <option value="statistical analysis was done and graphs were produced">statistical analysis was done and graphs were produced</option>
+                                
+                                    <option value="antibody">antibody</option>
+                                
+                                    <option value="gsea">gsea</option>
+                                
+                                    <option value="targeted gene set enrichment analysis">targeted gene set enrichment analysis</option>
+                                
+                                    <option value="gsea analysis">gsea analysis</option>
+                                
+                                    <option value="differentially expressed genes">differentially expressed genes</option>
+                                
+                                    <option value="gsea plots">gsea plots</option>
+                                
+                                    <option value="gene sets">gene sets</option>
+                                
+                                    <option value="hgfap promoter">hgfap promoter</option>
+                                
+                                    <option value="developing embryonic telencephalon">developing embryonic telencephalon</option>
+                                
+                                    <option value="fluorescent reporter proteins">fluorescent reporter proteins</option>
+                                
+                                    <option value="lentiviral plasmid hgfap-gfp">lentiviral plasmid hgfap-gfp</option>
+                                
+                                    <option value="hgfap- creert2;ai14 transgenic mice">hgfap- creert2;ai14 transgenic mice</option>
+                                
+                                    <option value="temporal-spatial generation of astrocytes">temporal-spatial generation of astrocytes</option>
+                                
+                                    <option value="hgfap-creert2">hgfap-creert2</option>
+                                
+                                    <option value="transgenic mice">transgenic mice</option>
+                                
+                                    <option value="hgfap-creert2; ai14 transgenic mice">hgfap-creert2; ai14 transgenic mice</option>
+                                
+                                    <option value="different developmental stages">different developmental stages</option>
+                                
+                                    <option value="genetic fate mapping analysis">genetic fate mapping analysis</option>
+                                
+                                    <option value="hgfap-creert2;ai14 transgenic mice">hgfap-creert2;ai14 transgenic mice</option>
+                                
+                                    <option value="hgfap-egfp plasmid">hgfap-egfp plasmid</option>
+                                
+                                    <option value="e14.5 mouse brains">e14.5 mouse brains</option>
+                                
+                                    <option value="hgfap-egfplabeled cells">hgfap-egfplabeled cells</option>
+                                
+                                    <option value="aldh1l1 staining">aldh1l1 staining</option>
+                                
+                                    <option value="hisat">hisat</option>
+                                
+                                    <option value="spliced aligner">spliced aligner</option>
+                                
+                                    <option value="hisat2 18">hisat2 18</option>
+                                
+                                    <option value="ensemble mouse reference genome grcm38.p6">ensemble mouse reference genome grcm38.p6</option>
+                                
+                                    <option value="hoechst staining">hoechst staining</option>
+                                
+                                    <option value="homeodomain code">homeodomain code</option>
+                                
+                                    <option value="astrocyte subtype">astrocyte subtype</option>
+                                
+                                    <option value="homeodomain proteins">homeodomain proteins</option>
+                                
+                                    <option value="pax6 and nkx6.1">pax6 and nkx6.1</option>
+                                
+                                    <option value="mouse">mouse</option>
+                                
+                                    <option value="illumina pe150 platform">illumina pe150 platform</option>
+                                
+                                    <option value="rna-seq libraries">rna-seq libraries</option>
+                                
+                                    <option value="immune privilege">immune privilege</option>
+                                
+                                    <option value="vascular endothelium">vascular endothelium</option>
+                                
+                                    <option value="immunohistochemistry">immunohistochemistry</option>
+                                
+                                    <option value="embyonic brains">embyonic brains</option>
+                                
+                                    <option value="in-utero electroporation (iue)">in-utero electroporation (iue)</option>
+                                
+                                    <option value="wild-type icr pregnant female mice">wild-type icr pregnant female mice</option>
+                                
+                                    <option value="laparotomy">laparotomy</option>
+                                
+                                    <option value="anesthesia">anesthesia</option>
+                                
+                                    <option value="leica sp8 or nikon a1 confocal laser microscope system">leica sp8 or nikon a1 confocal laser microscope system</option>
+                                
+                                    <option value="fluorescent images">fluorescent images</option>
+                                
+                                    <option value="lineage tracing studies">lineage tracing studies</option>
+                                
+                                    <option value="regional differences">regional differences</option>
+                                
+                                    <option value="lower region of 3v wall">lower region of 3v wall</option>
+                                
+                                    <option value="neurons in the diencephalon">neurons in the diencephalon</option>
+                                
+                                    <option value="marked genes">marked genes</option>
+                                
+                                    <option value="color scale heatmaps">color scale heatmaps</option>
+                                
+                                    <option value="metrics algorithm">metrics algorithm</option>
+                                
+                                    <option value="log fold change log10 (p-value not adjusted p-val)">log fold change log10 (p-value not adjusted p-val)</option>
+                                
+                                    <option value="developing retinal astrocytic and vascular networks">developing retinal astrocytic and vascular networks</option>
+                                
+                                    <option value="retinal astrocytes">retinal astrocytes</option>
+                                
+                                    <option value="migrating astrocyte progenitors">migrating astrocyte progenitors</option>
+                                
+                                    <option value="spine-like protrusions">spine-like protrusions</option>
+                                
+                                    <option value="multilineage precursor">multilineage precursor</option>
+                                
+                                    <option value="neural stem cell">neural stem cell</option>
+                                
+                                    <option value="multiple origins">multiple origins</option>
+                                
+                                    <option value="spatio-temporal emergence">spatio-temporal emergence</option>
+                                
+                                    <option value="hisat2">hisat2</option>
+                                
+                                    <option value="national key basic research program of china">national key basic research program of china</option>
+                                
+                                    <option value="support">support</option>
+                                
+                                    <option value="national natural science foundation of china">national natural science foundation of china</option>
+                                
+                                    <option value="natural science foundation of shanghai">natural science foundation of shanghai</option>
+                                
+                                    <option value="neun">neun</option>
+                                
+                                    <option value="neuronal marker">neuronal marker</option>
+                                
+                                    <option value="glial nature">glial nature</option>
+                                
+                                    <option value="neural stem cells">neural stem cells</option>
+                                
+                                    <option value="j neurosci">j neurosci</option>
+                                
+                                    <option value="postnatal neural stem cells">postnatal neural stem cells</option>
+                                
+                                    <option value="nfia">nfia</option>
+                                
+                                    <option value="genetax">genetax</option>
+                                
+                                    <option value="gliogenesis">gliogenesis</option>
+                                
+                                    <option value="spinal cord">spinal cord</option>
+                                
+                                    <option value="nfia antibody">nfia antibody</option>
+                                
+                                    <option value="ng2 or olig2 antibodies">ng2 or olig2 antibodies</option>
+                                
+                                    <option value="developing thala- mus">developing thala- mus</option>
+                                
+                                    <option value="nifa">nifa</option>
+                                
+                                    <option value="deep cortical layers">deep cortical layers</option>
+                                
+                                    <option value="nih imagej software">nih imagej software</option>
+                                
+                                    <option value="confo-cal images">confo-cal images</option>
+                                
+                                    <option value="nonsignificant genes">nonsignificant genes</option>
+                                
+                                    <option value="grey">grey</option>
+                                
+                                    <option value="cag-eyfp plasmid">cag-eyfp plasmid</option>
+                                
+                                    <option value="pyramidal-like neurons">pyramidal-like neurons</option>
+                                
+                                    <option value="oligodendrocyte lineage">oligodendrocyte lineage</option>
+                                
+                                    <option value="one-way anova followed by turkeys multiple comparison post hoc test">one-way anova followed by turkeys multiple comparison post hoc test</option>
+                                
+                                    <option value="data from multiple groups were analyzed">data from multiple groups were analyzed</option>
+                                
+                                    <option value="p7 mouse brains">p7 mouse brains</option>
+                                
+                                    <option value="aqp4 and collagen iv">aqp4 and collagen iv</option>
+                                
+                                    <option value="pallial radial glial cells">pallial radial glial cells</option>
+                                
+                                    <option value="gliogenic potential">gliogenic potential</option>
+                                
+                                    <option value="pcna">pcna</option>
+                                
+                                    <option value="proliferating cells">proliferating cells</option>
+                                
+                                    <option value="percentages">percentages</option>
+                                
+                                    <option value="principal components">principal components</option>
+                                
+                                    <option value="plasmid dna solution">plasmid dna solution</option>
+                                
+                                    <option value="fast green">fast green</option>
+                                
+                                    <option value="plasmid experiments">plasmid experiments</option>
+                                
+                                    <option value="hgfap-egfp labeled cells">hgfap-egfp labeled cells</option>
+                                
+                                    <option value="plasmids">plasmids</option>
+                                
+                                    <option value="cdna encoding eyfp">cdna encoding eyfp</option>
+                                
+                                    <option value="postnatal brains">postnatal brains</option>
+                                
+                                    <option value="transcar-dial perfusion">transcar-dial perfusion</option>
+                                
+                                    <option value="postnatal diencephalon">postnatal diencephalon</option>
+                                
+                                    <option value="temporal maturation of astrocytes">temporal maturation of astrocytes</option>
+                                
+                                    <option value="primary antibodies">primary antibodies</option>
+                                
+                                    <option value="blocking solution with 5 bovine serum albumin (bsa) in pbs">blocking solution with 5 bovine serum albumin (bsa) in pbs</option>
+                                
+                                    <option value="gfp (chicken), gfap (mouse), aldh1l1 (mouse), pcna (mouse), s100 (rabbit), neun (mouse), sox2 (rabbit), olig2 (rabbit), ng2 (rabbit), gs (mouse), iba1 (rabbit), cd31 (rat), nfia (rabbit), aqp4 (mouse), and collagen iv (rabbit)">gfp (chicken), gfap (mouse), aldh1l1 (mouse), pcna (mouse), s100 (rabbit), neun (mouse), sox2 (rabbit), olig2 (rabbit), ng2 (rabbit), gs (mouse), iba1 (rabbit), cd31 (rat), nfia (rabbit), aqp4 (mouse), and collagen iv (rabbit)</option>
+                                
+                                    <option value="neuron-like cells">neuron-like cells</option>
+                                
+                                    <option value="pyramidal neuron">pyramidal neuron</option>
+                                
+                                    <option value="pyramidal neuron-like cells">pyramidal neuron-like cells</option>
+                                
+                                    <option value="protoplasmic astrocyte-like cells">protoplasmic astrocyte-like cells</option>
+                                
+                                    <option value="hippocampal ca1ca3 region">hippocampal ca1ca3 region</option>
+                                
+                                    <option value="qin laboratory">qin laboratory</option>
+                                
+                                    <option value="suggestions and comments">suggestions and comments</option>
+                                
+                                    <option value="qubit rna hs assay kit with a qubit 2.0 fluorometer">qubit rna hs assay kit with a qubit 2.0 fluorometer</option>
+                                
+                                    <option value="extracted rna">extracted rna</option>
+                                
+                                    <option value="r programming language">r programming language</option>
+                                
+                                    <option value="principal component analysis (pca) clustering plots, volcano plots, and heat maps">principal component analysis (pca) clustering plots, volcano plots, and heat maps</option>
+                                
+                                    <option value="immature astrocytes">immature astrocytes</option>
+                                
+                                    <option value="neuronal progeny">neuronal progeny</option>
+                                
+                                    <option value="pial surface">pial surface</option>
+                                
+                                    <option value="signaling pathways">signaling pathways</option>
+                                
+                                    <option value="third ventricle (3v) wall">third ventricle (3v) wall</option>
+                                
+                                    <option value="transcription factors">transcription factors</option>
+                                
+                                    <option value="ventral zone (vz)">ventral zone (vz)</option>
+                                
+                                    <option value="transgenes">transgenes</option>
+                                
+                                    <option value="radial glia-derived astrocytes">radial glia-derived astrocytes</option>
+                                
+                                    <option value="spatial domains">spatial domains</option>
+                                
+                                    <option value="radial glial (tanycyte-like) morphology">radial glial (tanycyte-like) morphology</option>
+                                
+                                    <option value="egfp cells in the ventral diencephalon">egfp cells in the ventral diencephalon</option>
+                                
+                                    <option value="elongated radial process">elongated radial process</option>
+                                
+                                    <option value="periventricular cell body">periventricular cell body</option>
+                                
+                                    <option value="progenitors">progenitors</option>
+                                
+                                    <option value="radial migrating astrocyte progenitors">radial migrating astrocyte progenitors</option>
+                                
+                                    <option value="morphologies">morphologies</option>
+                                
+                                    <option value="radial migration of astrocyte progenitors">radial migration of astrocyte progenitors</option>
+                                
+                                    <option value="astrocyte markers">astrocyte markers</option>
+                                
+                                    <option value="region-specific radial glia">region-specific radial glia</option>
+                                
+                                    <option value="regional astrocyte allocation">regional astrocyte allocation</option>
+                                
+                                    <option value="cns synaptogenesis and repair">cns synaptogenesis and repair</option>
+                                
+                                    <option value="rett syndrome">rett syndrome</option>
+                                
+                                    <option value="fragile x mental retardation">fragile x mental retardation</option>
+                                
+                                    <option value="rnaprep pure micro kit">rnaprep pure micro kit</option>
+                                
+                                    <option value="total rna">total rna</option>
+                                
+                                    <option value="school of basic medical sciences">school of basic medical sciences</option>
+                                
+                                    <option value="fudan university">fudan university</option>
+                                
+                                    <option value="sections">sections</option>
+                                
+                                    <option value="superfrost-plus microscope slides (fisher)">superfrost-plus microscope slides (fisher)</option>
+                                
+                                    <option value="signals">signals</option>
+                                
+                                    <option value="progression">progression</option>
+                                
+                                    <option value="significantly down-regulated genes">significantly down-regulated genes</option>
+                                
+                                    <option value="light blue">light blue</option>
+                                
+                                    <option value="sonic hedgehog signaling">sonic hedgehog signaling</option>
+                                
+                                    <option value="thalamic progenitor identity">thalamic progenitor identity</option>
+                                
+                                    <option value="sox3">sox3</option>
+                                
+                                    <option value="nkx2-3">nkx2-3</option>
+                                
+                                    <option value="spatiotemporal specification">spatiotemporal specification</option>
+                                
+                                    <option value="state key laboratory of medical neurobiology">state key laboratory of medical neurobiology</option>
+                                
+                                    <option value="tamoxifen">tamoxifen</option>
+                                
+                                    <option value="induced cells">induced cells</option>
+                                
+                                    <option value="recombination">recombination</option>
+                                
+                                    <option value="tanycytes">tanycytes</option>
+                                
+                                    <option value="fgf-responsive neural progenitors">fgf-responsive neural progenitors</option>
+                                
+                                    <option value="tdt astrocyte-like cells">tdt astrocyte-like cells</option>
+                                
+                                    <option value="dorsal region above the 3v">dorsal region above the 3v</option>
+                                
+                                    <option value="tdt-expressing cells">tdt-expressing cells</option>
+                                
+                                    <option value="e14.5">e14.5</option>
+                                
+                                    <option value="third ventricle">third ventricle</option>
+                                
+                                    <option value="lateral ventricle">lateral ventricle</option>
+                                
+                                    <option value="trimmomatic">trimmomatic</option>
+                                
+                                    <option value="illumina sequence data">illumina sequence data</option>
+                                
+                                    <option value="low-quality reads and adaptor trimming">low-quality reads and adaptor trimming</option>
+                                
+                                    <option value="two- tailed unpaired students t-test">two- tailed unpaired students t-test</option>
+                                
+                                    <option value="data from two groups were analyzed">data from two groups were analyzed</option>
+                                
+                                    <option value="vector pcaggs">vector pcaggs</option>
+                                
+                                    <option value="cag promoter">cag promoter</option>
+                                
+                                    <option value="ventral spinal cord">ventral spinal cord</option>
+                                
+                                    <option value="regionally restricted manner">regionally restricted manner</option>
+                                
+                                    <option value="virus">virus</option>
+                                
+                                    <option value="lentiviral vector">lentiviral vector</option>
+                                
+                                    <option value="virus-containing culture supernatants">virus-containing culture supernatants</option>
+                                
+                                    <option value="centrifugation">centrifugation</option>
+                                
+                                    <option value="wnt7a">wnt7a</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"group": 2, "id": "3v wall", "label": "3v wall", "shape": "dot", "size": 5}, {"group": 2, "id": "lv wall", "label": "lv wall", "shape": "dot", "size": 1}, {"group": 2, "id": "egfp cells", "label": "egfp cells", "shape": "dot", "size": 7}, {"group": 2, "id": "hgfap-egfp", "label": "hgfap-egfp", "shape": "dot", "size": 1}, {"group": 2, "id": "tdt tanycytes", "label": "tdt tanycytes", "shape": "dot", "size": 1}, {"group": 2, "id": "telencephalon", "label": "telencephalon", "shape": "dot", "size": 5}, {"group": 4, "id": "abdominal fluids", "label": "abdominal fluids", "shape": "dot", "size": 1}, {"group": 4, "id": "warm saline", "label": "warm saline", "shape": "dot", "size": 1}, {"group": 5, "id": "abdominal wall", "label": "abdominal wall", "shape": "dot", "size": 1}, {"group": 5, "id": "skin", "label": "skin", "shape": "dot", "size": 1}, {"group": 7, "id": "agilent 2100 bioanalyzer", "label": "agilent 2100 bioanalyzer", "shape": "dot", "size": 1}, {"group": 7, "id": "rna quality", "label": "rna quality", "shape": "dot", "size": 1}, {"group": 8, "id": "ai14", "label": "ai14", "shape": "dot", "size": 1}, {"group": 8, "id": "rosa-tdtomato", "label": "rosa-tdtomato", "shape": "dot", "size": 1}, {"group": 9, "id": "aldh1l1", "label": "aldh1l1", "shape": "dot", "size": 2}, {"group": 9, "id": "lv", "label": "lv", "shape": "dot", "size": 1}, {"group": 9, "id": "ventricular wall", "label": "ventricular wall", "shape": "dot", "size": 1}, {"group": 10, "id": "aldh1l1 antibody", "label": "aldh1l1 antibody", "shape": "dot", "size": 1}, {"group": 10, "id": "thalamus and cortex", "label": "thalamus and cortex", "shape": "dot", "size": 2}, {"group": 2, "id": "amygdala", "label": "amygdala", "shape": "dot", "size": 1}, {"group": 2, "id": "dentate gyrus (dg)", "label": "dentate gyrus (dg)", "shape": "dot", "size": 2}, {"group": 15, "id": "aqp4", "label": "aqp4", "shape": "dot", "size": 2}, {"group": 15, "id": "perivascular endfeet", "label": "perivascular endfeet", "shape": "dot", "size": 1}, {"group": 15, "id": "santa cruz", "label": "santa cruz", "shape": "dot", "size": 1}, {"group": 17, "id": "aquaporin-4", "label": "aquaporin-4", "shape": "dot", "size": 1}, {"group": 17, "id": "brain", "label": "brain", "shape": "dot", "size": 1}, {"group": 2, "id": "astrocyte", "label": "astrocyte", "shape": "dot", "size": 8}, {"group": 2, "id": "communication elements", "label": "communication elements", "shape": "dot", "size": 1}, {"group": 2, "id": "glia", "label": "glia", "shape": "dot", "size": 1}, {"group": 2, "id": "lineage progression", "label": "lineage progression", "shape": "dot", "size": 2}, {"group": 2, "id": "midline glia", "label": "midline glia", "shape": "dot", "size": 2}, {"group": 2, "id": "specification", "label": "specification", "shape": "dot", "size": 1}, {"group": 2, "id": "oligodendrocyte", "label": "oligodendrocyte", "shape": "dot", "size": 1}, {"group": 2, "id": "tdt cells", "label": "tdt cells", "shape": "dot", "size": 6}, {"group": 2, "id": "thalamus", "label": "thalamus", "shape": "dot", "size": 5}, {"group": 18, "id": "astrocyte cortical heterogeneity", "label": "astrocyte cortical heterogeneity", "shape": "dot", "size": 1}, {"group": 18, "id": "clonal identity", "label": "clonal identity", "shape": "dot", "size": 1}, {"group": 2, "id": "astrocyte development", "label": "astrocyte development", "shape": "dot", "size": 2}, {"group": 2, "id": "developing mouse diencephalon", "label": "developing mouse diencephalon", "shape": "dot", "size": 2}, {"group": 2, "id": "guide", "label": "guide", "shape": "dot", "size": 1}, {"group": 19, "id": "astrocyte differentiation", "label": "astrocyte differentiation", "shape": "dot", "size": 1}, {"group": 19, "id": "npcs", "label": "npcs", "shape": "dot", "size": 3}, {"group": 2, "id": "astrocyte features", "label": "astrocyte features", "shape": "dot", "size": 1}, {"group": 2, "id": "egfp-expressing cells", "label": "egfp-expressing cells", "shape": "dot", "size": 8}, {"group": 20, "id": "astrocyte lineage", "label": "astrocyte lineage", "shape": "dot", "size": 3}, {"group": 20, "id": "development", "label": "development", "shape": "dot", "size": 1}, {"group": 20, "id": "specification and migration process", "label": "specification and migration process", "shape": "dot", "size": 1}, {"group": 20, "id": "startrack method", "label": "startrack method", "shape": "dot", "size": 1}, {"group": 22, "id": "astrocyte migration", "label": "astrocyte migration", "shape": "dot", "size": 1}, {"group": 22, "id": "developing diencephalon", "label": "developing diencephalon", "shape": "dot", "size": 4}, {"group": 23, "id": "astrocyte progenitors", "label": "astrocyte progenitors", "shape": "dot", "size": 2}, {"group": 23, "id": "dorsal diencephalon", "label": "dorsal diencephalon", "shape": "dot", "size": 1}, {"group": 23, "id": "radial migration", "label": "radial migration", "shape": "dot", "size": 1}, {"group": 22, "id": "astrocyte proliferation", "label": "astrocyte proliferation", "shape": "dot", "size": 1}, {"group": 2, "id": "astrocyte specification", "label": "astrocyte specification", "shape": "dot", "size": 3}, {"group": 2, "id": "diencephalon", "label": "diencephalon", "shape": "dot", "size": 10}, {"group": 2, "id": "lentivirus", "label": "lentivirus", "shape": "dot", "size": 1}, {"group": 2, "id": "lineage tracing", "label": "lineage tracing", "shape": "dot", "size": 1}, {"group": 25, "id": "astrocyte-like cells", "label": "astrocyte-like cells", "shape": "dot", "size": 3}, {"group": 2, "id": "forebrain", "label": "forebrain", "shape": "dot", "size": 3}, {"group": 25, "id": "progeny of radial glia", "label": "progeny of radial glia", "shape": "dot", "size": 2}, {"group": 25, "id": "radial glia", "label": "radial glia", "shape": "dot", "size": 12}, {"group": 2, "id": "astrocytes", "label": "astrocytes", "shape": "dot", "size": 21}, {"group": 2, "id": "brain regions", "label": "brain regions", "shape": "dot", "size": 1}, {"group": 2, "id": "disease", "label": "disease", "shape": "dot", "size": 1}, {"group": 2, "id": "fatty acid-binding protein 7", "label": "fatty acid-binding protein 7", "shape": "dot", "size": 1}, {"group": 2, "id": "inducible cre recombinase", "label": "inducible cre recombinase", "shape": "dot", "size": 1}, {"group": 2, "id": "microglia", "label": "microglia", "shape": "dot", "size": 5}, {"group": 2, "id": "neuroblasts", "label": "neuroblasts", "shape": "dot", "size": 1}, {"group": 2, "id": "neuroinflammatory response", "label": "neuroinflammatory response", "shape": "dot", "size": 1}, {"group": 2, "id": "oligodendrocytes", "label": "oligodendrocytes", "shape": "dot", "size": 1}, {"group": 2, "id": "proliferation", "label": "proliferation", "shape": "dot", "size": 1}, {"group": 2, "id": "ventral region of the diencephalon", "label": "ventral region of the diencephalon", "shape": "dot", "size": 1}, {"group": 2, "id": "zona incerta", "label": "zona incerta", "shape": "dot", "size": 3}, {"group": 2, "id": "bhlh protein scl", "label": "bhlh protein scl", "shape": "dot", "size": 1}, {"group": 2, "id": "cortex", "label": "cortex", "shape": "dot", "size": 6}, {"group": 2, "id": "cortical glial progenitors", "label": "cortical glial progenitors", "shape": "dot", "size": 2}, {"group": 2, "id": "pual vm", "label": "pual vm", "shape": "dot", "size": 1}, {"group": 2, "id": "upper region of 3v wall", "label": "upper region of 3v wall", "shape": "dot", "size": 1}, {"group": 29, "id": "astrocytes-like cell", "label": "astrocytes-like cell", "shape": "dot", "size": 1}, {"group": 29, "id": "ventral region of diencephalon", "label": "ventral region of diencephalon", "shape": "dot", "size": 1}, {"group": 30, "id": "astrocytic endfeet", "label": "astrocytic endfeet", "shape": "dot", "size": 2}, {"group": 30, "id": "blood-brain barrier and cerebral blood flow", "label": "blood-brain barrier and cerebral blood flow", "shape": "dot", "size": 1}, {"group": 30, "id": "blood-brain barrier", "label": "blood-brain barrier", "shape": "dot", "size": 1}, {"group": 22, "id": "astrogenesis", "label": "astrogenesis", "shape": "dot", "size": 11}, {"group": 22, "id": "cerebellum", "label": "cerebellum", "shape": "dot", "size": 1}, {"group": 22, "id": "dorsal region of diencephalon", "label": "dorsal region of diencephalon", "shape": "dot", "size": 1}, {"group": 22, "id": "geneset", "label": "geneset", "shape": "dot", "size": 2}, {"group": 22, "id": "timing", "label": "timing", "shape": "dot", "size": 1}, {"group": 22, "id": "dorsal region of developing diencephalon", "label": "dorsal region of developing diencephalon", "shape": "dot", "size": 1}, {"group": 22, "id": "gbx2", "label": "gbx2", "shape": "dot", "size": 1}, {"group": 22, "id": "id3", "label": "id3", "shape": "dot", "size": 1}, {"group": 22, "id": "slc17a6", "label": "slc17a6", "shape": "dot", "size": 1}, {"group": 22, "id": "ventral region of developing diencephalon", "label": "ventral region of developing diencephalon", "shape": "dot", "size": 1}, {"group": 22, "id": "wif1", "label": "wif1", "shape": "dot", "size": 1}, {"group": 32, "id": "basic helix-loop-helix transcription factors", "label": "basic helix-loop-helix transcription factors", "shape": "dot", "size": 1}, {"group": 32, "id": "scl and olig2", "label": "scl and olig2", "shape": "dot", "size": 1}, {"group": 37, "id": "blood vessels", "label": "blood vessels", "shape": "dot", "size": 1}, {"group": 37, "id": "gfp astrocytes", "label": "gfp astrocytes", "shape": "dot", "size": 1}, {"group": 38, "id": "brains", "label": "brains", "shape": "dot", "size": 1}, {"group": 38, "id": "cryoprotected with 30 sucrose in pbs", "label": "cryoprotected with 30 sucrose in pbs", "shape": "dot", "size": 1}, {"group": 2, "id": "bushy morphology", "label": "bushy morphology", "shape": "dot", "size": 1}, {"group": 39, "id": "c57bl6j and icr mice", "label": "c57bl6j and icr mice", "shape": "dot", "size": 1}, {"group": 39, "id": "shanghai slac laboratory", "label": "shanghai slac laboratory", "shape": "dot", "size": 1}, {"group": 33, "id": "cd31", "label": "cd31", "shape": "dot", "size": 1}, {"group": 33, "id": "bd biosciences", "label": "bd biosciences", "shape": "dot", "size": 1}, {"group": 42, "id": "cell bodies of astrocyte progenitors", "label": "cell bodies of astrocyte progenitors", "shape": "dot", "size": 1}, {"group": 42, "id": "multiple processes", "label": "multiple processes", "shape": "dot", "size": 1}, {"group": 43, "id": "cell counter software plugin", "label": "cell counter software plugin", "shape": "dot", "size": 1}, {"group": 43, "id": "imagej program", "label": "imagej program", "shape": "dot", "size": 1}, {"group": 31, "id": "central nervous system", "label": "central nervous system", "shape": "dot", "size": 1}, {"group": 31, "id": "bacterial artificial chromosomes", "label": "bacterial artificial chromosomes", "shape": "dot", "size": 1}, {"group": 2, "id": "cephalon", "label": "cephalon", "shape": "dot", "size": 1}, {"group": 26, "id": "cerebral blood flow", "label": "cerebral blood flow", "shape": "dot", "size": 2}, {"group": 26, "id": "astrocyte-mediated control", "label": "astrocyte-mediated control", "shape": "dot", "size": 1}, {"group": 26, "id": "regulation", "label": "regulation", "shape": "dot", "size": 1}, {"group": 2, "id": "cerebral cortex", "label": "cerebral cortex", "shape": "dot", "size": 3}, {"group": 2, "id": "local production of astrocytes", "label": "local production of astrocytes", "shape": "dot", "size": 1}, {"group": 45, "id": "cerrato v", "label": "cerrato v", "shape": "dot", "size": 1}, {"group": 45, "id": "cerebellar astrocyte heterogeneity", "label": "cerebellar astrocyte heterogeneity", "shape": "dot", "size": 1}, {"group": 34, "id": "chinese institute for brain research", "label": "chinese institute for brain research", "shape": "dot", "size": 1}, {"group": 34, "id": "beijing", "label": "beijing", "shape": "dot", "size": 1}, {"group": 47, "id": "collagen iv", "label": "collagen iv", "shape": "dot", "size": 1}, {"group": 47, "id": "millipore", "label": "millipore", "shape": "dot", "size": 1}, {"group": 48, "id": "collagen iv blood vessels", "label": "collagen iv blood vessels", "shape": "dot", "size": 1}, {"group": 48, "id": "egfp astrocytes", "label": "egfp astrocytes", "shape": "dot", "size": 2}, {"group": 53, "id": "copyright holder", "label": "copyright holder", "shape": "dot", "size": 1}, {"group": 53, "id": "permission", "label": "permission", "shape": "dot", "size": 1}, {"group": 54, "id": "coronal sections", "label": "coronal sections", "shape": "dot", "size": 1}, {"group": 54, "id": "cryostat (leica)", "label": "cryostat (leica)", "shape": "dot", "size": 1}, {"group": 13, "id": "corresponding secondary species-specific antibodies", "label": "corresponding secondary species-specific antibodies", "shape": "dot", "size": 1}, {"group": 13, "id": "alexa fluor 488, 555, or 647 (jackson immunoresearch)", "label": "alexa fluor 488, 555, or 647 (jackson immunoresearch)", "shape": "dot", "size": 1}, {"group": 2, "id": "neurons", "label": "neurons", "shape": "dot", "size": 3}, {"group": 2, "id": "protoplasmic astrocyte", "label": "protoplasmic astrocyte", "shape": "dot", "size": 2}, {"group": 2, "id": "pyramidal neurons", "label": "pyramidal neurons", "shape": "dot", "size": 2}, {"group": 2, "id": "s100 astrocytes", "label": "s100 astrocytes", "shape": "dot", "size": 4}, {"group": 55, "id": "cortical astrocytes", "label": "cortical astrocytes", "shape": "dot", "size": 1}, {"group": 55, "id": "progeny", "label": "progeny", "shape": "dot", "size": 1}, {"group": 56, "id": "cortical glial cell development", "label": "cortical glial cell development", "shape": "dot", "size": 1}, {"group": 56, "id": "decoding", "label": "decoding", "shape": "dot", "size": 1}, {"group": 2, "id": "common lineage", "label": "common lineage", "shape": "dot", "size": 1}, {"group": 57, "id": "cortical neuron", "label": "cortical neuron", "shape": "dot", "size": 1}, {"group": 57, "id": "division zone", "label": "division zone", "shape": "dot", "size": 1}, {"group": 25, "id": "cortical protoplasmic astrocytes", "label": "cortical protoplasmic astrocytes", "shape": "dot", "size": 1}, {"group": 58, "id": "cre", "label": "cre", "shape": "dot", "size": 1}, {"group": 58, "id": "mouse brain", "label": "mouse brain", "shape": "dot", "size": 1}, {"group": 27, "id": "cre-mediated recombination", "label": "cre-mediated recombination", "shape": "dot", "size": 1}, {"group": 27, "id": "astrocyte-specific", "label": "astrocyte-specific", "shape": "dot", "size": 1}, {"group": 59, "id": "creative commons licence", "label": "creative commons licence", "shape": "dot", "size": 1}, {"group": 59, "id": "material", "label": "material", "shape": "dot", "size": 1}, {"group": 22, "id": "custom geneset", "label": "custom geneset", "shape": "dot", "size": 1}, {"group": 22, "id": "positive regulation of astrogenesis and astrocyte development", "label": "positive regulation of astrogenesis and astrocyte development", "shape": "dot", "size": 2}, {"group": 64, "id": "department", "label": "department", "shape": "dot", "size": 1}, {"group": 64, "id": "university", "label": "university", "shape": "dot", "size": 1}, {"group": 65, "id": "department of neurobiology", "label": "department of neurobiology", "shape": "dot", "size": 1}, {"group": 65, "id": "zhejiang university school of medicine", "label": "zhejiang university school of medicine", "shape": "dot", "size": 1}, {"group": 66, "id": "deseq2", "label": "deseq2", "shape": "dot", "size": 1}, {"group": 66, "id": "pre-ranked (.rnk) file and custom geneset", "label": "pre-ranked (.rnk) file and custom geneset", "shape": "dot", "size": 1}, {"group": 68, "id": "developmental genetics", "label": "developmental genetics", "shape": "dot", "size": 1}, {"group": 68, "id": "glial-cell specification", "label": "glial-cell specification", "shape": "dot", "size": 1}, {"group": 2, "id": "iue-labeled cells", "label": "iue-labeled cells", "shape": "dot", "size": 1}, {"group": 2, "id": "radial migration pattern of astrocytes", "label": "radial migration pattern of astrocytes", "shape": "dot", "size": 1}, {"group": 71, "id": "differentially-expressed genes", "label": "differentially-expressed genes", "shape": "dot", "size": 1}, {"group": 71, "id": "groups", "label": "groups", "shape": "dot", "size": 1}, {"group": 2, "id": "dorsal 3v wall", "label": "dorsal 3v wall", "shape": "dot", "size": 3}, {"group": 2, "id": "mouse brains", "label": "mouse brains", "shape": "dot", "size": 2}, {"group": 2, "id": "radial glia-like cells", "label": "radial glia-like cells", "shape": "dot", "size": 1}, {"group": 2, "id": "rna-seq analysis", "label": "rna-seq analysis", "shape": "dot", "size": 2}, {"group": 74, "id": "dr. haimin li", "label": "dr. haimin li", "shape": "dot", "size": 1}, {"group": 74, "id": "preliminary intellectual exploration", "label": "preliminary intellectual exploration", "shape": "dot", "size": 1}, {"group": 76, "id": "egfp", "label": "egfp", "shape": "dot", "size": 2}, {"group": 76, "id": "progeny of egfp cells", "label": "progeny of egfp cells", "shape": "dot", "size": 1}, {"group": 76, "id": "tanycyte-like cells", "label": "tanycyte-like cells", "shape": "dot", "size": 1}, {"group": 48, "id": "endfeet structures", "label": "endfeet structures", "shape": "dot", "size": 1}, {"group": 2, "id": "astrocytic morphology", "label": "astrocytic morphology", "shape": "dot", "size": 3}, {"group": 2, "id": "hgfap- egfp plasmid", "label": "hgfap- egfp plasmid", "shape": "dot", "size": 1}, {"group": 2, "id": "long extended basal processes", "label": "long extended basal processes", "shape": "dot", "size": 1}, {"group": 2, "id": "nuclei", "label": "nuclei", "shape": "dot", "size": 2}, {"group": 2, "id": "pial surface of the hypothalamus", "label": "pial surface of the hypothalamus", "shape": "dot", "size": 1}, {"group": 78, "id": "egfp radial gliallike cells", "label": "egfp radial gliallike cells", "shape": "dot", "size": 1}, {"group": 78, "id": "ventral portion of the 3v wall", "label": "ventral portion of the 3v wall", "shape": "dot", "size": 1}, {"group": 2, "id": "gs", "label": "gs", "shape": "dot", "size": 2}, {"group": 2, "id": "parenchyma of the diencephalon", "label": "parenchyma of the diencephalon", "shape": "dot", "size": 1}, {"group": 2, "id": "hypothalamus", "label": "hypothalamus", "shape": "dot", "size": 5}, {"group": 2, "id": "ng2 glia", "label": "ng2 glia", "shape": "dot", "size": 1}, {"group": 2, "id": "olig2", "label": "olig2", "shape": "dot", "size": 3}, {"group": 6, "id": "egfp-positive tanycyte-like cells", "label": "egfp-positive tanycyte-like cells", "shape": "dot", "size": 1}, {"group": 6, "id": "adult progenitor b1 cells", "label": "adult progenitor b1 cells", "shape": "dot", "size": 1}, {"group": 79, "id": "electroporator (ecm 830, btx)", "label": "electroporator (ecm 830, btx)", "shape": "dot", "size": 1}, {"group": 79, "id": "uterus", "label": "uterus", "shape": "dot", "size": 1}, {"group": 3, "id": "embryonic brains", "label": "embryonic brains", "shape": "dot", "size": 1}, {"group": 3, "id": "4% paraformaldehyde", "label": "4% paraformaldehyde", "shape": "dot", "size": 1}, {"group": 83, "id": "embyos", "label": "embyos", "shape": "dot", "size": 1}, {"group": 83, "id": "home cage", "label": "home cage", "shape": "dot", "size": 1}, {"group": 1, "id": "eyfp", "label": "eyfp", "shape": "dot", "size": 1}, {"group": 1, "id": "3v progenitors", "label": "3v progenitors", "shape": "dot", "size": 1}, {"group": 86, "id": "eyfp cells in the cerebral cortex", "label": "eyfp cells in the cerebral cortex", "shape": "dot", "size": 1}, {"group": 86, "id": "mature neurons (neun)", "label": "mature neurons (neun)", "shape": "dot", "size": 1}, {"group": 87, "id": "eyfp cells in the hypothalamus", "label": "eyfp cells in the hypothalamus", "shape": "dot", "size": 1}, {"group": 87, "id": "neun neurons", "label": "neun neurons", "shape": "dot", "size": 1}, {"group": 88, "id": "eyfp cells in the thalamus", "label": "eyfp cells in the thalamus", "shape": "dot", "size": 1}, {"group": 88, "id": "glutamine synthetase-positive astrocytes", "label": "glutamine synthetase-positive astrocytes", "shape": "dot", "size": 1}, {"group": 2, "id": "eyfp radial glia", "label": "eyfp radial glia", "shape": "dot", "size": 1}, {"group": 80, "id": "eyfp reporter", "label": "eyfp reporter", "shape": "dot", "size": 1}, {"group": 80, "id": "radial glial cells", "label": "radial glial cells", "shape": "dot", "size": 4}, {"group": 11, "id": "fate specification of migrating astrocyte progenitors", "label": "fate specification of migrating astrocyte progenitors", "shape": "dot", "size": 1}, {"group": 11, "id": "aldh1l1 antibody staining", "label": "aldh1l1 antibody staining", "shape": "dot", "size": 1}, {"group": 90, "id": "featurecounts", "label": "featurecounts", "shape": "dot", "size": 2}, {"group": 90, "id": "mapped reads", "label": "mapped reads", "shape": "dot", "size": 1}, {"group": 90, "id": "mus muscu lus", "label": "mus muscu lus", "shape": "dot", "size": 2}, {"group": 50, "id": "forebrain midline glia", "label": "forebrain midline glia", "shape": "dot", "size": 1}, {"group": 50, "id": "commisure development", "label": "commisure development", "shape": "dot", "size": 1}, {"group": 95, "id": "g: profiler", "label": "g: profiler", "shape": "dot", "size": 1}, {"group": 95, "id": "pathway enrichment analysis", "label": "pathway enrichment analysis", "shape": "dot", "size": 1}, {"group": 96, "id": "gene set enrichment analysis", "label": "gene set enrichment analysis", "shape": "dot", "size": 1}, {"group": 96, "id": "genome-wide expression profiles", "label": "genome-wide expression profiles", "shape": "dot", "size": 1}, {"group": 99, "id": "gfap alpha tanycytes", "label": "gfap alpha tanycytes", "shape": "dot", "size": 1}, {"group": 99, "id": "neurogenesis", "label": "neurogenesis", "shape": "dot", "size": 2}, {"group": 28, "id": "gfap promoter", "label": "gfap promoter", "shape": "dot", "size": 1}, {"group": 28, "id": "astrocyte-specific expression", "label": "astrocyte-specific expression", "shape": "dot", "size": 1}, {"group": 100, "id": "gfap promoter elements", "label": "gfap promoter elements", "shape": "dot", "size": 1}, {"group": 100, "id": "region-specific expression", "label": "region-specific expression", "shape": "dot", "size": 1}, {"group": 35, "id": "gfp-expressing cells", "label": "gfp-expressing cells", "shape": "dot", "size": 2}, {"group": 35, "id": "blbp", "label": "blbp", "shape": "dot", "size": 1}, {"group": 35, "id": "viral titers", "label": "viral titers", "shape": "dot", "size": 1}, {"group": 81, "id": "glass micropipette", "label": "glass micropipette", "shape": "dot", "size": 1}, {"group": 81, "id": "embryonic forebrain", "label": "embryonic forebrain", "shape": "dot", "size": 1}, {"group": 72, "id": "glial biology", "label": "glial biology", "shape": "dot", "size": 1}, {"group": 72, "id": "diseases", "label": "diseases", "shape": "dot", "size": 1}, {"group": 101, "id": "glial cells", "label": "glial cells", "shape": "dot", "size": 1}, {"group": 101, "id": "postnatal cortex", "label": "postnatal cortex", "shape": "dot", "size": 1}, {"group": 102, "id": "glial development", "label": "glial development", "shape": "dot", "size": 1}, {"group": 102, "id": "regeneration and repair", "label": "regeneration and repair", "shape": "dot", "size": 1}, {"group": 51, "id": "gnanaguru g", "label": "gnanaguru g", "shape": "dot", "size": 1}, {"group": 51, "id": "complement c3c3ar axis", "label": "complement c3c3ar axis", "shape": "dot", "size": 1}, {"group": 63, "id": "granular neuron morphology", "label": "granular neuron morphology", "shape": "dot", "size": 1}, {"group": 63, "id": "dentate gyrus", "label": "dentate gyrus", "shape": "dot", "size": 2}, {"group": 63, "id": "granular neurons", "label": "granular neurons", "shape": "dot", "size": 1}, {"group": 105, "id": "graphpad prism 8.0 software", "label": "graphpad prism 8.0 software", "shape": "dot", "size": 1}, {"group": 105, "id": "statistical analysis was done and graphs were produced", "label": "statistical analysis was done and graphs were produced", "shape": "dot", "size": 1}, {"group": 2, "id": "antibody", "label": "antibody", "shape": "dot", "size": 2}, {"group": 107, "id": "gsea", "label": "gsea", "shape": "dot", "size": 1}, {"group": 107, "id": "targeted gene set enrichment analysis", "label": "targeted gene set enrichment analysis", "shape": "dot", "size": 1}, {"group": 70, "id": "gsea analysis", "label": "gsea analysis", "shape": "dot", "size": 1}, {"group": 70, "id": "differentially expressed genes", "label": "differentially expressed genes", "shape": "dot", "size": 1}, {"group": 97, "id": "gsea plots", "label": "gsea plots", "shape": "dot", "size": 1}, {"group": 97, "id": "gene sets", "label": "gene sets", "shape": "dot", "size": 1}, {"group": 2, "id": "hgfap promoter", "label": "hgfap promoter", "shape": "dot", "size": 5}, {"group": 2, "id": "developing embryonic telencephalon", "label": "developing embryonic telencephalon", "shape": "dot", "size": 1}, {"group": 2, "id": "fluorescent reporter proteins", "label": "fluorescent reporter proteins", "shape": "dot", "size": 1}, {"group": 2, "id": "lentiviral plasmid hgfap-gfp", "label": "lentiviral plasmid hgfap-gfp", "shape": "dot", "size": 1}, {"group": 108, "id": "hgfap- creert2;ai14 transgenic mice", "label": "hgfap- creert2;ai14 transgenic mice", "shape": "dot", "size": 1}, {"group": 108, "id": "temporal-spatial generation of astrocytes", "label": "temporal-spatial generation of astrocytes", "shape": "dot", "size": 1}, {"group": 109, "id": "hgfap-creert2", "label": "hgfap-creert2", "shape": "dot", "size": 1}, {"group": 109, "id": "transgenic mice", "label": "transgenic mice", "shape": "dot", "size": 2}, {"group": 69, "id": "hgfap-creert2; ai14 transgenic mice", "label": "hgfap-creert2; ai14 transgenic mice", "shape": "dot", "size": 2}, {"group": 69, "id": "different developmental stages", "label": "different developmental stages", "shape": "dot", "size": 1}, {"group": 69, "id": "genetic fate mapping analysis", "label": "genetic fate mapping analysis", "shape": "dot", "size": 2}, {"group": 69, "id": "hgfap-creert2;ai14 transgenic mice", "label": "hgfap-creert2;ai14 transgenic mice", "shape": "dot", "size": 1}, {"group": 2, "id": "hgfap-egfp plasmid", "label": "hgfap-egfp plasmid", "shape": "dot", "size": 2}, {"group": 2, "id": "e14.5 mouse brains", "label": "e14.5 mouse brains", "shape": "dot", "size": 1}, {"group": 12, "id": "hgfap-egfplabeled cells", "label": "hgfap-egfplabeled cells", "shape": "dot", "size": 1}, {"group": 12, "id": "aldh1l1 staining", "label": "aldh1l1 staining", "shape": "dot", "size": 1}, {"group": 111, "id": "hisat", "label": "hisat", "shape": "dot", "size": 1}, {"group": 111, "id": "spliced aligner", "label": "spliced aligner", "shape": "dot", "size": 1}, {"group": 84, "id": "hisat2 18", "label": "hisat2 18", "shape": "dot", "size": 1}, {"group": 84, "id": "ensemble mouse reference genome grcm38.p6", "label": "ensemble mouse reference genome grcm38.p6", "shape": "dot", "size": 1}, {"group": 2, "id": "hoechst staining", "label": "hoechst staining", "shape": "dot", "size": 1}, {"group": 24, "id": "homeodomain code", "label": "homeodomain code", "shape": "dot", "size": 1}, {"group": 24, "id": "astrocyte subtype", "label": "astrocyte subtype", "shape": "dot", "size": 1}, {"group": 112, "id": "homeodomain proteins", "label": "homeodomain proteins", "shape": "dot", "size": 1}, {"group": 112, "id": "pax6 and nkx6.1", "label": "pax6 and nkx6.1", "shape": "dot", "size": 1}, {"group": 2, "id": "mouse", "label": "mouse", "shape": "dot", "size": 1}, {"group": 113, "id": "illumina pe150 platform", "label": "illumina pe150 platform", "shape": "dot", "size": 1}, {"group": 113, "id": "rna-seq libraries", "label": "rna-seq libraries", "shape": "dot", "size": 1}, {"group": 115, "id": "immune privilege", "label": "immune privilege", "shape": "dot", "size": 1}, {"group": 115, "id": "vascular endothelium", "label": "vascular endothelium", "shape": "dot", "size": 1}, {"group": 82, "id": "immunohistochemistry", "label": "immunohistochemistry", "shape": "dot", "size": 1}, {"group": 82, "id": "embyonic brains", "label": "embyonic brains", "shape": "dot", "size": 1}, {"group": 116, "id": "in-utero electroporation (iue)", "label": "in-utero electroporation (iue)", "shape": "dot", "size": 1}, {"group": 116, "id": "wild-type icr pregnant female mice", "label": "wild-type icr pregnant female mice", "shape": "dot", "size": 1}, {"group": 14, "id": "laparotomy", "label": "laparotomy", "shape": "dot", "size": 1}, {"group": 14, "id": "anesthesia", "label": "anesthesia", "shape": "dot", "size": 1}, {"group": 92, "id": "leica sp8 or nikon a1 confocal laser microscope system", "label": "leica sp8 or nikon a1 confocal laser microscope system", "shape": "dot", "size": 1}, {"group": 92, "id": "fluorescent images", "label": "fluorescent images", "shape": "dot", "size": 1}, {"group": 121, "id": "lineage tracing studies", "label": "lineage tracing studies", "shape": "dot", "size": 1}, {"group": 121, "id": "regional differences", "label": "regional differences", "shape": "dot", "size": 1}, {"group": 123, "id": "lower region of 3v wall", "label": "lower region of 3v wall", "shape": "dot", "size": 1}, {"group": 123, "id": "neurons in the diencephalon", "label": "neurons in the diencephalon", "shape": "dot", "size": 1}, {"group": 49, "id": "marked genes", "label": "marked genes", "shape": "dot", "size": 1}, {"group": 49, "id": "color scale heatmaps", "label": "color scale heatmaps", "shape": "dot", "size": 1}, {"group": 122, "id": "metrics algorithm", "label": "metrics algorithm", "shape": "dot", "size": 1}, {"group": 122, "id": "log fold change log10 (p-value not adjusted p-val)", "label": "log fold change log10 (p-value not adjusted p-val)", "shape": "dot", "size": 1}, {"group": 2, "id": "developing retinal astrocytic and vascular networks", "label": "developing retinal astrocytic and vascular networks", "shape": "dot", "size": 1}, {"group": 2, "id": "retinal astrocytes", "label": "retinal astrocytes", "shape": "dot", "size": 1}, {"group": 124, "id": "migrating astrocyte progenitors", "label": "migrating astrocyte progenitors", "shape": "dot", "size": 1}, {"group": 124, "id": "spine-like protrusions", "label": "spine-like protrusions", "shape": "dot", "size": 1}, {"group": 103, "id": "multilineage precursor", "label": "multilineage precursor", "shape": "dot", "size": 1}, {"group": 103, "id": "neural stem cell", "label": "neural stem cell", "shape": "dot", "size": 2}, {"group": 126, "id": "multiple origins", "label": "multiple origins", "shape": "dot", "size": 1}, {"group": 126, "id": "spatio-temporal emergence", "label": "spatio-temporal emergence", "shape": "dot", "size": 1}, {"group": 90, "id": "hisat2", "label": "hisat2", "shape": "dot", "size": 1}, {"group": 127, "id": "national key basic research program of china", "label": "national key basic research program of china", "shape": "dot", "size": 1}, {"group": 127, "id": "support", "label": "support", "shape": "dot", "size": 3}, {"group": 127, "id": "national natural science foundation of china", "label": "national natural science foundation of china", "shape": "dot", "size": 1}, {"group": 127, "id": "natural science foundation of shanghai", "label": "natural science foundation of shanghai", "shape": "dot", "size": 1}, {"group": 128, "id": "neun", "label": "neun", "shape": "dot", "size": 1}, {"group": 128, "id": "neuronal marker", "label": "neuronal marker", "shape": "dot", "size": 1}, {"group": 103, "id": "glial nature", "label": "glial nature", "shape": "dot", "size": 1}, {"group": 117, "id": "neural stem cells", "label": "neural stem cells", "shape": "dot", "size": 2}, {"group": 117, "id": "j neurosci", "label": "j neurosci", "shape": "dot", "size": 1}, {"group": 117, "id": "postnatal neural stem cells", "label": "postnatal neural stem cells", "shape": "dot", "size": 1}, {"group": 98, "id": "nfia", "label": "nfia", "shape": "dot", "size": 3}, {"group": 98, "id": "genetax", "label": "genetax", "shape": "dot", "size": 1}, {"group": 98, "id": "gliogenesis", "label": "gliogenesis", "shape": "dot", "size": 1}, {"group": 98, "id": "spinal cord", "label": "spinal cord", "shape": "dot", "size": 1}, {"group": 10, "id": "nfia antibody", "label": "nfia antibody", "shape": "dot", "size": 1}, {"group": 67, "id": "ng2 or olig2 antibodies", "label": "ng2 or olig2 antibodies", "shape": "dot", "size": 1}, {"group": 67, "id": "developing thala- mus", "label": "developing thala- mus", "shape": "dot", "size": 1}, {"group": 62, "id": "nifa", "label": "nifa", "shape": "dot", "size": 1}, {"group": 62, "id": "deep cortical layers", "label": "deep cortical layers", "shape": "dot", "size": 1}, {"group": 52, "id": "nih imagej software", "label": "nih imagej software", "shape": "dot", "size": 1}, {"group": 52, "id": "confo-cal images", "label": "confo-cal images", "shape": "dot", "size": 1}, {"group": 106, "id": "nonsignificant genes", "label": "nonsignificant genes", "shape": "dot", "size": 1}, {"group": 106, "id": "grey", "label": "grey", "shape": "dot", "size": 1}, {"group": 19, "id": "cag-eyfp plasmid", "label": "cag-eyfp plasmid", "shape": "dot", "size": 1}, {"group": 19, "id": "pyramidal-like neurons", "label": "pyramidal-like neurons", "shape": "dot", "size": 1}, {"group": 2, "id": "oligodendrocyte lineage", "label": "oligodendrocyte lineage", "shape": "dot", "size": 1}, {"group": 60, "id": "one-way anova followed by turkeys multiple comparison post hoc test", "label": "one-way anova followed by turkeys multiple comparison post hoc test", "shape": "dot", "size": 1}, {"group": 60, "id": "data from multiple groups were analyzed", "label": "data from multiple groups were analyzed", "shape": "dot", "size": 1}, {"group": 16, "id": "p7 mouse brains", "label": "p7 mouse brains", "shape": "dot", "size": 1}, {"group": 16, "id": "aqp4 and collagen iv", "label": "aqp4 and collagen iv", "shape": "dot", "size": 1}, {"group": 104, "id": "pallial radial glial cells", "label": "pallial radial glial cells", "shape": "dot", "size": 1}, {"group": 104, "id": "gliogenic potential", "label": "gliogenic potential", "shape": "dot", "size": 1}, {"group": 130, "id": "pcna", "label": "pcna", "shape": "dot", "size": 1}, {"group": 130, "id": "proliferating cells", "label": "proliferating cells", "shape": "dot", "size": 1}, {"group": 131, "id": "percentages", "label": "percentages", "shape": "dot", "size": 1}, {"group": 131, "id": "principal components", "label": "principal components", "shape": "dot", "size": 1}, {"group": 89, "id": "plasmid dna solution", "label": "plasmid dna solution", "shape": "dot", "size": 1}, {"group": 89, "id": "fast green", "label": "fast green", "shape": "dot", "size": 1}, {"group": 110, "id": "plasmid experiments", "label": "plasmid experiments", "shape": "dot", "size": 1}, {"group": 110, "id": "hgfap-egfp labeled cells", "label": "hgfap-egfp labeled cells", "shape": "dot", "size": 1}, {"group": 41, "id": "plasmids", "label": "plasmids", "shape": "dot", "size": 1}, {"group": 41, "id": "cdna encoding eyfp", "label": "cdna encoding eyfp", "shape": "dot", "size": 1}, {"group": 132, "id": "postnatal brains", "label": "postnatal brains", "shape": "dot", "size": 1}, {"group": 132, "id": "transcar-dial perfusion", "label": "transcar-dial perfusion", "shape": "dot", "size": 1}, {"group": 133, "id": "postnatal diencephalon", "label": "postnatal diencephalon", "shape": "dot", "size": 1}, {"group": 133, "id": "temporal maturation of astrocytes", "label": "temporal maturation of astrocytes", "shape": "dot", "size": 1}, {"group": 36, "id": "primary antibodies", "label": "primary antibodies", "shape": "dot", "size": 2}, {"group": 36, "id": "blocking solution with 5 bovine serum albumin (bsa) in pbs", "label": "blocking solution with 5 bovine serum albumin (bsa) in pbs", "shape": "dot", "size": 1}, {"group": 36, "id": "gfp (chicken), gfap (mouse), aldh1l1 (mouse), pcna (mouse), s100 (rabbit), neun (mouse), sox2 (rabbit), olig2 (rabbit), ng2 (rabbit), gs (mouse), iba1 (rabbit), cd31 (rat), nfia (rabbit), aqp4 (mouse), and collagen iv (rabbit)", "label": "gfp (chicken), gfap (mouse), aldh1l1 (mouse), pcna (mouse), s100 (rabbit), neun (mouse), sox2 (rabbit), olig2 (rabbit), ng2 (rabbit), gs (mouse), iba1 (rabbit), cd31 (rat), nfia (rabbit), aqp4 (mouse), and collagen iv (rabbit)", "shape": "dot", "size": 1}, {"group": 25, "id": "neuron-like cells", "label": "neuron-like cells", "shape": "dot", "size": 2}, {"group": 2, "id": "pyramidal neuron", "label": "pyramidal neuron", "shape": "dot", "size": 1}, {"group": 136, "id": "pyramidal neuron-like cells", "label": "pyramidal neuron-like cells", "shape": "dot", "size": 1}, {"group": 136, "id": "protoplasmic astrocyte-like cells", "label": "protoplasmic astrocyte-like cells", "shape": "dot", "size": 1}, {"group": 2, "id": "hippocampal ca1ca3 region", "label": "hippocampal ca1ca3 region", "shape": "dot", "size": 1}, {"group": 137, "id": "qin laboratory", "label": "qin laboratory", "shape": "dot", "size": 1}, {"group": 137, "id": "suggestions and comments", "label": "suggestions and comments", "shape": "dot", "size": 1}, {"group": 85, "id": "qubit rna hs assay kit with a qubit 2.0 fluorometer", "label": "qubit rna hs assay kit with a qubit 2.0 fluorometer", "shape": "dot", "size": 1}, {"group": 85, "id": "extracted rna", "label": "extracted rna", "shape": "dot", "size": 1}, {"group": 134, "id": "r programming language", "label": "r programming language", "shape": "dot", "size": 1}, {"group": 134, "id": "principal component analysis (pca) clustering plots, volcano plots, and heat maps", "label": "principal component analysis (pca) clustering plots, volcano plots, and heat maps", "shape": "dot", "size": 1}, {"group": 25, "id": "immature astrocytes", "label": "immature astrocytes", "shape": "dot", "size": 1}, {"group": 25, "id": "neuronal progeny", "label": "neuronal progeny", "shape": "dot", "size": 1}, {"group": 25, "id": "pial surface", "label": "pial surface", "shape": "dot", "size": 1}, {"group": 25, "id": "signaling pathways", "label": "signaling pathways", "shape": "dot", "size": 1}, {"group": 25, "id": "third ventricle (3v) wall", "label": "third ventricle (3v) wall", "shape": "dot", "size": 2}, {"group": 25, "id": "transcription factors", "label": "transcription factors", "shape": "dot", "size": 1}, {"group": 25, "id": "ventral zone (vz)", "label": "ventral zone (vz)", "shape": "dot", "size": 1}, {"group": 25, "id": "transgenes", "label": "transgenes", "shape": "dot", "size": 1}, {"group": 138, "id": "radial glia-derived astrocytes", "label": "radial glia-derived astrocytes", "shape": "dot", "size": 1}, {"group": 138, "id": "spatial domains", "label": "spatial domains", "shape": "dot", "size": 1}, {"group": 77, "id": "radial glial (tanycyte-like) morphology", "label": "radial glial (tanycyte-like) morphology", "shape": "dot", "size": 1}, {"group": 77, "id": "egfp cells in the ventral diencephalon", "label": "egfp cells in the ventral diencephalon", "shape": "dot", "size": 1}, {"group": 80, "id": "elongated radial process", "label": "elongated radial process", "shape": "dot", "size": 1}, {"group": 80, "id": "periventricular cell body", "label": "periventricular cell body", "shape": "dot", "size": 1}, {"group": 80, "id": "progenitors", "label": "progenitors", "shape": "dot", "size": 1}, {"group": 125, "id": "radial migrating astrocyte progenitors", "label": "radial migrating astrocyte progenitors", "shape": "dot", "size": 1}, {"group": 125, "id": "morphologies", "label": "morphologies", "shape": "dot", "size": 1}, {"group": 21, "id": "radial migration of astrocyte progenitors", "label": "radial migration of astrocyte progenitors", "shape": "dot", "size": 1}, {"group": 21, "id": "astrocyte markers", "label": "astrocyte markers", "shape": "dot", "size": 1}, {"group": 25, "id": "region-specific radial glia", "label": "region-specific radial glia", "shape": "dot", "size": 1}, {"group": 46, "id": "regional astrocyte allocation", "label": "regional astrocyte allocation", "shape": "dot", "size": 1}, {"group": 46, "id": "cns synaptogenesis and repair", "label": "cns synaptogenesis and repair", "shape": "dot", "size": 1}, {"group": 93, "id": "rett syndrome", "label": "rett syndrome", "shape": "dot", "size": 1}, {"group": 93, "id": "fragile x mental retardation", "label": "fragile x mental retardation", "shape": "dot", "size": 1}, {"group": 140, "id": "rnaprep pure micro kit", "label": "rnaprep pure micro kit", "shape": "dot", "size": 1}, {"group": 140, "id": "total rna", "label": "total rna", "shape": "dot", "size": 1}, {"group": 94, "id": "school of basic medical sciences", "label": "school of basic medical sciences", "shape": "dot", "size": 1}, {"group": 94, "id": "fudan university", "label": "fudan university", "shape": "dot", "size": 2}, {"group": 141, "id": "sections", "label": "sections", "shape": "dot", "size": 1}, {"group": 141, "id": "superfrost-plus microscope slides (fisher)", "label": "superfrost-plus microscope slides (fisher)", "shape": "dot", "size": 1}, {"group": 135, "id": "signals", "label": "signals", "shape": "dot", "size": 1}, {"group": 135, "id": "progression", "label": "progression", "shape": "dot", "size": 1}, {"group": 120, "id": "significantly down-regulated genes", "label": "significantly down-regulated genes", "shape": "dot", "size": 1}, {"group": 120, "id": "light blue", "label": "light blue", "shape": "dot", "size": 1}, {"group": 142, "id": "sonic hedgehog signaling", "label": "sonic hedgehog signaling", "shape": "dot", "size": 1}, {"group": 142, "id": "thalamic progenitor identity", "label": "thalamic progenitor identity", "shape": "dot", "size": 1}, {"group": 129, "id": "sox3", "label": "sox3", "shape": "dot", "size": 1}, {"group": 129, "id": "nkx2-3", "label": "nkx2-3", "shape": "dot", "size": 1}, {"group": 2, "id": "spatiotemporal specification", "label": "spatiotemporal specification", "shape": "dot", "size": 1}, {"group": 94, "id": "state key laboratory of medical neurobiology", "label": "state key laboratory of medical neurobiology", "shape": "dot", "size": 1}, {"group": 109, "id": "tamoxifen", "label": "tamoxifen", "shape": "dot", "size": 3}, {"group": 109, "id": "induced cells", "label": "induced cells", "shape": "dot", "size": 1}, {"group": 109, "id": "recombination", "label": "recombination", "shape": "dot", "size": 1}, {"group": 91, "id": "tanycytes", "label": "tanycytes", "shape": "dot", "size": 1}, {"group": 91, "id": "fgf-responsive neural progenitors", "label": "fgf-responsive neural progenitors", "shape": "dot", "size": 1}, {"group": 73, "id": "tdt astrocyte-like cells", "label": "tdt astrocyte-like cells", "shape": "dot", "size": 1}, {"group": 73, "id": "dorsal region above the 3v", "label": "dorsal region above the 3v", "shape": "dot", "size": 1}, {"group": 75, "id": "tdt-expressing cells", "label": "tdt-expressing cells", "shape": "dot", "size": 1}, {"group": 75, "id": "e14.5", "label": "e14.5", "shape": "dot", "size": 1}, {"group": 118, "id": "third ventricle", "label": "third ventricle", "shape": "dot", "size": 1}, {"group": 118, "id": "lateral ventricle", "label": "lateral ventricle", "shape": "dot", "size": 1}, {"group": 114, "id": "trimmomatic", "label": "trimmomatic", "shape": "dot", "size": 2}, {"group": 114, "id": "illumina sequence data", "label": "illumina sequence data", "shape": "dot", "size": 1}, {"group": 114, "id": "low-quality reads and adaptor trimming", "label": "low-quality reads and adaptor trimming", "shape": "dot", "size": 1}, {"group": 61, "id": "two- tailed unpaired students t-test", "label": "two- tailed unpaired students t-test", "shape": "dot", "size": 1}, {"group": 61, "id": "data from two groups were analyzed", "label": "data from two groups were analyzed", "shape": "dot", "size": 1}, {"group": 40, "id": "vector pcaggs", "label": "vector pcaggs", "shape": "dot", "size": 1}, {"group": 40, "id": "cag promoter", "label": "cag promoter", "shape": "dot", "size": 1}, {"group": 139, "id": "ventral spinal cord", "label": "ventral spinal cord", "shape": "dot", "size": 1}, {"group": 139, "id": "regionally restricted manner", "label": "regionally restricted manner", "shape": "dot", "size": 1}, {"group": 119, "id": "virus", "label": "virus", "shape": "dot", "size": 1}, {"group": 119, "id": "lentiviral vector", "label": "lentiviral vector", "shape": "dot", "size": 1}, {"group": 44, "id": "virus-containing culture supernatants", "label": "virus-containing culture supernatants", "shape": "dot", "size": 1}, {"group": 44, "id": "centrifugation", "label": "centrifugation", "shape": "dot", "size": 1}, {"group": 99, "id": "wnt7a", "label": "wnt7a", "shape": "dot", "size": 1}]);
+                  edges = new vis.DataSet([{"from": "3v wall", "title": "compared with", "to": "lv wall", "width": 1.0}, {"from": "3v wall", "title": "located in", "to": "egfp cells", "width": 1.0}, {"from": "3v wall", "title": "expressing cells were largely co-labelled with NFIA in the 3V wall", "to": "hgfap-egfp", "width": 1.0}, {"from": "3v wall", "title": "lining with long processes", "to": "tdt tanycytes", "width": 1.0}, {"from": "3v wall", "title": "part of", "to": "telencephalon", "width": 1.0}, {"from": "abdominal fluids", "title": "related by replenishing", "to": "warm saline", "width": 1.0}, {"from": "abdominal wall", "title": "related by sutured separately", "to": "skin", "width": 1.0}, {"from": "agilent 2100 bioanalyzer", "title": "analyzed using", "to": "rna quality", "width": 1.0}, {"from": "ai14", "title": "The Ai14 gene is used to generate Rosa-tdTomato mice.", "to": "rosa-tdtomato", "width": 1.0}, {"from": "aldh1l1", "title": "mainly distributed", "to": "lv", "width": 1.0}, {"from": "aldh1l1", "title": "mainly distributed in the ventricular wall", "to": "ventricular wall", "width": 1.0}, {"from": "aldh1l1 antibody", "title": "immunostained in", "to": "thalamus and cortex", "width": 1.0}, {"from": "amygdala", "title": "tdT cells are also found in the amygdala and dentate gyrus (DG)", "to": "dentate gyrus (dg)", "width": 1.0}, {"from": "aqp4", "title": "restrictively expressed on", "to": "perivascular endfeet", "width": 1.0}, {"from": "aqp4", "title": "used for immunohistochemistry", "to": "santa cruz", "width": 1.0}, {"from": "aquaporin-4", "title": "Physiological roles of aquaporin-4 were identified in brain.", "to": "brain", "width": 1.0}, {"from": "astrocyte", "title": "Astrocytes have evolved from brain glue to communication elements.", "to": "communication elements", "width": 1.0}, {"from": "astrocyte", "title": "Astrocytes are a type of glia.", "to": "glia", "width": 1.0}, {"from": "astrocyte", "title": "The astrocyte lineage progression is shown in the forebrain at different developmental stages.", "to": "lineage progression", "width": 1.0}, {"from": "astrocyte", "title": "Abnormal development of forebrain midline glia was observed in Nfia knock-out mice.", "to": "midline glia", "width": 1.0}, {"from": "astrocyte", "title": "Astrocytes are specified by bHLH protein SCL in a restricted region of the neural tube.", "to": "specification", "width": 1.0}, {"from": "astrocyte", "title": "Both oligodendrocytes and astrocytes develop from progenitors in the subventricular zone of postnatal rat forebrain.", "to": "oligodendrocyte", "width": 1.0}, {"from": "astrocyte", "title": "all were positive for S100", "to": "tdt cells", "width": 1.0}, {"from": "astrocyte", "title": "exhibit astrocytic morphology", "to": "thalamus", "width": 1.0}, {"from": "astrocyte cortical heterogeneity", "title": "Determines astrocyte cortical heterogeneity.", "to": "clonal identity", "width": 1.0}, {"from": "astrocyte development", "title": "reveal new insights into the spatiotemporal regulation", "to": "developing mouse diencephalon", "width": 1.0}, {"from": "astrocyte development", "title": "A guide for the perplexed on astrocyte development was provided.", "to": "guide", "width": 1.0}, {"from": "astrocyte differentiation", "title": "have impressive progress in understanding", "to": "npcs", "width": 1.0}, {"from": "astrocyte features", "title": "showed", "to": "egfp-expressing cells", "width": 1.0}, {"from": "astrocyte lineage", "title": "related to", "to": "development", "width": 1.0}, {"from": "astrocyte lineage", "title": "includes", "to": "specification and migration process", "width": 1.0}, {"from": "astrocyte lineage", "title": "analyzes the", "to": "startrack method", "width": 1.0}, {"from": "astrocyte migration", "title": "takes place in", "to": "developing diencephalon", "width": 1.0}, {"from": "astrocyte progenitors", "title": "migrate in the dorsal diencephalon", "to": "dorsal diencephalon", "width": 1.0}, {"from": "astrocyte progenitors", "title": "express markers for astrocytes but not oligodendrocytes or NG2 glia", "to": "radial migration", "width": 1.0}, {"from": "astrocyte proliferation", "title": "in the", "to": "developing diencephalon", "width": 1.0}, {"from": "astrocyte specification", "title": "The generation of astrocytes shows a spatiotemporal pattern in the developing mouse diencephalon.", "to": "diencephalon", "width": 1.0}, {"from": "astrocyte specification", "title": "traced through", "to": "lentivirus", "width": 1.0}, {"from": "astrocyte specification", "title": "Lineage tracing is used to study the process of astrocyte specification.", "to": "lineage tracing", "width": 1.0}, {"from": "astrocyte-like cells", "title": "distributed across the entire", "to": "forebrain", "width": 1.0}, {"from": "astrocyte-like cells", "title": "gives rise to", "to": "progeny of radial glia", "width": 1.0}, {"from": "astrocyte-like cells", "title": "produces", "to": "radial glia", "width": 1.0}, {"from": "astrocytes", "title": "Astrocytes are generated in various brain regions such as olfactory bulb, hippocampus, striatum, and brain stem.", "to": "brain regions", "width": 1.0}, {"from": "astrocytes", "title": "Astrocytes are generated with a spatiotemporal pattern in the developing diencephalon.", "to": "developing diencephalon", "width": 1.0}, {"from": "astrocytes", "title": "are related to, have a neurodevelopmental perspective on", "to": "disease", "width": 1.0}, {"from": "astrocytes", "title": "Fatty acid-binding protein 7 regulated function of caveolae in astrocytes through expression of caveolin-1.", "to": "fatty acid-binding protein 7", "width": 1.0}, {"from": "astrocytes", "title": "astrocytes are generated spatially in the forebrain", "to": "forebrain", "width": 1.0}, {"from": "astrocytes", "title": "Expression patterns of inducible cre recombinase driven by differential astrocyte-specific promoters were studied in transgenic mouse lines.", "to": "inducible cre recombinase", "width": 1.0}, {"from": "astrocytes", "title": "may have engulfed during cortical development", "to": "microglia", "width": 1.0}, {"from": "astrocytes", "title": "Astrocytes can be reprogrammed to neuroblasts in the adult brain.", "to": "neuroblasts", "width": 1.0}, {"from": "astrocytes", "title": "contribute to in multiple sclerosis and experimental autoimmune encephalomyelitis", "to": "neuroinflammatory response", "width": 1.0}, {"from": "astrocytes", "title": "do not share a common lineage in the developing CNS", "to": "oligodendrocytes", "width": 1.0}, {"from": "astrocytes", "title": "undergo proliferation as early as E17.5", "to": "proliferation", "width": 1.0}, {"from": "astrocytes", "title": "transforms into,The radial glia produce two distinct cell types, including astrocytes,differentiate into astrocytes", "to": "radial glia", "width": 3.0}, {"from": "astrocytes", "title": "emerge earlier than in the diencephalon", "to": "telencephalon", "width": 1.0}, {"from": "astrocytes", "title": "are produced in the parenchyma of the dorsal diencephalon", "to": "thalamus", "width": 1.0}, {"from": "astrocytes", "title": "scattered in", "to": "ventral region of the diencephalon", "width": 1.0}, {"from": "astrocytes", "title": "first population appears along,are distributed along", "to": "zona incerta", "width": 2.0}, {"from": "astrocytes", "title": "specifies", "to": "bhlh protein scl", "width": 1.0}, {"from": "astrocytes", "title": "Dividing protoplasmic astrocytes are found in the cortex", "to": "cortex", "width": 1.0}, {"from": "astrocytes", "title": "Evidence for the common lineage of astrocytes and oligodendrocytes.", "to": "cortical glial progenitors", "width": 1.0}, {"from": "astrocytes", "title": "involved in the development of", "to": "pual vm", "width": 1.0}, {"from": "astrocytes", "title": "produce", "to": "upper region of 3v wall", "width": 1.0}, {"from": "astrocytes-like cell", "title": "An astrocytes-like cell is found in the ventral region of the diencephalon", "to": "ventral region of diencephalon", "width": 1.0}, {"from": "astrocytic endfeet", "title": "crucial for the structure of and regulation of", "to": "blood-brain barrier and cerebral blood flow", "width": 1.0}, {"from": "astrocytic endfeet", "title": "crucial for the structure of", "to": "blood-brain barrier", "width": 1.0}, {"from": "astrogenesis", "title": "follows a well-defined spatiotemporal pattern and an orderly developmental program", "to": "cerebellum", "width": 1.0}, {"from": "astrogenesis", "title": "astrogenesis occurs in the developing diencephalon", "to": "developing diencephalon", "width": 1.0}, {"from": "astrogenesis", "title": "Astrogenesis occurs at an early time point in the dorsal region of the diencephalon", "to": "dorsal region of diencephalon", "width": 1.0}, {"from": "astrogenesis", "title": "are highly concordant", "to": "geneset", "width": 1.0}, {"from": "astrogenesis", "title": "The timing of astrogenesis needs to be determined.", "to": "timing", "width": 1.0}, {"from": "astrogenesis", "title": "occurs at an early time point", "to": "dorsal region of developing diencephalon", "width": 1.0}, {"from": "astrogenesis", "title": "involved in", "to": "gbx2", "width": 1.0}, {"from": "astrogenesis", "title": "involved in", "to": "id3", "width": 1.0}, {"from": "astrogenesis", "title": "involved in", "to": "slc17a6", "width": 1.0}, {"from": "astrogenesis", "title": "relatively late to occur", "to": "ventral region of developing diencephalon", "width": 1.0}, {"from": "astrogenesis", "title": "involved in", "to": "wif1", "width": 1.0}, {"from": "basic helix-loop-helix transcription factors", "title": "involved in cross-repressive interactions with", "to": "scl and olig2", "width": 1.0}, {"from": "blood vessels", "title": "endfeet enveloping blood ves- sels", "to": "gfp astrocytes", "width": 1.0}, {"from": "brains", "title": "related through the process of preservation", "to": "cryoprotected with 30 sucrose in pbs", "width": 1.0}, {"from": "bushy morphology", "title": "had", "to": "egfp cells", "width": 1.0}, {"from": "c57bl6j and icr mice", "title": "Wild-type C57BL6J and ICR mice are purchased from the Shanghai SLAC Laboratory.", "to": "shanghai slac laboratory", "width": 1.0}, {"from": "cd31", "title": "used for immunohistochemistry", "to": "bd biosciences", "width": 1.0}, {"from": "cell bodies of astrocyte progenitors", "title": "were found to be flat or round with", "to": "multiple processes", "width": 1.0}, {"from": "cell counter software plugin", "title": "used to count cells", "to": "imagej program", "width": 1.0}, {"from": "central nervous system", "title": "A gene expression atlas of the central nervous system based on bacterial artificial chromosomes was created.", "to": "bacterial artificial chromosomes", "width": 1.0}, {"from": "cephalon", "title": "the cephalon is related to the diencephalon", "to": "diencephalon", "width": 1.0}, {"from": "cerebral blood flow", "title": "Astrocytes mediated control of cerebral blood flow.", "to": "astrocyte-mediated control", "width": 1.0}, {"from": "cerebral blood flow", "title": "of", "to": "regulation", "width": 1.0}, {"from": "cerebral cortex", "title": "contains", "to": "diencephalon", "width": 1.0}, {"from": "cerebral cortex", "title": "Local production of astrocytes in the cerebral cortex was observed.", "to": "local production of astrocytes", "width": 1.0}, {"from": "cerebral cortex", "title": "found in the developing", "to": "microglia", "width": 1.0}, {"from": "cerrato v", "title": "involved in the emergence of", "to": "cerebellar astrocyte heterogeneity", "width": 1.0}, {"from": "chinese institute for brain research", "title": "located in", "to": "beijing", "width": 1.0}, {"from": "collagen iv", "title": "used for immunohistochemistry", "to": "millipore", "width": 1.0}, {"from": "collagen iv blood vessels", "title": "co-localized with", "to": "egfp astrocytes", "width": 1.0}, {"from": "copyright holder", "title": "directly from", "to": "permission", "width": 1.0}, {"from": "coronal sections", "title": "related through the process of sectioning", "to": "cryostat (leica)", "width": 1.0}, {"from": "corresponding secondary species-specific antibodies", "title": "related through the process of conjugation and incubation", "to": "alexa fluor 488, 555, or 647 (jackson immunoresearch)", "width": 1.0}, {"from": "cortex", "title": "Neurons were made versus Glia in the developing cortex.", "to": "neurons", "width": 1.0}, {"from": "cortex", "title": "the diencephalon is related to the cortex", "to": "diencephalon", "width": 1.0}, {"from": "cortex", "title": "Dividing protoplasmic astrocytes are found in the cortex", "to": "protoplasmic astrocyte", "width": 1.0}, {"from": "cortex", "title": "Pyramidal neurons are found in the cortex along with protoplasmic astrocytes", "to": "pyramidal neurons", "width": 1.0}, {"from": "cortex", "title": "in the adult brain regions of hGFAP-CreERT2;Ai14 transgenic mice", "to": "s100 astrocytes", "width": 1.0}, {"from": "cortical astrocytes", "title": "has", "to": "progeny", "width": 1.0}, {"from": "cortical glial cell development", "title": "The process of decoding cortical glial cell development was discussed.", "to": "decoding", "width": 1.0}, {"from": "cortical glial progenitors", "title": "The common lineage of cortical glial progenitors was studied, including evidence for astrocyte development.", "to": "common lineage", "width": 1.0}, {"from": "cortical neuron", "title": "Cortical neurons arise in symmetric and asymmetric division zones and migrate through specific phases.", "to": "division zone", "width": 1.0}, {"from": "cortical protoplasmic astrocytes", "title": "generated from", "to": "radial glia", "width": 1.0}, {"from": "cre", "title": "The system reports and characterizes Cre in the whole mouse brain.", "to": "mouse brain", "width": 1.0}, {"from": "cre-mediated recombination", "title": "allowed robust expression of the red fluorescent protein tdTomato (tdT) after inducible astrocyte-specific", "to": "astrocyte-specific", "width": 1.0}, {"from": "creative commons licence", "title": "is related to", "to": "material", "width": 1.0}, {"from": "custom geneset", "title": "represents", "to": "positive regulation of astrogenesis and astrocyte development", "width": 1.0}, {"from": "dentate gyrus (dg)", "title": "The distribution of tdT cells is shown in the dentate gyrus (DG)", "to": "tdt cells", "width": 1.0}, {"from": "department", "title": "has affiliation with", "to": "university", "width": 1.0}, {"from": "department of neurobiology", "title": "has affiliation with", "to": "zhejiang university school of medicine", "width": 1.0}, {"from": "deseq2", "title": "were used as input for GSEA v4.0.3", "to": "pre-ranked (.rnk) file and custom geneset", "width": 1.0}, {"from": "developmental genetics", "title": "is related to vertebrate", "to": "glial-cell specification", "width": 1.0}, {"from": "diencephalon", "title": "The region-specific analysis is performed in the context of developing mouse diencephalon.", "to": "developing mouse diencephalon", "width": 1.0}, {"from": "diencephalon", "title": "the diencephalon is related to the telencephalon", "to": "telencephalon", "width": 1.0}, {"from": "diencephalon", "title": "found in", "to": "egfp-expressing cells", "width": 1.0}, {"from": "diencephalon", "title": "similar to EGFP-expressing cells in the diencephalon", "to": "iue-labeled cells", "width": 1.0}, {"from": "diencephalon", "title": "was found in the dorsal dien- cephalon at P1", "to": "radial migration pattern of astrocytes", "width": 1.0}, {"from": "diencephalon", "title": "the zona incerta is a region within the diencephalon", "to": "zona incerta", "width": 1.0}, {"from": "differentially-expressed genes", "title": "of the differentially-expressed genes of the groups 3V-v vs 3V-d (C) and LV-d vs 3V-d (D)", "to": "groups", "width": 1.0}, {"from": "dorsal 3v wall", "title": "dissected from", "to": "mouse brains", "width": 1.0}, {"from": "dorsal 3v wall", "title": "present in after 48 h of tamoxifen administration that began at E14.5", "to": "radial glia-like cells", "width": 1.0}, {"from": "dorsal 3v wall", "title": "revealed a cohort of genes that are differentially expressed when compared to the ventral 3V wall or the dorsal LV wall", "to": "rna-seq analysis", "width": 1.0}, {"from": "dr. haimin li", "title": "Dr. Haimin Li contributed to a preliminary intellectual exploration.", "to": "preliminary intellectual exploration", "width": 1.0}, {"from": "egfp", "title": "labeled in the 3V wall by IUE were examined at P21", "to": "progeny of egfp cells", "width": 1.0}, {"from": "egfp", "title": "has the potential for", "to": "tanycyte-like cells", "width": 1.0}, {"from": "egfp astrocytes", "title": "formed with blood vessels in the dorsal diencephalon at P7 and P14", "to": "endfeet structures", "width": 1.0}, {"from": "egfp cells", "title": "mainly distributed in the dorsal diencephalon with", "to": "astrocytic morphology", "width": 1.0}, {"from": "egfp cells", "title": "The EGFP cells are a result of electroporation with the hGFAP- EGFP plasmid", "to": "hgfap- egfp plasmid", "width": 1.0}, {"from": "egfp cells", "title": "projected", "to": "long extended basal processes", "width": 1.0}, {"from": "egfp cells", "title": "The nuclei are related to the EGFP cells, as they can be seen in the same view (B)", "to": "nuclei", "width": 1.0}, {"from": "egfp cells", "title": "ended at", "to": "pial surface of the hypothalamus", "width": 1.0}, {"from": "egfp radial gliallike cells", "title": "remain along with long extended processes at P21", "to": "ventral portion of the 3v wall", "width": 1.0}, {"from": "egfp-expressing cells", "title": "were not co-localized with", "to": "gs", "width": 1.0}, {"from": "egfp-expressing cells", "title": "migrated to and were stained with BLBP, an astrocyte marker", "to": "parenchyma of the diencephalon", "width": 1.0}, {"from": "egfp-expressing cells", "title": "exhibit astrocytic morphology", "to": "thalamus", "width": 1.0}, {"from": "egfp-expressing cells", "title": "confined specifically to the wall of the 3V and have radial glial (tanycyte-like) morphology", "to": "hypothalamus", "width": 1.0}, {"from": "egfp-expressing cells", "title": "were not stained positive for markers of NG2 glia", "to": "ng2 glia", "width": 1.0}, {"from": "egfp-expressing cells", "title": "were not stained positive for oligodendrocytes", "to": "olig2", "width": 1.0}, {"from": "egfp-positive tanycyte-like cells", "title": "are similar to", "to": "adult progenitor b1 cells", "width": 1.0}, {"from": "electroporator (ecm 830, btx)", "title": "applied electrical pulses through", "to": "uterus", "width": 1.0}, {"from": "embryonic brains", "title": "fixed with after extraction at indicated ages", "to": "4% paraformaldehyde", "width": 1.0}, {"from": "embyos", "title": "returned to after warming and analysis", "to": "home cage", "width": 1.0}, {"from": "eyfp", "title": "labels 3V progenitors", "to": "3v progenitors", "width": 1.0}, {"from": "eyfp cells in the cerebral cortex", "title": "comprise", "to": "mature neurons (neun)", "width": 1.0}, {"from": "eyfp cells in the hypothalamus", "title": "are", "to": "neun neurons", "width": 1.0}, {"from": "eyfp cells in the thalamus", "title": "are", "to": "glutamine synthetase-positive astrocytes", "width": 1.0}, {"from": "eyfp radial glia", "title": "The EYFP radial glia show astrocytic morphology in the parenchyma of the dorsal diencephalon", "to": "astrocytic morphology", "width": 1.0}, {"from": "eyfp reporter", "title": "expressing are found to migrate out of the VZSVZ", "to": "radial glial cells", "width": 1.0}, {"from": "fate specification of migrating astrocyte progenitors", "title": "was used to confirm the identity of hGFAP-EGFP labeled cells", "to": "aldh1l1 antibody staining", "width": 1.0}, {"from": "featurecounts", "title": "counted to genes using", "to": "mapped reads", "width": 1.0}, {"from": "featurecounts", "title": "mapped reads were counted to genes using featureCounts", "to": "mus muscu lus", "width": 1.0}, {"from": "forebrain", "title": "The abnormal development was specifically in the forebrain midline glia.", "to": "midline glia", "width": 1.0}, {"from": "forebrain midline glia", "title": "Abnormal development of forebrain midline glia and commissure development was observed.", "to": "commisure development", "width": 1.0}, {"from": "g: profiler", "title": "g: Profiler is used for pathway enrichment analysis and visualization of omics data.", "to": "pathway enrichment analysis", "width": 1.0}, {"from": "gene set enrichment analysis", "title": "Gene set enrichment analysis is a knowledge-based approach for interpreting genome-wide expression profiles.", "to": "genome-wide expression profiles", "width": 1.0}, {"from": "geneset", "title": "representing", "to": "positive regulation of astrogenesis and astrocyte development", "width": 1.0}, {"from": "gfap alpha tanycytes", "title": "have the potential for", "to": "neurogenesis", "width": 1.0}, {"from": "gfap promoter", "title": "The GFAP promoter directed astrocyte-specific expression in transgenic mice.", "to": "astrocyte-specific expression", "width": 1.0}, {"from": "gfap promoter elements", "title": "The promoter elements are required for region-specific expression of GFAP.", "to": "region-specific expression", "width": 1.0}, {"from": "gfp-expressing cells", "title": "The GFP-expressing cells are co-labeled with BLBP in the diencephalon", "to": "blbp", "width": 1.0}, {"from": "gfp-expressing cells", "title": "quantified for estimating virus transduction efficiency", "to": "viral titers", "width": 1.0}, {"from": "glass micropipette", "title": "was used to inject into", "to": "embryonic forebrain", "width": 1.0}, {"from": "glial biology", "title": "novel insight into", "to": "diseases", "width": 1.0}, {"from": "glial cells", "title": "Local generation of glia was a major source in postnatal cortex.", "to": "postnatal cortex", "width": 1.0}, {"from": "glial development", "title": "is connected to", "to": "regeneration and repair", "width": 1.0}, {"from": "gnanaguru g", "title": "involved in the refinement of", "to": "complement c3c3ar axis", "width": 1.0}, {"from": "granular neuron morphology", "title": "most of the tdT cells showed this morphology", "to": "dentate gyrus", "width": 1.0}, {"from": "granular neurons", "title": "tdT cells also exhibited granular neuron-like morphology localized in the dentate gyrus", "to": "dentate gyrus", "width": 1.0}, {"from": "graphpad prism 8.0 software", "title": "using GraphPad Prism 8.0 software", "to": "statistical analysis was done and graphs were produced", "width": 1.0}, {"from": "gs", "title": "stains cells with", "to": "antibody", "width": 1.0}, {"from": "gsea", "title": "was applied following previous protocols", "to": "targeted gene set enrichment analysis", "width": 1.0}, {"from": "gsea analysis", "title": "of the differ- entially expressed genes with a geneset representing posi- tive regulation of astrogenesis and astrocyte development", "to": "differentially expressed genes", "width": 1.0}, {"from": "gsea plots", "title": "showing the positive regulation of astrogenesis and astrocyte development", "to": "gene sets", "width": 1.0}, {"from": "hgfap promoter", "title": "drives gene expression localized in the VZ of", "to": "developing embryonic telencephalon", "width": 1.0}, {"from": "hgfap promoter", "title": "controls the combinatorial expression of", "to": "fluorescent reporter proteins", "width": 1.0}, {"from": "hgfap promoter", "title": "drive reporter expression in", "to": "microglia", "width": 1.0}, {"from": "hgfap promoter", "title": "continues to generate during the development of the dentate gyrus", "to": "neurons", "width": 1.0}, {"from": "hgfap promoter", "title": "was generated by sub-cloning into", "to": "lentiviral plasmid hgfap-gfp", "width": 1.0}, {"from": "hgfap- creert2;ai14 transgenic mice", "title": "demonstrates", "to": "temporal-spatial generation of astrocytes", "width": 1.0}, {"from": "hgfap-creert2", "title": "The hGFAP-CreERT2 gene is used to generate transgenic mice.", "to": "transgenic mice", "width": 1.0}, {"from": "hgfap-creert2; ai14 transgenic mice", "title": "the mice develop at different stages", "to": "different developmental stages", "width": 1.0}, {"from": "hgfap-creert2; ai14 transgenic mice", "title": "used for", "to": "genetic fate mapping analysis", "width": 1.0}, {"from": "hgfap-creert2;ai14 transgenic mice", "title": "the analysis was performed on the transgenic mice", "to": "genetic fate mapping analysis", "width": 1.0}, {"from": "hgfap-egfp plasmid", "title": "electroporated with", "to": "e14.5 mouse brains", "width": 1.0}, {"from": "hgfap-egfp plasmid", "title": "electroporated with at E14.5", "to": "mouse brains", "width": 1.0}, {"from": "hgfap-egfplabeled cells", "title": "exhibited extensive colocalization in the diencephalon at E17.5", "to": "aldh1l1 staining", "width": 1.0}, {"from": "hisat", "title": "HISAT is a fast spliced aligner with low memory requirements.", "to": "spliced aligner", "width": 1.0}, {"from": "hisat2 18", "title": "used for mapping", "to": "ensemble mouse reference genome grcm38.p6", "width": 1.0}, {"from": "hoechst staining", "title": "reveals the nuclei", "to": "nuclei", "width": 1.0}, {"from": "homeodomain code", "title": "Identification of positionally distinct astrocyte subtypes whose identities are specified by a homeodomain code.", "to": "astrocyte subtype", "width": 1.0}, {"from": "homeodomain proteins", "title": "combinatorially expressed for specifying region-specific subtypes of ventral astrocytes", "to": "pax6 and nkx6.1", "width": 1.0}, {"from": "hypothalamus", "title": "The mouse developing hypothalamus was genetically manipulated through in utero electroporation.", "to": "mouse", "width": 1.0}, {"from": "hypothalamus", "title": "are produced in the hypothalamus", "to": "neurons", "width": 1.0}, {"from": "hypothalamus", "title": "in the adult brain regions of hGFAP-CreERT2;Ai14 transgenic mice", "to": "s100 astrocytes", "width": 1.0}, {"from": "hypothalamus", "title": "tdT cells are found in both the thalamus and hypothalamus", "to": "thalamus", "width": 1.0}, {"from": "illumina pe150 platform", "title": "constructed on", "to": "rna-seq libraries", "width": 1.0}, {"from": "immune privilege", "title": "CD31 signals conferred immune privilege to the vascular endothelium.", "to": "vascular endothelium", "width": 1.0}, {"from": "immunohistochemistry", "title": "related through the process of extraction and fixation", "to": "embyonic brains", "width": 1.0}, {"from": "in-utero electroporation (iue)", "title": "was performed on", "to": "wild-type icr pregnant female mice", "width": 1.0}, {"from": "laparotomy", "title": "performed under for injection of lentivirus into embryonic forebrain", "to": "anesthesia", "width": 1.0}, {"from": "leica sp8 or nikon a1 confocal laser microscope system", "title": "acquired", "to": "fluorescent images", "width": 1.0}, {"from": "lineage tracing studies", "title": "Lineage tracing studies will help determine regional differences in the astrocytic lineage.", "to": "regional differences", "width": 1.0}, {"from": "lower region of 3v wall", "title": "produce", "to": "neurons in the diencephalon", "width": 1.0}, {"from": "marked genes", "title": "showing the marked genes that are highly differentially expressed of the groups 3V-v vs 3V-d (E) and LV-d vs 3V-d (F)", "to": "color scale heatmaps", "width": 1.0}, {"from": "metrics algorithm", "title": "according to the statistical result of DESeq2", "to": "log fold change log10 (p-value not adjusted p-val)", "width": 1.0}, {"from": "microglia", "title": "refine through the complement C3C3aR axis", "to": "developing retinal astrocytic and vascular networks", "width": 1.0}, {"from": "microglia", "title": "interact with to implement death", "to": "retinal astrocytes", "width": 1.0}, {"from": "migrating astrocyte progenitors", "title": "had quite long leading processes with", "to": "spine-like protrusions", "width": 1.0}, {"from": "multilineage precursor", "title": "Early postnatal astroglial cells produce multilineage precursors and neural stem cells in vivo.", "to": "neural stem cell", "width": 1.0}, {"from": "multiple origins", "title": "of cerebellar astrocyte heterogeneity", "to": "spatio-temporal emergence", "width": 1.0}, {"from": "mus muscu lus", "title": "mapped reads were counted to genes using featureCounts with Hisat2", "to": "hisat2", "width": 1.0}, {"from": "national key basic research program of china", "title": "This work was further supported by the National Key Basic Research Program of China.", "to": "support", "width": 1.0}, {"from": "national natural science foundation of china", "title": "This work was supported by the National Natural Science Foundation of China.", "to": "support", "width": 1.0}, {"from": "natural science foundation of shanghai", "title": "This work was also supported by the Natural Science Foundation of Shanghai.", "to": "support", "width": 1.0}, {"from": "neun", "title": "marks neurons", "to": "neuronal marker", "width": 1.0}, {"from": "neural stem cell", "title": "The glial nature of embry- onic and adult neural stem cells.", "to": "glial nature", "width": 1.0}, {"from": "neural stem cells", "title": "published in", "to": "j neurosci", "width": 1.0}, {"from": "neural stem cells", "title": "Embryonic origin of postnatal neural stem cells.", "to": "postnatal neural stem cells", "width": 1.0}, {"from": "nfia", "title": "used for immunohistochemistry", "to": "genetax", "width": 1.0}, {"from": "nfia", "title": "regulate gliogenesis", "to": "gliogenesis", "width": 1.0}, {"from": "nfia", "title": "The transcription factor NFIA controlled the onset of gliogenesis in the developing spinal cord.", "to": "spinal cord", "width": 1.0}, {"from": "nfia antibody", "title": "immunostained in", "to": "thalamus and cortex", "width": 1.0}, {"from": "ng2 or olig2 antibodies", "title": "immunostained with", "to": "developing thala- mus", "width": 1.0}, {"from": "nifa", "title": "highly expressed", "to": "deep cortical layers", "width": 1.0}, {"from": "nih imagej software", "title": "analyzed by", "to": "confo-cal images", "width": 1.0}, {"from": "nonsignificant genes", "title": "are in", "to": "grey", "width": 1.0}, {"from": "npcs", "title": "The NPCs are labeled with CAG-EYFP plasmid by electroporation in the wall of the 3V versus the lateral ventricle (LV)", "to": "cag-eyfp plasmid", "width": 1.0}, {"from": "npcs", "title": "The NPCs differentiate into pyramidal-like neurons that migrate to the superficial layer of the cerebral cortex by P7", "to": "pyramidal-like neurons", "width": 1.0}, {"from": "olig2", "title": "stains cells with", "to": "antibody", "width": 1.0}, {"from": "olig2", "title": "a marker for the", "to": "oligodendrocyte lineage", "width": 1.0}, {"from": "one-way anova followed by turkeys multiple comparison post hoc test", "title": "with one-way ANOVA followed by Turkeys multiple comparison post hoc test", "to": "data from multiple groups were analyzed", "width": 1.0}, {"from": "p7 mouse brains", "title": "co-labeled in the diencephalon", "to": "aqp4 and collagen iv", "width": 1.0}, {"from": "pallial radial glial cells", "title": "Gliogenic potential of single pallial radial glial cells in lower cortical layers.", "to": "gliogenic potential", "width": 1.0}, {"from": "pcna", "title": "specific marker for proliferating cells", "to": "proliferating cells", "width": 1.0}, {"from": "percentages", "title": "explained by", "to": "principal components", "width": 1.0}, {"from": "plasmid dna solution", "title": "was mixed with", "to": "fast green", "width": 1.0}, {"from": "plasmid experiments", "title": "were found to have radial glial morphology", "to": "hgfap-egfp labeled cells", "width": 1.0}, {"from": "plasmids", "title": "were cloned into", "to": "cdna encoding eyfp", "width": 1.0}, {"from": "postnatal brains", "title": "related through the process of extraction and fixation", "to": "transcar-dial perfusion", "width": 1.0}, {"from": "postnatal diencephalon", "title": "occurs in", "to": "temporal maturation of astrocytes", "width": 1.0}, {"from": "primary antibodies", "title": "related through the process of blocking and incubation", "to": "blocking solution with 5 bovine serum albumin (bsa) in pbs", "width": 1.0}, {"from": "primary antibodies", "title": "related through the process of use as primary antibodies", "to": "gfp (chicken), gfap (mouse), aldh1l1 (mouse), pcna (mouse), s100 (rabbit), neun (mouse), sox2 (rabbit), olig2 (rabbit), ng2 (rabbit), gs (mouse), iba1 (rabbit), cd31 (rat), nfia (rabbit), aqp4 (mouse), and collagen iv (rabbit)", "width": 1.0}, {"from": "progeny of radial glia", "title": "gives rise to", "to": "neuron-like cells", "width": 1.0}, {"from": "protoplasmic astrocyte", "title": "Coincident generation of pyramidal neurons and protoplasmic astrocytes in neocortical columns.", "to": "pyramidal neuron", "width": 1.0}, {"from": "pyramidal neuron-like cells", "title": "tdT cells exhibited both pyramidal neuron-like and protoplasmic astrocyte-like cells in the cerebral cortex", "to": "protoplasmic astrocyte-like cells", "width": 1.0}, {"from": "pyramidal neurons", "title": "most tdT cells displayed the morphology of pyramidal neurons in the hippocampal CA1CA3 region", "to": "hippocampal ca1ca3 region", "width": 1.0}, {"from": "qin laboratory", "title": "Members of the Qin laboratory provided suggestions and comments.", "to": "suggestions and comments", "width": 1.0}, {"from": "qubit rna hs assay kit with a qubit 2.0 fluorometer", "title": "quantified using", "to": "extracted rna", "width": 1.0}, {"from": "r programming language", "title": "generated using the R programming language", "to": "principal component analysis (pca) clustering plots, volcano plots, and heat maps", "width": 1.0}, {"from": "radial glia", "title": "translocate from the lateral VZ and become in the cortex", "to": "immature astrocytes", "width": 1.0}, {"from": "radial glia", "title": "produces", "to": "neuron-like cells", "width": 1.0}, {"from": "radial glia", "title": "Regional differences in radial glia fate.", "to": "neuronal progeny", "width": 1.0}, {"from": "radial glia", "title": "elongate long radial processes to the pial surface", "to": "pial surface", "width": 1.0}, {"from": "radial glia", "title": "govern the spatiotemporal behavior", "to": "signaling pathways", "width": 1.0}, {"from": "radial glia", "title": "located along", "to": "third ventricle (3v) wall", "width": 1.0}, {"from": "radial glia", "title": "govern the spatiotemporal behavior", "to": "transcription factors", "width": 1.0}, {"from": "radial glia", "title": "originates from", "to": "ventral zone (vz)", "width": 1.0}, {"from": "radial glia", "title": "are expressed in", "to": "transgenes", "width": 1.0}, {"from": "radial glia-derived astrocytes", "title": "allocated to", "to": "spatial domains", "width": 1.0}, {"from": "radial glial (tanycyte-like) morphology", "title": "had", "to": "egfp cells in the ventral diencephalon", "width": 1.0}, {"from": "radial glial cells", "title": "extends from", "to": "elongated radial process", "width": 1.0}, {"from": "radial glial cells", "title": "consists of", "to": "periventricular cell body", "width": 1.0}, {"from": "radial glial cells", "title": "migrate out of the VZSVZ and later generate astrocytes", "to": "progenitors", "width": 1.0}, {"from": "radial migrating astrocyte progenitors", "title": "The radial migrating astrocyte progenitors have different morphologies", "to": "morphologies", "width": 1.0}, {"from": "radial migration of astrocyte progenitors", "title": "was observed in the dorsal diencephalon at E17.5", "to": "astrocyte markers", "width": 1.0}, {"from": "region-specific radial glia", "title": "located in", "to": "third ventricle (3v) wall", "width": 1.0}, {"from": "regional astrocyte allocation", "title": "regulates", "to": "cns synaptogenesis and repair", "width": 1.0}, {"from": "rett syndrome", "title": "The developmental genesis and dysfunction of astrocytes are closely associated with neurological disorders such as Rett syndrome and fragile X mental retardation.", "to": "fragile x mental retardation", "width": 1.0}, {"from": "rna-seq analysis", "title": "applied to", "to": "telencephalon", "width": 1.0}, {"from": "rnaprep pure micro kit", "title": "used for isolation from wall of 3V or LV", "to": "total rna", "width": 1.0}, {"from": "s100 astrocytes", "title": "in the adult brain regions of hGFAP-CreERT2;Ai14 transgenic mice", "to": "thalamus", "width": 1.0}, {"from": "s100 astrocytes", "title": "give rise to", "to": "tdt cells", "width": 1.0}, {"from": "school of basic medical sciences", "title": "located in", "to": "fudan university", "width": 1.0}, {"from": "sections", "title": "related through the process of mounting", "to": "superfrost-plus microscope slides (fisher)", "width": 1.0}, {"from": "signals", "title": "direct the", "to": "progression", "width": 1.0}, {"from": "significantly down-regulated genes", "title": "are in", "to": "light blue", "width": 1.0}, {"from": "sonic hedgehog signaling", "title": "Sonic hedgehog signaling controls thalamic progenitor identity and nuclei specification in mice.", "to": "thalamic progenitor identity", "width": 1.0}, {"from": "sox3", "title": "may promote neurogenesis in the ventral diencephalon and the cortex", "to": "nkx2-3", "width": 1.0}, {"from": "spatiotemporal specification", "title": "of astrocytes remain largely unexplored", "to": "lineage progression", "width": 1.0}, {"from": "state key laboratory of medical neurobiology", "title": "located in", "to": "fudan university", "width": 1.0}, {"from": "tamoxifen", "title": "cells are induced by tamoxifen", "to": "induced cells", "width": 1.0}, {"from": "tamoxifen", "title": "Tamoxifen is used to induce CreER-dependent recombination in hGFAP-CreERT2;Ai14 transgenic mice.", "to": "recombination", "width": 1.0}, {"from": "tamoxifen", "title": "was given to", "to": "transgenic mice", "width": 1.0}, {"from": "tanycytes", "title": "Distinct populations of FGF-responsive neural progenitors", "to": "fgf-responsive neural progenitors", "width": 1.0}, {"from": "tdt astrocyte-like cells", "title": "induced by", "to": "dorsal region above the 3v", "width": 1.0}, {"from": "tdt cells", "title": "the tdT cells displayed astrocytic morphology in the diencephalon", "to": "astrocytic morphology", "width": 1.0}, {"from": "tdt cells", "title": "multiple present in the dorsal telencephalon", "to": "telencephalon", "width": 1.0}, {"from": "tdt cells", "title": "tdT cells are distributed along the region of zona incerta in the thalamus", "to": "zona incerta", "width": 1.0}, {"from": "tdt-expressing cells", "title": "cells are induced at E14.5", "to": "e14.5", "width": 1.0}, {"from": "third ventricle", "title": "The study focuses on the dorsal 3V wall and LV wall in comparison.", "to": "lateral ventricle", "width": 1.0}, {"from": "trimmomatic", "title": "Trimmomatic is a flexible trimmer for Illumina sequence data.", "to": "illumina sequence data", "width": 1.0}, {"from": "trimmomatic", "title": "recruited to", "to": "low-quality reads and adaptor trimming", "width": 1.0}, {"from": "two- tailed unpaired students t-test", "title": "with a two- tailed unpaired Students t-test", "to": "data from two groups were analyzed", "width": 1.0}, {"from": "vector pcaggs", "title": "expression is driven by", "to": "cag promoter", "width": 1.0}, {"from": "ventral spinal cord", "title": "modulated by", "to": "regionally restricted manner", "width": 1.0}, {"from": "virus", "title": "generated by transient transfections in HEK293T cells", "to": "lentiviral vector", "width": 1.0}, {"from": "virus-containing culture supernatants", "title": "collected and concentrated", "to": "centrifugation", "width": 1.0}, {"from": "wnt7a", "title": "in the ventral diencephalon and the cortex", "to": "neurogenesis", "width": 1.0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
